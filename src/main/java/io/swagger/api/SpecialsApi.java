@@ -7,6 +7,8 @@ package io.swagger.api;
 
 import java.util.List;
 import io.swagger.annotations.*;
+import io.swagger.model.Advertisement;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
