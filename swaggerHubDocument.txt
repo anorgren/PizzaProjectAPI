@@ -1,0 +1,173 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/aayushms93/ThePizzaProject/1.0.0
+  - description: Heroku API
+    url: http://http://infinite-wildwood-41499.herokuapp.com/aayushms93/ThePizzaProject/1.0.0
+info:
+  description: This is a simple API
+  version: "1.0.0"
+  title: Simple Inventory API
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /stores:
+    get:
+      tags:
+        - developers
+      summary: returns all stores
+      operationId: getStores
+      description: |
+        Get list of all stores
+      responses:
+        '200':
+          description: list of all stores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Store'
+        '400':
+          description: bad input parameter
+  /toppings:
+    get:
+      tags:
+        - developers
+      summary: returns all toppings
+      operationId: getToppings
+      description: |
+        Get list of all toppings
+      responses:
+        '200':
+          description: list of all toppings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Topping'
+        '400':
+          description: bad input parameter
+  /sizes:
+    get:
+      tags:
+        - developers
+      summary: returns all pizza sizes
+      operationId: getSizes
+      description: |
+        Get list of all pizza sizes
+      responses:
+        '200':
+          description: list of all pizza sizes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PizzaSize'
+        '400':
+          description: bad input parameter
+  /specials:
+    get:
+      tags:
+      - developers
+      summary: returns list of specials in all stores
+      operationId: getSpecials
+      description: |
+        get list of all specials for all stores
+      responses:
+        '200':
+          description: 'list of all specials for all stores'
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Advertisement'
+components:
+  schemas:
+    Store:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          example: 1
+        branchName:
+          type: string
+          example: Fremont Branch
+        address:
+          type: string
+          example: '101 Fremont Ave, Seattle, WA 12345' 
+        DiateryRestrictions:
+          type: object
+          additionalProperties:
+            type: boolean
+        availableToppings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Topping'
+        availableSizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PizzaSize'
+        advertisements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Advertisement'
+    Topping:
+      type: object
+      required:
+      - toppingName
+      properties:
+        toppingName:
+          type: string
+          example: Tomato
+        dietryProperties:
+          type: object
+          additionalProperties:
+              type: boolean
+        price:
+          type: number
+          example: 1.00
+    DiateryProperty:
+      type: string
+      enum: 
+      - Vegetatian
+      - Vegan
+      - Gluten Free
+    PizzaSize:
+      type: string
+      enum:
+      - small
+      - medium
+      - large
+    AdvertisementType:
+      type: string
+      enum: 
+      - Special
+      - Cupon
+    Advertisement:
+      type: object
+      required:
+      - advertisementType
+      properties:
+        advertiesmentType:
+          $ref: '#/components/schemas/AdvertisementType'
+        marketingContent:
+          type: string
+          example: 'Buy my pizza'
+        
