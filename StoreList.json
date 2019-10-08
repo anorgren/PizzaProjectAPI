@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "branchName": "Fremont Branch",
+    "address": "101 Fremont Ave, Seattle, WA 12345",
+    "DiateryRestrictions": {
+      "Vegan": true,
+      "Gluten Free": false,
+      "Vegetarian": true
+    },
+    "availableToppings": [
+      {
+        "toppingName": "Tomato",
+        "dietryProperties": {
+          "additionalProp1": true,
+          "additionalProp2": true,
+          "additionalProp3": true
+        },
+        "price": 1
+      }
+    ],
+    "availableSizes": [
+      "medium", "large"
+    ],
+    "advertisements": [
+      {
+        "advertiesmentType": "Special",
+        "marketingContent": "Buy my pizza"
+      }
+    ]
+  }
+  {
+    "id": 2,
+    "branchName": "Capitol Hill Branch",
+    "address": "101 Pine Ave, Seattle, WA 01234",
+    "DiateryRestrictions": {
+      "Vegan": true,
+      "Gluten Free": true,
+      "Vegetarian": true
+    },
+    "availableToppings": [
+      {
+        "toppingName": "Tomato",
+        "dietryProperties": {
+          "additionalProp1": true,
+          "additionalProp2": true,
+          "additionalProp3": true
+        },
+        "price": 1
+      }
+    ],
+    "availableSizes": [
+      "small", "medium", "large"
+    ],
+    "advertisements": [
+      {
+        "advertiesmentType": "Special",
+        "marketingContent": "Buy my pizza"
+      }
+    ]
+  }
+  {
+    "id": 3,
+    "branchName": "Sodo Branch",
+    "address": "101 1st Ave, Seattle, WA 98765",
+    "DiateryRestrictions": {
+      "Vegan": true,
+      "Gluten Free": true,
+      "Vegetarian": true
+    },
+    "availableToppings": [
+      {
+        "toppingName": "Tomato",
+        "dietryProperties": {
+          "additionalProp1": true,
+          "additionalProp2": true,
+          "additionalProp3": true
+        },
+        "price": 1
+      }
+    ],
+    "availableSizes": [
+      "small", "medium", "large"
+    ],
+    "advertisements": [
+      {
+        "advertiesmentType": "Special",
+        "marketingContent": "Buy my pizza"
+      }
+    ]
+  }
+]

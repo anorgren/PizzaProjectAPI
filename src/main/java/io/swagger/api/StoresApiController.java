@@ -1,8 +1,11 @@
 package io.swagger.api;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import io.swagger.model.Store;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -41,7 +44,7 @@ public class StoresApiController implements StoresApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<List<Store>>(objectMapper.readValue("[ {\n  \"DiateryRestrictions\" : {\n    \"key\" : true\n  },\n  \"advertisements\" : [ {\n    \"advertiesmentType\" : \"Special\",\n    \"marketingContent\" : \"Buy my pizza\"\n  }, {\n    \"advertiesmentType\" : \"Special\",\n    \"marketingContent\" : \"Buy my pizza\"\n  } ],\n  \"address\" : \"101 Fremont Ave, Seattle, WA 12345\",\n  \"availableToppings\" : [ {\n    \"dietryProperties\" : {\n      \"key\" : true\n    },\n    \"toppingName\" : \"Tomato\",\n    \"price\" : 1\n  }, {\n    \"dietryProperties\" : {\n      \"key\" : true\n    },\n    \"toppingName\" : \"Tomato\",\n    \"price\" : 1\n  } ],\n  \"branchName\" : \"Fremont Branch\",\n  \"id\" : \"1\",\n  \"availableSizes\" : [ \"small\", \"small\" ]\n}, {\n  \"DiateryRestrictions\" : {\n    \"key\" : true\n  },\n  \"advertisements\" : [ {\n    \"advertiesmentType\" : \"Special\",\n    \"marketingContent\" : \"Buy my pizza\"\n  }, {\n    \"advertiesmentType\" : \"Special\",\n    \"marketingContent\" : \"Buy my pizza\"\n  } ],\n  \"address\" : \"101 Fremont Ave, Seattle, WA 12345\",\n  \"availableToppings\" : [ {\n    \"dietryProperties\" : {\n      \"key\" : true\n    },\n    \"toppingName\" : \"Tomato\",\n    \"price\" : 1\n  }, {\n    \"dietryProperties\" : {\n      \"key\" : true\n    },\n    \"toppingName\" : \"Tomato\",\n    \"price\" : 1\n  } ],\n  \"branchName\" : \"Fremont Branch\",\n  \"id\" : \"1\",\n  \"availableSizes\" : [ \"small\", \"small\" ]\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<List<Store>>(lookupStores(), HttpStatus.OK);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<List<Store>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -51,4 +54,9 @@ public class StoresApiController implements StoresApi {
         return new ResponseEntity<List<Store>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
+    private List<Store> lookupStores() throws IOException {
+        String json = new String(Files.readAllBytes(Paths.get("StoreList.json")));
+        List<Store> stores = objectMapper.readValue(json,new TypeReference<List<Store>>(){});
+        return stores;
+    }
 }
