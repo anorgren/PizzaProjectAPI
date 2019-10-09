@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
 @Controller
 public class SizesApiController implements SizesApi {
@@ -41,7 +42,7 @@ public class SizesApiController implements SizesApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<List<PizzaSize>>(objectMapper.readValue("[ \"small\", \"small\" ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<List<PizzaSize>>(objectMapper.readValue("[ \"small\", \"medium\", \"large\" ]", List.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<List<PizzaSize>>(HttpStatus.INTERNAL_SERVER_ERROR);
