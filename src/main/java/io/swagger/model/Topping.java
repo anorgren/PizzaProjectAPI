@@ -22,9 +22,9 @@ public class Topping   {
   @JsonProperty("toppingName")
   private String toppingName = null;
 
-  @JsonProperty("dietryProperties")
+  @JsonProperty("dietaryProperties")
   @Valid
-  private Map<String, Boolean> dietryProperties = null;
+  private Map<String, Boolean> dietaryProperties = null;
 
   @JsonProperty("price")
   private BigDecimal price = null;
@@ -49,16 +49,16 @@ public class Topping   {
     this.toppingName = toppingName;
   }
 
-  public Topping dietryProperties(Map<String, Boolean> dietryProperties) {
-    this.dietryProperties = dietryProperties;
+  public Topping dietryProperties(Map<String, Boolean> dietaryProperties) {
+    this.dietaryProperties = dietaryProperties;
     return this;
   }
 
   public Topping putDietryPropertiesItem(String key, Boolean dietryPropertiesItem) {
-    if (this.dietryProperties == null) {
-      this.dietryProperties = new HashMap<String, Boolean>();
+    if (this.dietaryProperties == null) {
+      this.dietaryProperties = new HashMap<String, Boolean>();
     }
-    this.dietryProperties.put(key, dietryPropertiesItem);
+    this.dietaryProperties.put(key, dietryPropertiesItem);
     return this;
   }
 
@@ -69,11 +69,11 @@ public class Topping   {
   @ApiModelProperty(value = "")
 
   public Map<String, Boolean> getDietryProperties() {
-    return dietryProperties;
+    return dietaryProperties;
   }
 
   public void setDietryProperties(Map<String, Boolean> dietryProperties) {
-    this.dietryProperties = dietryProperties;
+    this.dietaryProperties = dietryProperties;
   }
 
   public Topping price(BigDecimal price) {
@@ -107,13 +107,13 @@ public class Topping   {
     }
     Topping topping = (Topping) o;
     return Objects.equals(this.toppingName, topping.toppingName) &&
-        Objects.equals(this.dietryProperties, topping.dietryProperties) &&
+        Objects.equals(this.dietaryProperties, topping.dietaryProperties) &&
         Objects.equals(this.price, topping.price);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(toppingName, dietryProperties, price);
+    return Objects.hash(toppingName, dietaryProperties, price);
   }
 
   @Override
@@ -122,7 +122,7 @@ public class Topping   {
     sb.append("class Topping {\n");
     
     sb.append("    toppingName: ").append(toIndentedString(toppingName)).append("\n");
-    sb.append("    dietryProperties: ").append(toIndentedString(dietryProperties)).append("\n");
+    sb.append("    dietryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("}");
     return sb.toString();

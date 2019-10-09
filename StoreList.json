@@ -309,7 +309,7 @@
           "Vegetarian": true
         },
         "price": 2
-      },
+      }
     ],
     "availableSizes": [
       "small", "medium", "large"

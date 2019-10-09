@@ -53,11 +53,38 @@ public class StoresApiControllerIntegrationTest {
         Map<String, Boolean> dietProp =  first.getDiateryRestrictions();
         assertEquals(dietProp.get("Vegan"), true);
         assertEquals(dietProp.get("Gluten Free"), false);
-        assertEquals(dietProp.get("Vegetarian"), false);
+        assertEquals(dietProp.get("Vegetarian"), true);
         assertTrue(first.getAvailableSizes().contains(PizzaSize.MEDIUM));
         assertTrue(first.getAvailableSizes().contains(PizzaSize.LARGE));
     }
 
+    @Test
+    public void getStoresTestCountStores() throws Exception {
+        ResponseEntity<List<Store>> responseEntity = api.getStores();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<Store> stores = responseEntity.getBody();
+        assertEquals(stores.size(),3);;
+    }
+
+    @Test
+    public void getStoresTestToppingNumbers() throws Exception {
+        ResponseEntity<List<Store>> responseEntity = api.getStores();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<Store> stores = responseEntity.getBody();
+        assertEquals(stores.get(0).getAvailableToppings().size(),24);
+        assertEquals(stores.get(1).getAvailableToppings().size(),7);
+        assertEquals(stores.get(2).getAvailableToppings().size(),17);
+    }
+
+    @Test
+    public void getStoresTestCheckIDs() throws Exception {
+        ResponseEntity<List<Store>> responseEntity = api.getStores();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<Store> stores = responseEntity.getBody();
+        assertEquals(stores.get(0).getId(),"1");
+        assertEquals(stores.get(1).getId(),"2");
+        assertEquals(stores.get(2).getId(),"3");
+    }
     @Test
     public void getStoresTestNoHeader() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
