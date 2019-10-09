@@ -49,22 +49,22 @@ public class Topping   {
     this.toppingName = toppingName;
   }
 
-  public Topping dietryProperties(Map<String, Boolean> dietaryProperties) {
+  public Topping dietaryProperties(Map<String, Boolean> dietaryProperties) {
     this.dietaryProperties = dietaryProperties;
     return this;
   }
 
-  public Topping putDietryPropertiesItem(String key, Boolean dietryPropertiesItem) {
+  public Topping putDietryPropertiesItem(String key, Boolean dietaryPropertiesItem) {
     if (this.dietaryProperties == null) {
       this.dietaryProperties = new HashMap<String, Boolean>();
     }
-    this.dietaryProperties.put(key, dietryPropertiesItem);
+    this.dietaryProperties.put(key, dietaryPropertiesItem);
     return this;
   }
 
   /**
-   * Get dietryProperties
-   * @return dietryProperties
+   * Get dietaryProperties
+   * @return dietaryProperties
   **/
   @ApiModelProperty(value = "")
 
@@ -72,8 +72,8 @@ public class Topping   {
     return dietaryProperties;
   }
 
-  public void setDietryProperties(Map<String, Boolean> dietryProperties) {
-    this.dietaryProperties = dietryProperties;
+  public void setDietryProperties(Map<String, Boolean> dietaryProperties) {
+    this.dietaryProperties = dietaryProperties;
   }
 
   public Topping price(BigDecimal price) {
@@ -122,7 +122,7 @@ public class Topping   {
     sb.append("class Topping {\n");
     
     sb.append("    toppingName: ").append(toIndentedString(toppingName)).append("\n");
-    sb.append("    dietryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
+    sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("}");
     return sb.toString();
