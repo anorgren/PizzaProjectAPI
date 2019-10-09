@@ -54,7 +54,7 @@ public class Topping   {
     return this;
   }
 
-  public Topping putDietryPropertiesItem(String key, Boolean dietaryPropertiesItem) {
+  public Topping putDietaryPropertiesItem(String key, Boolean dietaryPropertiesItem) {
     if (this.dietaryProperties == null) {
       this.dietaryProperties = new HashMap<String, Boolean>();
     }
@@ -68,11 +68,11 @@ public class Topping   {
   **/
   @ApiModelProperty(value = "")
 
-  public Map<String, Boolean> getDietryProperties() {
+  public Map<String, Boolean> getDietaryProperties() {
     return dietaryProperties;
   }
 
-  public void setDietryProperties(Map<String, Boolean> dietaryProperties) {
+  public void setDietaryProperties(Map<String, Boolean> dietaryProperties) {
     this.dietaryProperties = dietaryProperties;
   }
 
