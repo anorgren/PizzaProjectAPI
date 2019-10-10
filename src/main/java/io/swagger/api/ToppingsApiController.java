@@ -1,8 +1,12 @@
 package io.swagger.api;
 
 import io.swagger.model.Topping;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.swagger.annotations.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,37 +22,48 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
 @Controller
 public class ToppingsApiController implements ToppingsApi {
 
-    private static final Logger log = LoggerFactory.getLogger(ToppingsApiController.class);
+  private static final Logger log = LoggerFactory.getLogger(ToppingsApiController.class);
 
-    private final ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
 
-    private final HttpServletRequest request;
+  private final HttpServletRequest request;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    public ToppingsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-        this.objectMapper = objectMapper;
-        this.request = request;
+  @org.springframework.beans.factory.annotation.Autowired
+  public ToppingsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    this.objectMapper = objectMapper;
+    this.request = request;
+  }
+
+  public ResponseEntity<List<Topping>> getToppings() {
+    String accept = request.getHeader("Accept");
+    if (accept != null && accept.contains("application/json")) {
+      try {
+        return new ResponseEntity<List<Topping>>(getToppingList(), HttpStatus.OK);
+      } catch (IOException e) {
+        log.error("Couldn't serialize response for content type application/json", e);
+        return new ResponseEntity<List<Topping>>(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
 
-    public ResponseEntity<List<Topping>> getToppings() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Topping>>(objectMapper.readValue("[ {\n  \"dietryProperties\" : {\n    \"key\" : true\n  },\n  \"toppingName\" : \"Tomato\",\n  \"price\" : 1\n}, {\n  \"dietryProperties\" : {\n    \"key\" : true\n  },\n  \"toppingName\" : \"Tomato\",\n  \"price\" : 1\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Topping>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+    return new ResponseEntity<List<Topping>>(HttpStatus.NOT_IMPLEMENTED);
+  }
 
-        return new ResponseEntity<List<Topping>>(HttpStatus.NOT_IMPLEMENTED);
-    }
+  private List<Topping> getToppingList() throws IOException {
+    String toppingListJson = new String(Files.readAllBytes(Paths.get("ToppingList.json")), StandardCharsets.UTF_8);
+    List<Topping> toppingList = objectMapper.readValue(toppingListJson, new TypeReference<List<Topping>>(){});
+    return toppingList;
+  }
 
 }

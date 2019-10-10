@@ -1,24 +1,20 @@
 package io.swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonValue;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
  * Gets or Sets DiateryProperty
  */
-public enum DiateryProperty {
-  VEGETATIAN("Vegetatian"),
+public enum DietaryProperty {
+  VEGETARIAN("Vegetarian"),
     VEGAN("Vegan"),
     GLUTEN_FREE("Gluten Free");
 
   private String value;
 
-  DiateryProperty(String value) {
+  DietaryProperty(String value) {
     this.value = value;
   }
 
@@ -29,8 +25,8 @@ public enum DiateryProperty {
   }
 
   @JsonCreator
-  public static DiateryProperty fromValue(String text) {
-    for (DiateryProperty b : DiateryProperty.values()) {
+  public static DietaryProperty fromValue(String text) {
+    for (DietaryProperty b : DietaryProperty.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

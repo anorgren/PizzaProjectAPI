@@ -2,12 +2,10 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
+
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -24,7 +22,7 @@ public class Topping   {
 
   @JsonProperty("dietaryProperties")
   @Valid
-  private Map<String, Boolean> dietaryProperties = null;
+  private Map<DietaryProperty, Boolean> dietaryProperties = null;
 
   @JsonProperty("price")
   private BigDecimal price = null;
@@ -49,16 +47,16 @@ public class Topping   {
     this.toppingName = toppingName;
   }
 
-  public Topping dietaryProperties(Map<String, Boolean> dietaryProperties) {
-    this.dietaryProperties = dietaryProperties;
+  public Topping dietryProperties(Map<DietaryProperty, Boolean> dietryProperties) {
+    this.dietaryProperties = dietryProperties;
     return this;
   }
 
-  public Topping putDietaryPropertiesItem(String key, Boolean dietaryPropertiesItem) {
+  public Topping putDietryPropertiesItem(DietaryProperty key, Boolean dietryPropertiesItem) {
     if (this.dietaryProperties == null) {
-      this.dietaryProperties = new HashMap<String, Boolean>();
+      this.dietaryProperties = new HashMap<DietaryProperty, Boolean>();
     }
-    this.dietaryProperties.put(key, dietaryPropertiesItem);
+    this.dietaryProperties.put(key, dietryPropertiesItem);
     return this;
   }
 
@@ -68,11 +66,11 @@ public class Topping   {
   **/
   @ApiModelProperty(value = "")
 
-  public Map<String, Boolean> getDietaryProperties() {
+  public Map<DietaryProperty, Boolean> getDietaryProperties() {
     return dietaryProperties;
   }
 
-  public void setDietaryProperties(Map<String, Boolean> dietaryProperties) {
+  public void setDietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
     this.dietaryProperties = dietaryProperties;
   }
 
