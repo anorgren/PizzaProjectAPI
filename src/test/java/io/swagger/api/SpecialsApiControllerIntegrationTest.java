@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import io.swagger.model.Advertisement;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
