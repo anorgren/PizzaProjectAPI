@@ -1,7 +1,7 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.model.DiateryProperty;
+import io.swagger.model.DietaryProperty;
 import io.swagger.model.PizzaSize;
 import io.swagger.model.Store;
 
