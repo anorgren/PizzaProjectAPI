@@ -4,6 +4,10 @@ import io.swagger.model.PizzaSize;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import io.swagger.model.Size;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -52,5 +56,7 @@ public class SizesApiController implements SizesApi {
         return new ResponseEntity<List<PizzaSize>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    private List<Size>
+    private List<PizzaSize> getPizzaSizesList() throws IOException {
+        return new ArrayList<PizzaSize>(Arrays.asList(PizzaSize.values()));
+    }
 }
