@@ -54,7 +54,7 @@ public class SizesApiControllerIntegrationTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(sizeListRef.size(), responseEntity.getBody().size());
         // Line below causing test to fail
-        // Assert.assertEquals(sizeListRef, responseEntity.getBody());
+        Assert.assertEquals(sizeListRef, responseEntity.getBody());
     }
 
     @Test

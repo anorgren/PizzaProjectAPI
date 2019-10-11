@@ -4,12 +4,8 @@
     <list default="true" id="519c9ad5-ced4-41b9-aeef-1a70b36a5914" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/SizesApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/SizesApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/model/PizzaSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/model/PizzaSize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/model/Size.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/io/swagger/api/SizesApiControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/swagger/api/SizesApiControllerIntegrationTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/SizesApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/SizesApiController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/model/PizzaSize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/model/PizzaSize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/io/swagger/api/SizesApiControllerIntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/io/swagger/api/SizesApiControllerIntegrationTest.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -28,8 +24,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/io/swagger/api/SizesApiControllerIntegrationTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="49" column="21" lean-forward="true" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
+            <state relative-caret-position="76">
+              <caret line="46" column="19" lean-forward="true" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,8 +45,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/swagger/api/SizesApiController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-429">
-              <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+            <state relative-caret-position="254">
+              <caret line="50" column="51" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -110,7 +109,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -268,7 +267,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.SizesApiControllerIntegrationTest">
+  <component name="RunManager" selected="JUnit.SizesApiControllerIntegrationTest.getSizesTestNoHeader">
     <configuration name="SizesApiControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="swagger-spring" />
       <extension name="coverage">
@@ -356,10 +355,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.SizesApiControllerIntegrationTest" />
         <item itemvalue="JUnit.SizesApiControllerIntegrationTest.getSizesTestNoHeader" />
         <item itemvalue="JUnit.SizesApiControllerIntegrationTest.getSizesTestCountSizes" />
         <item itemvalue="JUnit.SizesApiControllerIntegrationTest.getSizesTestStatusOk" />
+        <item itemvalue="JUnit.SizesApiControllerIntegrationTest" />
         <item itemvalue="JUnit.SpecialsApiControllerIntegrationTest" />
       </list>
     </recent_temporary>
@@ -374,14 +373,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570695993351</updated>
-      <workItem from="1570695996370" duration="9672000" />
+      <workItem from="1570695996370" duration="10210000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="SizesApiControllerIntegrationTest - 2019.10.10 at 01h 30m 54s.xml">
-      <configuration name="SizesApiControllerIntegrationTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="SpecialsApiControllerIntegrationTest - 2019.10.10 at 03h 10m 35s.xml">
       <configuration name="SpecialsApiControllerIntegrationTest" configurationId="JUnit" />
     </history-entry>
@@ -409,12 +405,16 @@
     <history-entry file="SizesApiControllerIntegrationTest - 2019.10.10 at 23h 10m 18s.xml">
       <configuration name="SizesApiControllerIntegrationTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="SizesApiControllerIntegrationTest - 2019.10.10 at 23h 14m 49s.xml">
+      <configuration name="SizesApiControllerIntegrationTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9672000" />
+    <option name="totallyTimeSpent" value="10210000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" />
       <window_info id="Image Layers" />
@@ -423,7 +423,7 @@
       <window_info id="Favorites" side_tool="true" />
       <window_info id="Learn" />
       <window_info id="Web" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2549234" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.124200426" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Spring" />
       <window_info anchor="bottom" id="Terminal" />
@@ -435,7 +435,7 @@
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33479214" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33152762" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -518,15 +518,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/swagger/api/SizesApiController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-429">
-          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+        <state relative-caret-position="254">
+          <caret line="50" column="51" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/io/swagger/api/SizesApiControllerIntegrationTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="49" column="21" lean-forward="true" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
+        <state relative-caret-position="76">
+          <caret line="46" column="19" lean-forward="true" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

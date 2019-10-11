@@ -48,9 +48,7 @@ public class SizesApiController implements SizesApi {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
       try {
-        return new ResponseEntity<List<PizzaSize>>(
-            objectMapper.readValue("[ \"small\", \"medium\", \"large\" ]", List.class),
-            HttpStatus.OK);
+        return new ResponseEntity<List<PizzaSize>>(getPizzaSizesList(), HttpStatus.OK);
       } catch (IOException e) {
         log.error("Couldn't serialize response for content type application/json", e);
         return new ResponseEntity<List<PizzaSize>>(HttpStatus.INTERNAL_SERVER_ERROR);
