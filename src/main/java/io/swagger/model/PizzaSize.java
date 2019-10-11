@@ -13,8 +13,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  */
 public enum PizzaSize {
   SMALL("small"),
-    MEDIUM("medium"),
-    LARGE("large");
+  MEDIUM("medium"),
+  LARGE("large");
 
   private String value;
 
@@ -36,5 +36,9 @@ public enum PizzaSize {
       }
     }
     return null;
+  }
+
+  public String getValue() {
+    return value;
   }
 }
