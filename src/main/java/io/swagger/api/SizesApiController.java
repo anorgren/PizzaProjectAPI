@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -59,6 +58,10 @@ public class SizesApiController implements SizesApi {
   }
 
   private List<PizzaSize> getPizzaSizesList() throws IOException {
-    return Arrays.stream(PizzaSize.values()).collect(Collectors.toList());
+    String sizeListJson = new String(Files.readAllBytes(Paths.get("SizesList.json")),
+        StandardCharsets.UTF_8);
+    List<PizzaSize> sizeList = objectMapper
+        .readValue(sizeListJson, new TypeReference<List<PizzaSize>>(){});
+    return sizeList;
   }
 }
