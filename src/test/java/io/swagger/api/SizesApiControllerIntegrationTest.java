@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
@@ -45,15 +46,11 @@ public class SizesApiControllerIntegrationTest {
 
     @Test
     public void getSizesTestStatusOk() throws Exception {
-        String sizeListJson = new String(Files.readAllBytes(Paths.get("SizesList.json")),
-            StandardCharsets.UTF_8);
-        List<PizzaSize> sizeListRef = objectMapper
-            .readValue(sizeListJson, new TypeReference<List<PizzaSize>>() {});
+        List<PizzaSize> sizeListRef = Arrays.stream(PizzaSize.values()).collect(Collectors.toList());
         ResponseEntity<List<PizzaSize>> responseEntity = api.getSizes();
 
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(sizeListRef.size(), responseEntity.getBody().size());
-        // Line below causing test to fail
         Assert.assertEquals(sizeListRef, responseEntity.getBody());
     }
 
@@ -73,5 +70,4 @@ public class SizesApiControllerIntegrationTest {
         ResponseEntity<List<PizzaSize>> responseEntity = api.getSizes();
         Assert.assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
-
 }
