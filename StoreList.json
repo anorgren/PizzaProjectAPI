@@ -1,0 +1,499 @@
+[
+  {
+    "id": 1,
+    "branchName": "Fremont Branch",
+    "address": "101 Fremont Ave, Seattle, WA 12345",
+    "DiateryRestrictions": {
+      "Vegan": true,
+      "Gluten Free": false,
+      "Vegetarian": true
+    },
+    "availableToppings": [
+          {
+        "toppingName": "Hot Sauce",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Garlic",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Jalapeno Peppers",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Onions",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Banana Peppers",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Diced Tomatoes",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Black Olives",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Mushrooms",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Pineapple",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Green Peppers",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Spinach",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Roasted Red Peppers",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Shredded Provolone Cheese",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Cheddar Cheese",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Feta Cheese",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Shredded Parmesan Asiago",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Ham",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Beef",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Salami",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Pepperoni",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Italian Sausage",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Premium Chicken",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Bacon",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Philly Steak",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      }
+    ],
+    "availableSizes": [
+      "medium", "large"
+    ],
+    "advertisements": [
+      {
+        "advertiesmentType": "Special",
+        "marketingContent": "Buy my pizza"
+      }
+    ]
+  }
+,
+  {
+    "id": 2,
+    "branchName": "Capitol Hill Branch",
+    "address": "101 Pine Ave, Seattle, WA 01234",
+    "DiateryRestrictions": {
+      "Vegan": true,
+      "Gluten Free": true,
+      "Vegetarian": true
+    },
+    "availableToppings": [
+     {
+        "toppingName": "Hot Sauce",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Garlic",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Jalapeno Peppers",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Onions",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Banana Peppers",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Diced Tomatoes",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Black Olives",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      }
+    ],
+    "availableSizes": [
+      "small", "medium", "large"
+    ],
+    "advertisements": [
+      {
+        "advertiesmentType": "Special",
+        "marketingContent": "Buy my pizza"
+      }
+    ]
+  }
+,
+  {
+    "id": 3,
+    "branchName": "SODO Branch",
+    "address": "101 1st Ave, Seattle, WA 98765",
+    "DiateryRestrictions": {
+      "Vegan": true,
+      "Gluten Free": true,
+      "Vegetarian": true
+    },
+    "availableToppings": [
+        {
+        "toppingName": "Mushrooms",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Pineapple",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Green Peppers",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Spinach",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Roasted Red Peppers",
+        "dietaryProperties": {
+          "Vegan": true,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Shredded Provolone Cheese",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Cheddar Cheese",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Feta Cheese",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Shredded Parmesan Asiago",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": true
+        },
+        "price": 2
+      },
+      {
+        "toppingName": "Ham",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Beef",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Salami",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Pepperoni",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Italian Sausage",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Premium Chicken",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Bacon",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      },
+      {
+        "toppingName": "Philly Steak",
+        "dietaryProperties": {
+          "Vegan": false,
+          "Gluten Free": false,
+          "Vegetarian": false
+        },
+        "price": 3
+      }
+    ],
+    "availableSizes": [
+      "small", "medium", "large"
+    ],
+    "advertisements": [
+      {
+        "advertiesmentType": "Special",
+        "marketingContent": "Buy my pizza"
+      }
+    ]
+  }
+]

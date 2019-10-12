@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import io.swagger.model.PizzaSize;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -33,32 +35,33 @@ import java.util.Map;
 @Controller
 public class SizesApiController implements SizesApi {
 
-  private static final Logger log = LoggerFactory.getLogger(SizesApiController.class);
+    private static final Logger log = LoggerFactory.getLogger(SizesApiController.class);
 
-  private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-  private final HttpServletRequest request;
+    private final HttpServletRequest request;
 
-  @org.springframework.beans.factory.annotation.Autowired
-  public SizesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-    this.objectMapper = objectMapper;
-    this.request = request;
-  }
-
-  public ResponseEntity<List<PizzaSize>> getSizes() {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
-      try {
-        return new ResponseEntity<List<PizzaSize>>(getPizzaSizesList(), HttpStatus.OK);
-      } catch (Exception e) {
-        log.error("Couldn't serialize response for content type application/json", e);
-        return new ResponseEntity<List<PizzaSize>>(HttpStatus.INTERNAL_SERVER_ERROR);
-      }
+    @org.springframework.beans.factory.annotation.Autowired
+    public SizesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+        this.objectMapper = objectMapper;
+        this.request = request;
     }
-    return new ResponseEntity<List<PizzaSize>>(HttpStatus.NOT_IMPLEMENTED);
-  }
 
-  private List<PizzaSize> getPizzaSizesList() {
-    return Arrays.stream(PizzaSize.values()).collect(Collectors.toList());
-  }
+
+    public ResponseEntity<List<PizzaSize>> getSizes() {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<List<PizzaSize>>(getPizzaSizesList(), HttpStatus.OK);
+            } catch (Exception e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<List<PizzaSize>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        return new ResponseEntity<List<PizzaSize>>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    private List<PizzaSize> getPizzaSizesList() {
+        return Arrays.stream(PizzaSize.values()).collect(Collectors.toList());
+    }
 }
