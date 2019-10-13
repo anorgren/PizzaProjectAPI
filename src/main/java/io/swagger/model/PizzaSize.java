@@ -12,9 +12,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * Gets or Sets PizzaSize
  */
 public enum PizzaSize {
-  SMALL("small"),
-  MEDIUM("medium"),
-  LARGE("large");
+  SMALL("10 inches"),
+  MEDIUM("12 inches"),
+  LARGE("14 inches");
 
   private String value;
 
