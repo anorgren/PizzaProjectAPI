@@ -1,10 +1,6 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.model.PizzaSize;
-import io.swagger.model.Store;
-
-import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +11,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.model.DietaryProperty;
+import io.swagger.model.PizzaSize;
+import io.swagger.model.Store;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -49,10 +53,10 @@ public class StoresApiControllerIntegrationTest {
         assertEquals(first.getAddress(), "101 Fremont Ave, Seattle, WA 12345");
         assertEquals(first.getId(), "1");
         assertEquals(first.getBranchName(), "Fremont Branch");
-        Map<String, Boolean> dietProp =  first.getDiateryRestrictions();
-        assertEquals(dietProp.get("Vegan"), true);
-        assertEquals(dietProp.get("Gluten Free"), false);
-        assertEquals(dietProp.get("Vegetarian"), true);
+        Map<DietaryProperty, Boolean> dietProp =  first.getDietaryRestrictions();
+        assertEquals(dietProp.get(DietaryProperty.VEGAN), true);
+        assertEquals(dietProp.get(DietaryProperty.GLUTEN_FREE), false);
+        assertEquals(dietProp.get(DietaryProperty.VEGETARIAN), true);
         assertTrue(first.getAvailableSizes().contains(PizzaSize.MEDIUM));
         assertTrue(first.getAvailableSizes().contains(PizzaSize.LARGE));
     }
@@ -92,5 +96,50 @@ public class StoresApiControllerIntegrationTest {
         ResponseEntity<List<Store>> responseEntity = api.getStores();
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
+    
+    @Test
+    public void getStoresByIdTest() throws Exception {
+        String id = "1";
+        ResponseEntity<Store> responseEntity = api.getStoresById(id);
+        Store first = responseEntity.getBody();
+        assertEquals(first.getAddress(), "101 Fremont Ave, Seattle, WA 12345");
+        assertEquals(first.getId(), "1");
+        assertEquals(first.getBranchName(), "Fremont Branch");
+        Map<DietaryProperty, Boolean> dietProp =  first.getDietaryRestrictions();
+        assertEquals(dietProp.get(DietaryProperty.VEGAN), true);
+        assertEquals(dietProp.get(DietaryProperty.GLUTEN_FREE), false);
+        assertEquals(dietProp.get(DietaryProperty.VEGETARIAN), true);
+        assertTrue(first.getAvailableSizes().contains(PizzaSize.MEDIUM));
+        assertTrue(first.getAvailableSizes().contains(PizzaSize.LARGE));
+    }
 
+    @Test
+    public void getStoresByIdTest_InvalidId() throws Exception {
+        String id = "-1";
+        ResponseEntity<Store> responseEntity = api.getStoresById(id);
+        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void getStoresByIdTestNoHeader() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        objectMapper = new ObjectMapper();
+        api = new StoresApiController(objectMapper, request);
+        ResponseEntity<Store> responseEntity = api.getStoresById("1");
+        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void getToppingsTest_FileNotFound() throws Exception {
+        String fileName = "StoreList.json";
+        String newFileName = "StoreList_new.json";
+        File storeListFile = new File(fileName);
+        File storeListTempFile = new File(newFileName);
+        storeListFile.renameTo(storeListTempFile);
+        ResponseEntity<List<Store>> storeListResponse = api.getStores();
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, storeListResponse.getStatusCode());
+        ResponseEntity<Store> storeResponse = api.getStoresById("1");
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, storeResponse.getStatusCode());
+        storeListTempFile.renameTo(storeListFile);
+    }
 }

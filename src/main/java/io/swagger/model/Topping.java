@@ -1,15 +1,18 @@
 package io.swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.swagger.annotations.ApiModelProperty;
+import org.springframework.validation.annotation.Validated;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.validation.annotation.Validated;
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Topping
@@ -36,7 +39,7 @@ public class Topping   {
    * Get toppingName
    * @return toppingName
   **/
-  @ApiModelProperty(example = "Tomato", required = true, value = "")
+  @ApiModelProperty(example = "tomato", required = true, value = "")
   @NotNull
 
   public String getToppingName() {
@@ -47,16 +50,16 @@ public class Topping   {
     this.toppingName = toppingName;
   }
 
-  public Topping dietryProperties(Map<DietaryProperty, Boolean> dietryProperties) {
-    this.dietaryProperties = dietryProperties;
+  public Topping dietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
+    this.dietaryProperties = dietaryProperties;
     return this;
   }
 
-  public Topping putDietryPropertiesItem(DietaryProperty key, Boolean dietryPropertiesItem) {
+  public Topping putDietaryPropertiesItem(DietaryProperty key, Boolean dietaryPropertiesItem) {
     if (this.dietaryProperties == null) {
       this.dietaryProperties = new HashMap<DietaryProperty, Boolean>();
     }
-    this.dietaryProperties.put(key, dietryPropertiesItem);
+    this.dietaryProperties.put(key, dietaryPropertiesItem);
     return this;
   }
 

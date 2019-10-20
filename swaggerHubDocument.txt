@@ -4,11 +4,11 @@ servers:
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/aayushms93/ThePizzaProject/1.0.0
   - description: Heroku API
-    url: http://http://infinite-wildwood-41499.herokuapp.com/aayushms93/ThePizzaProject/1.0.0
+    url: https://infinite-wildwood-41499.herokuapp.com/aayushms93/ThePizzaProject/1.0.0
 info:
-  description: This is a simple API
+  description: These are the APIs for delivery at The Pizza Temple Restaurant
   version: "1.0.0"
-  title: Simple Inventory API
+  title: The Pizza Temple
   contact:
     email: you@your-company.com
   license:
@@ -39,6 +39,31 @@ paths:
                   $ref: '#/components/schemas/Store'
         '400':
           description: bad input parameter
+  /stores/{id}:
+    get:
+      tags:
+        - developers
+      summary: get store by id
+      operationId: getStoresById
+      description: |
+        Get store details by id
+      parameters:
+      - name: id
+        in: path
+        description: StoreId
+        required: true
+        schema:
+          type: string
+          example: 1
+      responses:
+        '200':
+          description: Details of the store of the given Id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '400':
+          description: bad input parameter
   /toppings:
     get:
       tags:
@@ -56,6 +81,31 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Topping'
+        '400':
+          description: bad input parameter
+  /toppings/{name}:
+    get:
+      tags:
+        - developers
+      summary: returns topping information of the given topping
+      operationId: getToppingsbyName
+      description: |
+        Get topping information of the given topping
+      parameters:
+        - name: name
+          in: path
+          description: toppingName
+          required: true
+          schema:
+            type: string
+            example: tomato
+      responses:
+        '200':
+          description: topping information of the given topping
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Topping'
         '400':
           description: bad input parameter
   /sizes:
@@ -111,15 +161,16 @@ components:
           example: Fremont Branch
         address:
           type: string
-          example: '101 Fremont Ave, Seattle, WA 12345' 
-        DiateryRestrictions:
+          example: '101 Fremont Ave, Seattle, WA 12345'
+        dietaryRestrictions:
           type: object
           additionalProperties:
             type: boolean
         availableToppings:
           type: array
           items:
-            $ref: '#/components/schemas/Topping'
+            type: string
+            example: tomato
         availableSizes:
           type: array
           items:
@@ -135,18 +186,18 @@ components:
       properties:
         toppingName:
           type: string
-          example: Tomato
-        dietryProperties:
+          example: tomato
+        dietaryProperties:
           type: object
           additionalProperties:
               type: boolean
         price:
           type: number
           example: 1.00
-    DiateryProperty:
+    DietaryProperty:
       type: string
-      enum: 
-      - Vegetatian
+      enum:
+      - Vegetarian
       - Vegan
       - Gluten Free
     PizzaSize:
@@ -157,17 +208,16 @@ components:
       - large
     AdvertisementType:
       type: string
-      enum: 
+      enum:
       - Special
-      - Cupon
+      - Coupon
     Advertisement:
       type: object
       required:
       - advertisementType
       properties:
-        advertiesmentType:
+        advertisementType:
           $ref: '#/components/schemas/AdvertisementType'
         marketingContent:
           type: string
           example: 'Buy my pizza'
-        

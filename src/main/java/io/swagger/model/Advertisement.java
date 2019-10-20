@@ -1,45 +1,47 @@
 package io.swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.AdvertisementType;
+
 import org.springframework.validation.annotation.Validated;
+
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Advertisement
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-19T23:59:29.208Z[GMT]")
 public class Advertisement   {
-  @JsonProperty("advertiesmentType")
-  private AdvertisementType advertiesmentType = null;
+  @JsonProperty("advertisementType")
+  private AdvertisementType advertisementType = null;
 
   @JsonProperty("marketingContent")
   private String marketingContent = null;
 
-  public Advertisement advertiesmentType(AdvertisementType advertiesmentType) {
-    this.advertiesmentType = advertiesmentType;
+  public Advertisement advertisementType(AdvertisementType advertisementType) {
+    this.advertisementType = advertisementType;
     return this;
   }
 
   /**
-   * Get advertiesmentType
-   * @return advertiesmentType
+   * Get advertisementType
+   * @return advertisementType
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
   @Valid
-  public AdvertisementType getAdvertiesmentType() {
-    return advertiesmentType;
+  public AdvertisementType getAdvertisementType() {
+    return advertisementType;
   }
 
-  public void setAdvertiesmentType(AdvertisementType advertiesmentType) {
-    this.advertiesmentType = advertiesmentType;
+  public void setAdvertisementType(AdvertisementType advertisementType) {
+    this.advertisementType = advertisementType;
   }
 
   public Advertisement marketingContent(String marketingContent) {
@@ -71,13 +73,13 @@ public class Advertisement   {
       return false;
     }
     Advertisement advertisement = (Advertisement) o;
-    return Objects.equals(this.advertiesmentType, advertisement.advertiesmentType) &&
+    return Objects.equals(this.advertisementType, advertisement.advertisementType) &&
         Objects.equals(this.marketingContent, advertisement.marketingContent);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(advertiesmentType, marketingContent);
+    return Objects.hash(advertisementType, marketingContent);
   }
 
   @Override
@@ -85,7 +87,7 @@ public class Advertisement   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Advertisement {\n");
     
-    sb.append("    advertiesmentType: ").append(toIndentedString(advertiesmentType)).append("\n");
+    sb.append("    advertisementType: ").append(toIndentedString(advertisementType)).append("\n");
     sb.append("    marketingContent: ").append(toIndentedString(marketingContent)).append("\n");
     sb.append("}");
     return sb.toString();
