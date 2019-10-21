@@ -1,26 +1,25 @@
 package io.swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.Advertisement;
-import io.swagger.model.PizzaSize;
-import io.swagger.model.Topping;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.validation.annotation.Validated;
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Store
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T01:15:42.292Z[GMT]")
 public class Store   {
   @JsonProperty("id")
   private String id = null;
@@ -31,13 +30,13 @@ public class Store   {
   @JsonProperty("address")
   private String address = null;
 
-  @JsonProperty("DiateryRestrictions")
+  @JsonProperty("dietaryRestrictions")
   @Valid
-  private Map<String, Boolean> diateryRestrictions = null;
+  private Map<DietaryProperty, Boolean> dietaryRestrictions = null;
 
   @JsonProperty("availableToppings")
   @Valid
-  private List<Topping> availableToppings = null;
+  private List<String> availableToppings = null;
 
   @JsonProperty("availableSizes")
   @Valid
@@ -105,41 +104,41 @@ public class Store   {
     this.address = address;
   }
 
-  public Store diateryRestrictions(Map<String, Boolean> diateryRestrictions) {
-    this.diateryRestrictions = diateryRestrictions;
+  public Store dietaryRestrictions(Map<DietaryProperty, Boolean> dietaryRestrictions) {
+    this.dietaryRestrictions = dietaryRestrictions;
     return this;
   }
 
-  public Store putDiateryRestrictionsItem(String key, Boolean diateryRestrictionsItem) {
-    if (this.diateryRestrictions == null) {
-      this.diateryRestrictions = new HashMap<String, Boolean>();
+  public Store putDietaryRestrictionsItem(DietaryProperty key, Boolean dietaryRestrictionsItem) {
+    if (this.dietaryRestrictions == null) {
+      this.dietaryRestrictions = new HashMap<DietaryProperty, Boolean>();
     }
-    this.diateryRestrictions.put(key, diateryRestrictionsItem);
+    this.dietaryRestrictions.put(key, dietaryRestrictionsItem);
     return this;
   }
 
   /**
-   * Get diateryRestrictions
-   * @return diateryRestrictions
+   * Get dietaryRestrictions
+   * @return dietaryRestrictions
   **/
   @ApiModelProperty(value = "")
 
-  public Map<String, Boolean> getDiateryRestrictions() {
-    return diateryRestrictions;
+  public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
+    return dietaryRestrictions;
   }
 
-  public void setDiateryRestrictions(Map<String, Boolean> diateryRestrictions) {
-    this.diateryRestrictions = diateryRestrictions;
+  public void setDietaryRestrictions(Map<DietaryProperty, Boolean> dietaryRestrictions) {
+    this.dietaryRestrictions = dietaryRestrictions;
   }
 
-  public Store availableToppings(List<Topping> availableToppings) {
+  public Store availableToppings(List<String> availableToppings) {
     this.availableToppings = availableToppings;
     return this;
   }
 
-  public Store addAvailableToppingsItem(Topping availableToppingsItem) {
+  public Store addAvailableToppingsItem(String availableToppingsItem) {
     if (this.availableToppings == null) {
-      this.availableToppings = new ArrayList<Topping>();
+      this.availableToppings = new ArrayList<String>();
     }
     this.availableToppings.add(availableToppingsItem);
     return this;
@@ -150,12 +149,12 @@ public class Store   {
    * @return availableToppings
   **/
   @ApiModelProperty(value = "")
-  @Valid
-  public List<Topping> getAvailableToppings() {
+
+  public List<String> getAvailableToppings() {
     return availableToppings;
   }
 
-  public void setAvailableToppings(List<Topping> availableToppings) {
+  public void setAvailableToppings(List<String> availableToppings) {
     this.availableToppings = availableToppings;
   }
 
@@ -226,7 +225,7 @@ public class Store   {
     return Objects.equals(this.id, store.id) &&
         Objects.equals(this.branchName, store.branchName) &&
         Objects.equals(this.address, store.address) &&
-        Objects.equals(this.diateryRestrictions, store.diateryRestrictions) &&
+        Objects.equals(this.dietaryRestrictions, store.dietaryRestrictions) &&
         Objects.equals(this.availableToppings, store.availableToppings) &&
         Objects.equals(this.availableSizes, store.availableSizes) &&
         Objects.equals(this.advertisements, store.advertisements);
@@ -234,7 +233,7 @@ public class Store   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, branchName, address, diateryRestrictions, availableToppings, availableSizes, advertisements);
+    return Objects.hash(id, branchName, address, dietaryRestrictions, availableToppings, availableSizes, advertisements);
   }
 
   @Override
@@ -245,7 +244,7 @@ public class Store   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
-    sb.append("    diateryRestrictions: ").append(toIndentedString(diateryRestrictions)).append("\n");
+    sb.append("    dietaryRestrictions: ").append(toIndentedString(dietaryRestrictions)).append("\n");
     sb.append("    availableToppings: ").append(toIndentedString(availableToppings)).append("\n");
     sb.append("    availableSizes: ").append(toIndentedString(availableSizes)).append("\n");
     sb.append("    advertisements: ").append(toIndentedString(advertisements)).append("\n");
