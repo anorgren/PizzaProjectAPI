@@ -35,7 +35,7 @@ public class SuggestionsApiController implements SuggestionsApi {
 
     private static final int SLICES_PER_ADULT = 3;
 
-    private static final int SLICES_PER_CHILD = 1;
+    private static final int SLICES_PER_CHILD = 2;
 
     private static final int SLICES_PER_SMALL = 6;
 

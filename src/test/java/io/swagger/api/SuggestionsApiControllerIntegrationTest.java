@@ -25,7 +25,7 @@ public class SuggestionsApiControllerIntegrationTest {
     private SuggestionsApi api;
 
     private ObjectMapper objectMapper;
-    
+
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
@@ -40,7 +40,7 @@ public class SuggestionsApiControllerIntegrationTest {
         String preferredSize = "large";
         ResponseEntity<PizzaSuggestion> responseEntity = api.getNumberOfPizzas(adults, children, preferredSize);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals((Integer)1, responseEntity.getBody().getLarge());
+        assertEquals((Integer)2, responseEntity.getBody().getLarge());
         assertEquals((Integer)0, responseEntity.getBody().getMedium());
         assertEquals((Integer)0, responseEntity.getBody().getSmall());
     }
@@ -53,18 +53,18 @@ public class SuggestionsApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals((Integer)1, responseEntity.getBody().getLarge());
         assertEquals((Integer)0, responseEntity.getBody().getMedium());
-        assertEquals((Integer)0, responseEntity.getBody().getSmall());
+        assertEquals((Integer)1, responseEntity.getBody().getSmall());
     }
 
     @Test
     public void getNumberOfPizzasTestNoPreferenceMultipleTypes() throws Exception {
-        Integer adults = 6;
-        Integer children = 1;
+        Integer adults = 4;
+        Integer children = 3;
         ResponseEntity<PizzaSuggestion> responseEntity = api.getNumberOfPizzas(adults, children, null);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals((Integer)1, responseEntity.getBody().getLarge());
         assertEquals((Integer)1, responseEntity.getBody().getMedium());
-        assertEquals((Integer)1, responseEntity.getBody().getSmall());
+        assertEquals((Integer)0, responseEntity.getBody().getSmall());
     }
 
     @Test
