@@ -1,6 +1,5 @@
 package io.swagger.api;
 
-import java.math.BigDecimal;
 import io.swagger.model.PizzaSuggestion;
 
 import java.util.*;
@@ -24,8 +23,8 @@ public class SuggestionsApiControllerIntegrationTest {
 
     @Test
     public void getNumberOfPizzasTest() throws Exception {
-        BigDecimal adults = new BigDecimal();
-        BigDecimal children = new BigDecimal();
+        Integer adults = 56;
+        Integer children = 56;
         String preferredSize = "preferredSize_example";
         ResponseEntity<PizzaSuggestion> responseEntity = api.getNumberOfPizzas(adults, children, preferredSize);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());

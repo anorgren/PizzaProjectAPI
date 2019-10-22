@@ -5,7 +5,6 @@
  */
 package io.swagger.api;
 
-import java.math.BigDecimal;
 import io.swagger.model.PizzaSuggestion;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T17:50:14.546Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T18:16:30.929Z[GMT]")
 @Api(value = "suggestions", description = "the suggestions API")
 public interface SuggestionsApi {
 
@@ -34,6 +33,6 @@ public interface SuggestionsApi {
     @RequestMapping(value = "/suggestions",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<PizzaSuggestion> getNumberOfPizzas(@NotNull @ApiParam(value = "Number of adults", required = true) @Valid @RequestParam(value = "adults", required = true) BigDecimal adults,@NotNull @ApiParam(value = "Number of children", required = true) @Valid @RequestParam(value = "children", required = true) BigDecimal children,@ApiParam(value = "The preferred size, if given all suggested pizzas will be this size. Must be a valid size (small, medium, large).") @Valid @RequestParam(value = "preferredSize", required = false) String preferredSize);
+    ResponseEntity<PizzaSuggestion> getNumberOfPizzas(@NotNull @ApiParam(value = "Number of adults", required = true) @Valid @RequestParam(value = "adults", required = true) Integer adults,@NotNull @ApiParam(value = "Number of children", required = true) @Valid @RequestParam(value = "children", required = true) Integer children,@ApiParam(value = "The preferred size, if given all suggested pizzas will be this size. Must be a valid size (small, medium, large).") @Valid @RequestParam(value = "preferredSize", required = false) String preferredSize);
 
 }

@@ -1,6 +1,5 @@
 package io.swagger.api;
 
-import java.math.BigDecimal;
 import io.swagger.model.PizzaSuggestion;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T17:50:14.546Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T18:16:30.929Z[GMT]")
 @Controller
 public class SuggestionsApiController implements SuggestionsApi {
 
@@ -38,7 +37,7 @@ public class SuggestionsApiController implements SuggestionsApi {
         this.request = request;
     }
 
-    public ResponseEntity<PizzaSuggestion> getNumberOfPizzas(@NotNull @ApiParam(value = "Number of adults", required = true) @Valid @RequestParam(value = "adults", required = true) BigDecimal adults,@NotNull @ApiParam(value = "Number of children", required = true) @Valid @RequestParam(value = "children", required = true) BigDecimal children,@ApiParam(value = "The preferred size, if given all suggested pizzas will be this size. Must be a valid size (small, medium, large).") @Valid @RequestParam(value = "preferredSize", required = false) String preferredSize) {
+    public ResponseEntity<PizzaSuggestion> getNumberOfPizzas(@NotNull @ApiParam(value = "Number of adults", required = true) @Valid @RequestParam(value = "adults", required = true) Integer adults,@NotNull @ApiParam(value = "Number of children", required = true) @Valid @RequestParam(value = "children", required = true) Integer children,@ApiParam(value = "The preferred size, if given all suggested pizzas will be this size. Must be a valid size (small, medium, large).") @Valid @RequestParam(value = "preferredSize", required = false) String preferredSize) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
