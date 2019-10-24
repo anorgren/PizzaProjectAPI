@@ -1,11 +1,11 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.swagger.model.PizzaSize;
+import io.swagger.model.Price;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
-import io.swagger.model.PizzaSize;
 import io.swagger.model.Topping;
-import io.swagger.models.auth.In;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -15,14 +15,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T15:49:19.347Z[GMT]")
+import java.util.Map;
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T18:44:25.092Z[GMT]")
 @Controller
 public class PricesApiController implements PricesApi {
 
@@ -38,40 +44,37 @@ public class PricesApiController implements PricesApi {
     private final Integer DOLLARS_TO_CENTS = 100;
     private Integer toppingsPrice = 0;
 
-
     @org.springframework.beans.factory.annotation.Autowired
     public PricesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;
     }
 
-    /**
-     * Calculates the price of a pizza with a given size and toppings.
-     * @param size The size of the pizza (small, medium, large)
-     * @param toppings A list of the names of all the toppings
-     * @return The price in cents as an integer
-     */
-    public ResponseEntity<Integer> getPizzaPrice(@NotNull @ApiParam(value = "Size of pizza", required = true) @Valid @RequestParam(value = "size", required = true) String size,@ApiParam(value = "Topping to include on pizza") @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
+    public ResponseEntity<Price> getPizzaPrice(@NotNull @ApiParam(value = "Size of pizza", required = true)
+        @Valid @RequestParam(value = "size", required = true) String size,@ApiParam(value = "Topping to include on pizza")
+        @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("text/plain")) {
+        if (accept != null && accept.contains("application/json")) {
             try {
-                List<Topping> availableToppings = getToppingList();
-                if (isValidToppings(availableToppings, toppings) && PizzaSize.fromValue(size.toLowerCase()) != null) {
-                    Integer totalPrice = getBasePrice(size) + this.toppingsPrice;
-                    return new ResponseEntity<Integer>(totalPrice, HttpStatus.OK);
+                if (isValidToppings(toppings) && PizzaSize.fromValue(size.toLowerCase()) != null) {
+                    Price total = new Price();
+                    total = total.priceInCents(getBasePrice(size) + this.toppingsPrice);
+                    return new ResponseEntity<Price>(total, HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<Price>(new Price(), HttpStatus.BAD_REQUEST);
                 }
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<Price>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        return new ResponseEntity<Integer>(HttpStatus.NOT_IMPLEMENTED);
+
+        return new ResponseEntity<Price>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    private boolean isValidToppings(List<Topping> availableToppings, List<String> toppings) {
+    private boolean isValidToppings(List<String> toppings) throws IOException {
         boolean allValid = true;
+        List<Topping> availableToppings = getToppingList();
         for (String topping : toppings) {
             boolean toppingValid = false;
             for (Topping availableTopping : availableToppings) {
@@ -110,8 +113,3 @@ public class PricesApiController implements PricesApi {
         return price;
     }
 }
-
-
-
-
-

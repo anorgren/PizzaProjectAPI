@@ -1,6 +1,7 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.Price;
 import java.math.BigDecimal;
 
 import java.util.*;
@@ -30,41 +31,41 @@ public class PricesApiControllerIntegrationTest {
     public void setUp() {
         objectMapper = new ObjectMapper();
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader("Accept", "text/plain");
+        request.addHeader("Accept", "application/json");
         api = new PricesApiController(objectMapper, request);
     }
     @Test
     public void getPizzaPriceTestNoToppingSmall() throws Exception {
         String size = "small";
         List<String> toppings = Arrays.asList();
-        ResponseEntity<Integer> responseEntity = api.getPizzaPrice(size, toppings);
+        ResponseEntity<Price> responseEntity = api.getPizzaPrice(size, toppings);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals((Integer) 800, responseEntity.getBody());
+        assertEquals((Integer) 800, responseEntity.getBody().getPriceInCents());
     }
 
     @Test
     public void getPizzaPriceTestNoToppingMedium() throws Exception {
         String size = "medium";
         List<String> toppings = Arrays.asList();
-        ResponseEntity<Integer> responseEntity = api.getPizzaPrice(size, toppings);
+        ResponseEntity<Price> responseEntity = api.getPizzaPrice(size, toppings);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals((Integer) 1000, responseEntity.getBody());
+        assertEquals((Integer) 1000, responseEntity.getBody().getPriceInCents());
     }
 
     @Test
     public void getPizzaPriceTestNoToppingLarge() throws Exception {
         String size = "large";
         List<String> toppings = Arrays.asList();
-        ResponseEntity<Integer> responseEntity = api.getPizzaPrice(size, toppings);
+        ResponseEntity<Price> responseEntity = api.getPizzaPrice(size, toppings);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals((Integer) 1200, responseEntity.getBody());
+        assertEquals((Integer) 1200, responseEntity.getBody().getPriceInCents());
     }
 
     @Test
     public void getPizzaPriceTestInvalidSize() throws Exception {
         String size = "massive";
         List<String> toppings = Arrays.asList();
-        ResponseEntity<Integer> responseEntity = api.getPizzaPrice(size, toppings);
+        ResponseEntity<Price> responseEntity = api.getPizzaPrice(size, toppings);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
@@ -72,27 +73,27 @@ public class PricesApiControllerIntegrationTest {
     public void getPizzaPriceTestOneToppingSmall() throws Exception {
         String size = "small";
         List<String> toppings = Arrays.asList("Garlic");
-        ResponseEntity<Integer> responseEntity = api.getPizzaPrice(size, toppings);
+        ResponseEntity<Price> responseEntity = api.getPizzaPrice(size, toppings);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals((Integer) 1000, responseEntity.getBody());
+        assertEquals((Integer) 1000, responseEntity.getBody().getPriceInCents());
     }
 
     @Test
     public void getPizzaPriceTestTwoToppingSmall() throws Exception {
         String size = "small";
         List<String> toppings = Arrays.asList("Garlic", "onions");
-        ResponseEntity<Integer> responseEntity = api.getPizzaPrice(size, toppings);
+        ResponseEntity<Price> responseEntity = api.getPizzaPrice(size, toppings);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals((Integer) 1200, responseEntity.getBody());
+        assertEquals((Integer) 1200, responseEntity.getBody().getPriceInCents());
     }
 
     @Test
     public void getPizzaPriceTestManyoppingLarge() throws Exception {
         String size = "Large";
         List<String> toppings = Arrays.asList("Garlic", "onions", "bacon", "philly steak");
-        ResponseEntity<Integer> responseEntity = api.getPizzaPrice(size, toppings);
+        ResponseEntity<Price> responseEntity = api.getPizzaPrice(size, toppings);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals((Integer) 2200, responseEntity.getBody());
+        assertEquals((Integer) 2200, responseEntity.getBody().getPriceInCents());
     }
 
 }
