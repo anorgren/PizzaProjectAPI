@@ -30,7 +30,7 @@ public class PricesApiControllerIntegrationTest {
     public void setUp() {
         objectMapper = new ObjectMapper();
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader("Accept", "application/json");
+        request.addHeader("Accept", "text/plain");
         api = new PricesApiController(objectMapper, request);
     }
     @Test

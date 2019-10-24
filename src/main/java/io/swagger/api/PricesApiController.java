@@ -53,7 +53,7 @@ public class PricesApiController implements PricesApi {
      */
     public ResponseEntity<Integer> getPizzaPrice(@NotNull @ApiParam(value = "Size of pizza", required = true) @Valid @RequestParam(value = "size", required = true) String size,@ApiParam(value = "Topping to include on pizza") @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        if (accept != null && accept.contains("text/plain")) {
             try {
                 List<Topping> availableToppings = getToppingList();
                 if (isValidToppings(availableToppings, toppings) && PizzaSize.fromValue(size.toLowerCase()) != null) {
