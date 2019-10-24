@@ -36,7 +36,7 @@ public class PricesApiController implements PricesApi {
     private final Integer MEDIUM_BASE_PRICE = 1000;
     private final Integer LARGE_BASE_PRICE = 1200;
     private final Integer DOLLARS_TO_CENTS = 100;
-    private Integer toppinsPrice = 0;
+    private Integer toppingsPrice = 0;
 
 
     @org.springframework.beans.factory.annotation.Autowired
@@ -45,13 +45,19 @@ public class PricesApiController implements PricesApi {
         this.request = request;
     }
 
+    /**
+     * Calculates the price of a pizza with a given size and toppings.
+     * @param size The size of the pizza (small, medium, large)
+     * @param toppings A list of the names of all the toppings
+     * @return The price in cents as an integer
+     */
     public ResponseEntity<Integer> getPizzaPrice(@NotNull @ApiParam(value = "Size of pizza", required = true) @Valid @RequestParam(value = "size", required = true) String size,@ApiParam(value = "Topping to include on pizza") @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
                 List<Topping> availableToppings = getToppingList();
-                if (isValidToppings(availableToppings, toppings) && PizzaSize.fromValue(size) != null) {
-                    Integer totalPrice = getBasePrice(size) + this.toppinsPrice;
+                if (isValidToppings(availableToppings, toppings) && PizzaSize.fromValue(size.toLowerCase()) != null) {
+                    Integer totalPrice = getBasePrice(size) + this.toppingsPrice;
                     return new ResponseEntity<Integer>(totalPrice, HttpStatus.OK);
                 } else {
                     return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
@@ -69,10 +75,10 @@ public class PricesApiController implements PricesApi {
         for (String topping : toppings) {
             boolean toppingValid = false;
             for (Topping availableTopping : availableToppings) {
-                if (topping.equals(availableTopping.getToppingName())) {
+                if (topping.equalsIgnoreCase(availableTopping.getToppingName())) {
                     toppingValid = true;
                     BigDecimal priceInCents = availableTopping.getPrice().multiply(new BigDecimal(DOLLARS_TO_CENTS));
-                    this.toppinsPrice += priceInCents.intValue();
+                    this.toppingsPrice += priceInCents.intValue();
                 }
             }
             allValid = allValid && toppingValid;
@@ -88,15 +94,18 @@ public class PricesApiController implements PricesApi {
     }
 
     private Integer getBasePrice(String size) {
-        PizzaSize pizzaSize = PizzaSize.fromValue(size);
+        PizzaSize pizzaSize = PizzaSize.fromValue(size.toLowerCase());
         Integer price = 0;
         switch (pizzaSize) {
             case SMALL:
                 price = SMALL_BASE_PRICE;
+                break;
             case MEDIUM:
                 price = MEDIUM_BASE_PRICE;
+                break;
             case LARGE:
                 price = LARGE_BASE_PRICE;
+                break;
         }
         return price;
     }
