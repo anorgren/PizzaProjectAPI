@@ -75,6 +75,9 @@ public class PricesApiController implements PricesApi {
     private boolean isValidToppings(List<String> toppings) throws IOException {
         boolean allValid = true;
         List<Topping> availableToppings = getToppingList();
+        this.toppingsPrice = 0;
+        //it is OK is no toppings are provided
+        if (toppings == null) { return true; }
         for (String topping : toppings) {
             boolean toppingValid = false;
             for (Topping availableTopping : availableToppings) {

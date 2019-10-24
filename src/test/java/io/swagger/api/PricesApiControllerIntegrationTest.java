@@ -96,4 +96,12 @@ public class PricesApiControllerIntegrationTest {
         assertEquals((Integer) 2200, responseEntity.getBody().getPriceInCents());
     }
 
+    @Test
+    public void getPizzaPriceTestNullToppings() throws Exception {
+        String size = "small";
+        ResponseEntity<Price> responseEntity = api.getPizzaPrice(size, null);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals((Integer) 800, responseEntity.getBody().getPriceInCents());
+    }
+
 }
