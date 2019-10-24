@@ -1,27 +1,28 @@
 package io.swagger.api;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.model.PizzaSize;
+import io.swagger.model.Topping;
+import io.swagger.models.auth.In;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T17:50:14.546Z[GMT]")
+
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T15:49:19.347Z[GMT]")
 @Controller
 public class PricesApiController implements PricesApi {
 
@@ -31,24 +32,77 @@ public class PricesApiController implements PricesApi {
 
     private final HttpServletRequest request;
 
+    private final Integer SMALL_BASE_PRICE = 800;
+    private final Integer MEDIUM_BASE_PRICE = 1000;
+    private final Integer LARGE_BASE_PRICE = 1200;
+    private final Integer DOLLARS_TO_CENTS = 100;
+    private Integer toppinsPrice = 0;
+
+
     @org.springframework.beans.factory.annotation.Autowired
     public PricesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;
     }
 
-    public ResponseEntity<BigDecimal> getPizzaPrice(@NotNull @ApiParam(value = "Size of pizza", required = true) @Valid @RequestParam(value = "size", required = true) String size,@ApiParam(value = "Topping to include on pizza") @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
+    public ResponseEntity<Integer> getPizzaPrice(@NotNull @ApiParam(value = "Size of pizza", required = true) @Valid @RequestParam(value = "size", required = true) String size,@ApiParam(value = "Topping to include on pizza") @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<BigDecimal>(objectMapper.readValue("10.99", BigDecimal.class), HttpStatus.NOT_IMPLEMENTED);
+                List<Topping> availableToppings = getToppingList();
+                if (isValidToppings(availableToppings, toppings) && PizzaSize.fromValue(size) != null) {
+                    Integer totalPrice = getBasePrice(size) + this.toppinsPrice;
+                    return new ResponseEntity<Integer>(totalPrice, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+                }
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<BigDecimal>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-
-        return new ResponseEntity<BigDecimal>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<Integer>(HttpStatus.NOT_IMPLEMENTED);
     }
 
+    private boolean isValidToppings(List<Topping> availableToppings, List<String> toppings) {
+        boolean allValid = true;
+        for (String topping : toppings) {
+            boolean toppingValid = false;
+            for (Topping availableTopping : availableToppings) {
+                if (topping.equals(availableTopping.getToppingName())) {
+                    toppingValid = true;
+                    BigDecimal priceInCents = availableTopping.getPrice().multiply(new BigDecimal(DOLLARS_TO_CENTS));
+                    this.toppinsPrice += priceInCents.intValue();
+                }
+            }
+            allValid = allValid && toppingValid;
+        }
+        return allValid;
+    }
+
+    private List<Topping> getToppingList() throws IOException {
+        String toppingListJson = new String(Files.readAllBytes(Paths.get("ToppingList.json")), StandardCharsets.UTF_8);
+        List<Topping> toppingList = objectMapper.readValue(toppingListJson, new TypeReference<List<Topping>>() {
+        });
+        return toppingList;
+    }
+
+    private Integer getBasePrice(String size) {
+        PizzaSize pizzaSize = PizzaSize.fromValue(size);
+        Integer price = 0;
+        switch (pizzaSize) {
+            case SMALL:
+                price = SMALL_BASE_PRICE;
+            case MEDIUM:
+                price = MEDIUM_BASE_PRICE;
+            case LARGE:
+                price = LARGE_BASE_PRICE;
+        }
+        return price;
+    }
 }
+
+
+
+
+

@@ -155,7 +155,7 @@ paths:
     get:
       tags:
         - developers
-      summary: Returns the price of a single pizza sold by Pizza Temple
+      summary: Returns the price of a single pizza sold by Pizza Temple in cents
       operationId: getPizzaPrice
       description: Get pricing information on pizzas sold by PizzaTemple
       parameters:
@@ -175,12 +175,12 @@ paths:
              type: string
       responses:
         '200':
-          description: The cost of the requested pizza
+          description: The cost of the requested pizza in cents
           content:
             text/plain:
               schema:
-                type: number
-                example: 10.99
+                type: integer
+                example: 1099
               
         '400':
           description: bad input parameter

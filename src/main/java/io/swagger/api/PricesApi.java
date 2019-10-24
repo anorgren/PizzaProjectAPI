@@ -5,7 +5,6 @@
  */
 package io.swagger.api;
 
-import java.math.BigDecimal;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,17 +21,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T17:50:14.546Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T15:49:19.347Z[GMT]")
 @Api(value = "prices", description = "the prices API")
 public interface PricesApi {
 
-    @ApiOperation(value = "Returns the price of a single pizza sold by Pizza Temple", nickname = "getPizzaPrice", notes = "Get pricing information on pizzas sold by PizzaTemple", response = BigDecimal.class, tags={ "developers", })
+    @ApiOperation(value = "Returns the price of a single pizza sold by Pizza Temple in cents", nickname = "getPizzaPrice", notes = "Get pricing information on pizzas sold by PizzaTemple", response = Integer.class, tags={ "developers", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The cost of the requested pizza", response = BigDecimal.class),
+        @ApiResponse(code = 200, message = "The cost of the requested pizza in cents", response = Integer.class),
         @ApiResponse(code = 400, message = "bad input parameter") })
     @RequestMapping(value = "/prices",
         produces = { "text/plain" }, 
         method = RequestMethod.GET)
-    ResponseEntity<BigDecimal> getPizzaPrice(@NotNull @ApiParam(value = "Size of pizza", required = true) @Valid @RequestParam(value = "size", required = true) String size,@ApiParam(value = "Topping to include on pizza") @Valid @RequestParam(value = "toppings", required = false) List<String> toppings);
+    ResponseEntity<Integer> getPizzaPrice(@NotNull @ApiParam(value = "Size of pizza", required = true) @Valid @RequestParam(value = "size", required = true) String size,@ApiParam(value = "Topping to include on pizza") @Valid @RequestParam(value = "toppings", required = false) List<String> toppings);
 
 }

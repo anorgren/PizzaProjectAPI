@@ -25,7 +25,7 @@ public class PricesApiControllerIntegrationTest {
     public void getPizzaPriceTest() throws Exception {
         String size = "size_example";
         List<String> toppings = Arrays.asList("toppings_example");
-        ResponseEntity<BigDecimal> responseEntity = api.getPizzaPrice(size, toppings);
+        ResponseEntity<Integer> responseEntity = api.getPizzaPrice(size, toppings);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
