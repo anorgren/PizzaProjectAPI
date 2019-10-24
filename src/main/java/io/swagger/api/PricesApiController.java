@@ -50,6 +50,12 @@ public class PricesApiController implements PricesApi {
         this.request = request;
     }
 
+    /**
+     * Calculates the price of a pizza with a given size and toppings.
+     * @param size The size of the pizza (small, medium, large)
+     * @param toppings A list of the names of all the toppings
+     * @return The price of a pizza
+     */
     public ResponseEntity<Price> getPizzaPrice(@NotNull @ApiParam(value = "Size of pizza", required = true)
         @Valid @RequestParam(value = "size", required = true) String size,@ApiParam(value = "Topping to include on pizza")
         @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
@@ -68,10 +74,16 @@ public class PricesApiController implements PricesApi {
                 return new ResponseEntity<Price>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-
         return new ResponseEntity<Price>(HttpStatus.NOT_IMPLEMENTED);
     }
 
+    /**
+     *  Checks if toppings are valid (exsist in ToppingsList.json) and sets global variable
+     *  toppingsPrice to the price of a topping
+     * @param toppings List of topping names, can be null
+     * @return if all topping names are valid
+     * @throws IOException
+     */
     private boolean isValidToppings(List<String> toppings) throws IOException {
         boolean allValid = true;
         List<Topping> availableToppings = getToppingList();

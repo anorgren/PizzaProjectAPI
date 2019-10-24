@@ -9,7 +9,7 @@ servers:
   - description: Heroku API
     url: https://infinite-wildwood-41499.herokuapp.com/aayushms93/ThePizzaProject/1.0.0
   - description: Andrew Heroku API
-    url: https://arcane-river-43270.herokuapp.com//aayushms93/ThePizzaProject/1.0.0
+    url: https://arcane-river-43270.herokuapp.com/aayushms93/ThePizzaProject/1.0.0
 info:
   description: These are the APIs for delivery at The Pizza Temple Restaurant
   version: "1.0.0"
@@ -177,11 +177,9 @@ paths:
         '200':
           description: The cost of the requested pizza in cents
           content:
-            text/plain:
+            application/json:
               schema:
-                type: integer
-                example: 1099
-              
+               $ref: '#/components/schemas/Price'
         '400':
           description: bad input parameter
   /suggestions:
@@ -313,3 +311,11 @@ components:
         large:
           type: integer
           example: 0
+    Price:
+      type: object
+      required:
+      - priceInCents
+      properties:
+        priceInCents:
+          type: integer
+          example: 1000
