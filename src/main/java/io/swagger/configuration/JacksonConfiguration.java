@@ -1,6 +1,7 @@
 package io.swagger.configuration;
 
 import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

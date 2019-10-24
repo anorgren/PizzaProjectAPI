@@ -5,24 +5,20 @@
  */
 package io.swagger.api;
 
-import io.swagger.model.Topping;
-import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import java.util.List;
-import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.model.Topping;
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-19T23:59:29.208Z[GMT]")
 @Api(value = "toppings", description = "the toppings API")
 public interface ToppingsApi {
 
@@ -34,5 +30,15 @@ public interface ToppingsApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<List<Topping>> getToppings();
+
+
+    @ApiOperation(value = "returns topping information of the given topping", nickname = "getToppingsbyName", notes = "Get topping information of the given topping ", response = Topping.class, tags={ "developers", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "topping information of the given topping", response = Topping.class),
+        @ApiResponse(code = 400, message = "bad input parameter") })
+    @RequestMapping(value = "/toppings/{name}",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<Topping> getToppingsbyName(@ApiParam(value = "toppingName",required=true) @PathVariable("name") String name);
 
 }
