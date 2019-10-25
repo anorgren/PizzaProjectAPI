@@ -1,10 +1,15 @@
 openapi: 3.0.0
 # Added by API Auto Mocking Plugin
 servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/acurt7/ThePizzaProject/1.0.0
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/aayushms93/ThePizzaProject/1.0.0
   - description: Heroku API
     url: https://infinite-wildwood-41499.herokuapp.com/aayushms93/ThePizzaProject/1.0.0
+  - description: Andrew Heroku API
+    url: https://arcane-river-43270.herokuapp.com/aayushms93/ThePizzaProject/1.0.0
 info:
   description: These are the APIs for delivery at The Pizza Temple Restaurant
   version: "1.0.0"
@@ -146,6 +151,75 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/Advertisement'
+  /prices:
+    get:
+      tags:
+        - developers
+      summary: Returns the price of a single pizza sold by Pizza Temple in cents
+      operationId: getPizzaPrice
+      description: Get pricing information on pizzas sold by PizzaTemple
+      parameters:
+        - name: size
+          in: query
+          description: Size of pizza
+          required: true
+          schema:
+            type: string
+            example: small
+        - name: toppings
+          in: query
+          description: Topping to include on pizza
+          schema:
+            type: array
+            items:
+             type: string
+      responses:
+        '200':
+          description: The cost of the requested pizza in cents
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Price'
+        '400':
+          description: bad input parameter
+  /suggestions:
+    get:
+      tags:
+        - developers
+      summary: Returns a suggested number of pizzas to order given the number of adults and children that will be enjoying it.
+      operationId: getNumberOfPizzas
+      description: Suggests how many pizzas to order based on the number of people in the ordering group.
+      parameters:
+        - name: adults
+          in: query
+          description: Number of adults
+          required: true
+          schema:
+            type: integer
+            example: 3
+        - name: children
+          in: query
+          description: Number of children
+          required: true
+          schema:
+            type: integer
+            example: 2
+        - name : preferredSize
+          in: query
+          description: The preferred size, if given all suggested pizzas will be this size. Must be a valid size (small, medium, large).
+          schema:
+            type: string
+            example : small
+      responses:
+        '200':
+          description: The number of small, medium, and large pizzas to order
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/PizzaSuggestion'
+              
+        '400':
+          description: bad input parameter
 components:
   schemas:
     Store:
@@ -221,3 +295,27 @@ components:
         marketingContent:
           type: string
           example: 'Buy my pizza'
+    PizzaSuggestion:
+      type: object
+      required:
+      - small
+      - medium
+      - large
+      properties:
+        small:
+          type: integer
+          example: 2
+        medium:
+          type: integer
+          example: 3
+        large:
+          type: integer
+          example: 0
+    Price:
+      type: object
+      required:
+      - priceInCents
+      properties:
+        priceInCents:
+          type: integer
+          example: 1000
