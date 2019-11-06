@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.controller.StoresApiController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

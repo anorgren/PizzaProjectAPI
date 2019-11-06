@@ -1,8 +1,8 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.controller.PricesApiController;
 import io.swagger.model.Price;
-import java.math.BigDecimal;
 
 import java.util.*;
 
