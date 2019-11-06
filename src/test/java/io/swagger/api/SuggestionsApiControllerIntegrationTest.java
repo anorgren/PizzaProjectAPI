@@ -1,7 +1,6 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.controller.SuggestionsApiController;
 import io.swagger.model.PizzaSuggestion;
 
 import org.junit.Before;

@@ -2,7 +2,6 @@ package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.swagger.controller.SizesApiController;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

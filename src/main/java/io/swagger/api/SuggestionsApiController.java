@@ -1,6 +1,5 @@
-package io.swagger.controller;
+package io.swagger.api;
 
-import io.swagger.api.SuggestionsApi;
 import io.swagger.model.PizzaSize;
 import io.swagger.model.PizzaSuggestion;
 import com.fasterxml.jackson.databind.ObjectMapper;

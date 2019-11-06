@@ -1,7 +1,6 @@
-package io.swagger.controller;
+package io.swagger.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.swagger.api.PricesApi;
 import io.swagger.model.PizzaSize;
 import io.swagger.model.Price;
 import com.fasterxml.jackson.databind.ObjectMapper;
