@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum DietaryProperty {
   VEGETARIAN("Vegetarian"),
-    VEGAN("Vegan"),
-    GLUTEN_FREE("Gluten Free");
+  VEGAN("Vegan"),
+  GLUTEN_FREE("Gluten Free");
 
   private String value;
 

@@ -2,6 +2,8 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
 import java.math.BigDecimal;
@@ -14,9 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
 
-/**
- * Topping
- */
+@Document(collection="Toppings")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
 public class Topping   {
@@ -40,8 +40,8 @@ public class Topping   {
    * @return toppingName
   **/
   @ApiModelProperty(example = "tomato", required = true, value = "")
+  @Id
   @NotNull
-
   public String getToppingName() {
     return toppingName;
   }
