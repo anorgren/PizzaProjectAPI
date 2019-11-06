@@ -31,7 +31,7 @@ public class Store   {
 
   @JsonProperty("dietaryRestrictions")
   @Valid
-  private Map<String, Boolean> dietaryRestrictions = null;
+  private Map<DietaryProperty, Boolean> dietaryRestrictions = null;
 
   @JsonProperty("availableToppings")
   @Valid
@@ -99,14 +99,14 @@ public class Store   {
     this.address = address;
   }
 
-  public Store dietaryRestrictions(Map<String, Boolean> dietaryRestrictions) {
+  public Store dietaryRestrictions(Map<DietaryProperty, Boolean> dietaryRestrictions) {
     this.dietaryRestrictions = dietaryRestrictions;
     return this;
   }
 
-  public Store putDietaryRestrictionsItem(String key, Boolean dietaryRestrictionsItem) {
+  public Store putDietaryRestrictionsItem(DietaryProperty key, Boolean dietaryRestrictionsItem) {
     if (this.dietaryRestrictions == null) {
-      this.dietaryRestrictions = new HashMap<String, Boolean>();
+      this.dietaryRestrictions = new HashMap<DietaryProperty, Boolean>();
     }
     this.dietaryRestrictions.put(key, dietaryRestrictionsItem);
     return this;
@@ -118,11 +118,11 @@ public class Store   {
   **/
   @ApiModelProperty(value = "")
   
-    public Map<String, Boolean> getDietaryRestrictions() {
+    public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
     return dietaryRestrictions;
   }
 
-  public void setDietaryRestrictions(Map<String, Boolean> dietaryRestrictions) {
+  public void setDietaryRestrictions(Map<DietaryProperty, Boolean> dietaryRestrictions) {
     this.dietaryRestrictions = dietaryRestrictions;
   }
 
