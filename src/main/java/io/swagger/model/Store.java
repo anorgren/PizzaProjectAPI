@@ -20,7 +20,8 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T01:15:42.292Z[GMT]")
-public class Store   {
+public class Store {
+
   @JsonProperty("id")
   private String id = null;
 
@@ -53,8 +54,9 @@ public class Store   {
 
   /**
    * Get id
+   *
    * @return id
-  **/
+   **/
   @ApiModelProperty(example = "1", required = true, value = "")
   @NotNull
 
@@ -73,8 +75,9 @@ public class Store   {
 
   /**
    * Get branchName
+   *
    * @return branchName
-  **/
+   **/
   @ApiModelProperty(example = "Fremont Branch", value = "")
 
   public String getBranchName() {
@@ -92,8 +95,9 @@ public class Store   {
 
   /**
    * Get address
+   *
    * @return address
-  **/
+   **/
   @ApiModelProperty(example = "101 Fremont Ave, Seattle, WA 12345", value = "")
 
   public String getAddress() {
@@ -119,8 +123,9 @@ public class Store   {
 
   /**
    * Get dietaryRestrictions
+   *
    * @return dietaryRestrictions
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
@@ -146,8 +151,9 @@ public class Store   {
 
   /**
    * Get availableToppings
+   *
    * @return availableToppings
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public List<String> getAvailableToppings() {
@@ -173,8 +179,9 @@ public class Store   {
 
   /**
    * Get availableSizes
+   *
    * @return availableSizes
-  **/
+   **/
   @ApiModelProperty(value = "")
   @Valid
   public List<PizzaSize> getAvailableSizes() {
@@ -200,8 +207,9 @@ public class Store   {
 
   /**
    * Get advertisements
+   *
    * @return advertisements
-  **/
+   **/
   @ApiModelProperty(value = "")
   @Valid
   public List<Advertisement> getAdvertisements() {
@@ -233,18 +241,21 @@ public class Store   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, branchName, address, dietaryRestrictions, availableToppings, availableSizes, advertisements);
+    return Objects
+        .hash(id, branchName, address, dietaryRestrictions, availableToppings, availableSizes,
+            advertisements);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Store {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
-    sb.append("    dietaryRestrictions: ").append(toIndentedString(dietaryRestrictions)).append("\n");
+    sb.append("    dietaryRestrictions: ").append(toIndentedString(dietaryRestrictions))
+        .append("\n");
     sb.append("    availableToppings: ").append(toIndentedString(availableToppings)).append("\n");
     sb.append("    availableSizes: ").append(toIndentedString(availableSizes)).append("\n");
     sb.append("    advertisements: ").append(toIndentedString(advertisements)).append("\n");
@@ -253,8 +264,8 @@ public class Store   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

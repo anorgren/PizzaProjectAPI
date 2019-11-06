@@ -14,7 +14,8 @@ import javax.validation.constraints.*;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T17:50:14.546Z[GMT]")
-public class PizzaSuggestion   {
+public class PizzaSuggestion {
+
   @JsonProperty("small")
   private Integer small = null;
 
@@ -31,8 +32,9 @@ public class PizzaSuggestion   {
 
   /**
    * Get small
+   *
    * @return small
-  **/
+   **/
   @ApiModelProperty(example = "2", required = true, value = "")
   @NotNull
 
@@ -51,8 +53,9 @@ public class PizzaSuggestion   {
 
   /**
    * Get medium
+   *
    * @return medium
-  **/
+   **/
   @ApiModelProperty(example = "3", required = true, value = "")
   @NotNull
 
@@ -71,8 +74,9 @@ public class PizzaSuggestion   {
 
   /**
    * Get large
+   *
    * @return large
-  **/
+   **/
   @ApiModelProperty(example = "0", required = true, value = "")
   @NotNull
 
@@ -108,7 +112,7 @@ public class PizzaSuggestion   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class PizzaSuggestion {\n");
-    
+
     sb.append("    small: ").append(toIndentedString(small)).append("\n");
     sb.append("    medium: ").append(toIndentedString(medium)).append("\n");
     sb.append("    large: ").append(toIndentedString(large)).append("\n");
@@ -117,8 +121,8 @@ public class PizzaSuggestion   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

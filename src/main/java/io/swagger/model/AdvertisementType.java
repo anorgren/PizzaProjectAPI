@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum AdvertisementType {
   SPECIAL("Special"),
-    COUPON("Coupon");
+  COUPON("Coupon");
 
   private String value;
 
