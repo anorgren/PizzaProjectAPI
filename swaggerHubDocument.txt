@@ -146,11 +146,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Advertisement'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Special'
   /prices:
     get:
       tags:
@@ -249,10 +247,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PizzaSize'
-        advertisements:
-          type: array
-          items:
-            $ref: '#/components/schemas/Advertisement'
     Topping:
       type: object
       required:
@@ -280,21 +274,6 @@ components:
       - small
       - medium
       - large
-    AdvertisementType:
-      type: string
-      enum:
-      - Special
-      - Coupon
-    Advertisement:
-      type: object
-      required:
-      - advertisementType
-      properties:
-        advertisementType:
-          $ref: '#/components/schemas/AdvertisementType'
-        marketingContent:
-          type: string
-          example: 'Buy my pizza'
     PizzaSuggestion:
       type: object
       required:
@@ -319,3 +298,16 @@ components:
         priceInCents:
           type: integer
           example: 1000
+    Special:
+      type: object
+      required: 
+      - specialId
+      - description
+      properties:
+        specialId:
+          type: string
+          example: BOGO
+        description:
+          type: string
+          example: Receive the cheapest item for free when you purchase two or more items.
+          
