@@ -30,7 +30,6 @@ public class ToppingsApiController implements ToppingsApi {
     this.request = request;
   }
 
-  @GetMapping("/toppings")
   public ResponseEntity<List<Topping>> getToppings() {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
