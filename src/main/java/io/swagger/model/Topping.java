@@ -2,6 +2,9 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.repository.ToppingRepository;
+import java.util.LinkedList;
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
@@ -21,8 +24,18 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
 public class Topping {
 
-  @Id
-  private Long _id;
+  public static void initialize(ToppingRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
+
+    List<Topping> defaultToppings = new LinkedList<Topping>();
+    Topping pepperoni = new Topping();
+    pepperoni.toppingName("pepperoni").price(new BigDecimal(2.00));
+    defaultToppings.add(pepperoni);
+
+    repository.insert(defaultToppings);
+  }
 
   @JsonProperty("toppingName")
   private String toppingName = null;

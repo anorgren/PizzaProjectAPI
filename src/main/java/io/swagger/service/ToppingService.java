@@ -1,11 +1,22 @@
 package io.swagger.service;
 
 import io.swagger.model.Topping;
+import io.swagger.repository.ToppingRepository;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface ToppingService {
+@Service
+public class ToppingService {
 
-  Topping getTopping(String toppingName);
-  List<Topping> getAllToppings();
+  @Autowired
+  private ToppingRepository toppingRepository;
 
+  public Topping getTopping(String toppingName) {
+    return toppingRepository.findToppingByToppingName(toppingName);
+  }
+
+  public List<Topping> getAllToppings() {
+    return toppingRepository.findAll();
+  }
 }
