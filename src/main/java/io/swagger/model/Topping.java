@@ -21,6 +21,9 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
 public class Topping {
 
+  @Id
+  private Long _id;
+
   @JsonProperty("toppingName")
   private String toppingName = null;
 
@@ -42,7 +45,6 @@ public class Topping {
    * @return toppingName
    **/
   @ApiModelProperty(example = "tomato", required = true, value = "")
-  @Id
   @NotNull
   public String getToppingName() {
     return toppingName;

@@ -1,6 +1,5 @@
 package io.swagger.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.Topping;
 import io.swagger.service.ToppingService;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-19T23:59:29.208Z[GMT]")
@@ -20,19 +20,17 @@ public class ToppingsApiController implements ToppingsApi {
 
   private static final Logger log = LoggerFactory.getLogger(ToppingsApiController.class);
 
-  private final ObjectMapper objectMapper;
-
   private final HttpServletRequest request;
 
   @Autowired
   private ToppingService toppingService;
 
   @Autowired
-  public ToppingsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-    this.objectMapper = objectMapper;
+  public ToppingsApiController(HttpServletRequest request) {
     this.request = request;
   }
 
+  @GetMapping("/toppings")
   public ResponseEntity<List<Topping>> getToppings() {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {

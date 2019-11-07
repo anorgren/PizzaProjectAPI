@@ -6,7 +6,6 @@ import java.util.List;
 public interface ToppingService {
 
   Topping getTopping(String toppingName);
-
   List<Topping> getAllToppings();
 
 }

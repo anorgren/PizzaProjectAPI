@@ -37,7 +37,7 @@ public class ToppingsApiControllerIntegrationTest {
     objectMapper = new ObjectMapper();
     MockHttpServletRequest request = new MockHttpServletRequest();
     request.addHeader("Accept", "application/json");
-    api = new ToppingsApiController(objectMapper, request);
+    api = new ToppingsApiController( request);
   }
 
   @Test
@@ -55,7 +55,7 @@ public class ToppingsApiControllerIntegrationTest {
   public void getToppingsTest_NoHeader() throws Exception {
     objectMapper = new ObjectMapper();
     MockHttpServletRequest NoHeaderRequest = new MockHttpServletRequest();
-    ToppingsApi NoHeaderapi = new ToppingsApiController(objectMapper, NoHeaderRequest);
+    ToppingsApi NoHeaderapi = new ToppingsApiController( NoHeaderRequest);
     ResponseEntity<List<Topping>> responseEntity = NoHeaderapi.getToppings();
     assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     ResponseEntity<Topping> toppingNameResponse = NoHeaderapi.getToppingsbyName("garlic");
