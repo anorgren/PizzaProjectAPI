@@ -2,9 +2,11 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.ToppingRepository;
 import java.util.LinkedList;
 import java.util.List;
+import javax.xml.crypto.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
@@ -25,16 +27,11 @@ import io.swagger.annotations.ApiModelProperty;
 public class Topping {
 
   public static void initialize(ToppingRepository repository) {
+    repository.deleteAll();
     if (repository.count() > 0) {
       return;
     }
-
-    List<Topping> defaultToppings = new LinkedList<Topping>();
-    Topping pepperoni = new Topping();
-    pepperoni.toppingName("pepperoni").price(new BigDecimal(2.00));
-    defaultToppings.add(pepperoni);
-
-    repository.insert(defaultToppings);
+    DataConfiguration.backfillToppingsRepository(repository);
   }
 
   @JsonProperty("toppingName")

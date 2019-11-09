@@ -41,7 +41,7 @@ public interface ToppingsApi {
   @RequestMapping(value = "/toppings/{name}",
       produces = {"application/json"},
       method = RequestMethod.GET)
-  ResponseEntity<Topping> getToppingsbyName(
+  ResponseEntity<Topping> getToppingsByName(
       @ApiParam(value = "toppingName", required = true) @PathVariable("name") String name);
 
 }

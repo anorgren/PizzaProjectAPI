@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-19T23:59:29.208Z[GMT]")
@@ -33,27 +32,24 @@ public class ToppingsApiController implements ToppingsApi {
   public ResponseEntity<List<Topping>> getToppings() {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
-      try {
-        return new ResponseEntity<List<Topping>>(toppingService.getAllToppings(), HttpStatus.OK);
-      } catch (IllegalArgumentException e) {
-        log.error("Illegal Argument Error: " + e.getMessage());
-        return new ResponseEntity<List<Topping>>(HttpStatus.BAD_REQUEST);
+      final List<Topping> toppingList = toppingService.getAllToppings();
+      if (toppingList == null) {
+        return new ResponseEntity<>(toppingList, HttpStatus.NOT_FOUND);
       }
+      return new ResponseEntity<List<Topping>>(toppingList, HttpStatus.OK);
     }
-
     return new ResponseEntity<List<Topping>>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  public ResponseEntity<Topping> getToppingsbyName(
+  public ResponseEntity<Topping> getToppingsByName(
       @ApiParam(value = "toppingName", required = true) @PathVariable("name") String name) {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
-      try {
-        return new ResponseEntity<Topping>(toppingService.getTopping(name), HttpStatus.OK);
-      } catch (IllegalArgumentException e) {
-        log.error("Illegal Argument Error: " + e.getMessage());
-        return new ResponseEntity<Topping>(HttpStatus.BAD_REQUEST);
-      }
+        final Topping topping = toppingService.getTopping(name);
+        if (topping == null) {
+          return new ResponseEntity<Topping>(topping, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Topping>(topping, HttpStatus.OK);
     }
     return new ResponseEntity<Topping>(HttpStatus.NOT_IMPLEMENTED);
   }
