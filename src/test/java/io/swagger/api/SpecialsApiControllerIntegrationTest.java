@@ -1,5 +1,6 @@
 package io.swagger.api;
 
+import io.swagger.model.Special;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Map;
 
-import io.swagger.model.Advertisement;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +24,7 @@ public class SpecialsApiControllerIntegrationTest {
 
     @Test
     public void getSpecialsTest() throws Exception {
-        ResponseEntity<Map<String, List<Advertisement>>> responseEntity = api.getSpecials();
+        ResponseEntity<List<Special>> responseEntity = api.getSpecials();
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
