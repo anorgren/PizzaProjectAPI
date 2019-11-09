@@ -1,25 +1,17 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.ToppingRepository;
-import java.util.LinkedList;
-import java.util.List;
-import javax.xml.crypto.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.ApiModelProperty;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
 
 @Document(collection = "Toppings")
 @Validated
@@ -27,7 +19,6 @@ import io.swagger.annotations.ApiModelProperty;
 public class Topping {
 
   public static void initialize(ToppingRepository repository) {
-    repository.deleteAll();
     if (repository.count() > 0) {
       return;
     }
@@ -49,11 +40,6 @@ public class Topping {
     return this;
   }
 
-  /**
-   * Get toppingName
-   *
-   * @return toppingName
-   **/
   @ApiModelProperty(example = "tomato", required = true, value = "")
   @NotNull
   public String getToppingName() {

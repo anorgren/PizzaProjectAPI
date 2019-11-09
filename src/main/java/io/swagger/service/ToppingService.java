@@ -13,8 +13,7 @@ public class ToppingService {
   private ToppingRepository toppingRepository;
 
   public Topping getTopping(String toppingName) {
-    Topping topping = toppingRepository.findToppingByToppingName(toppingName.toLowerCase());
-    return topping;
+    return toppingRepository.findToppingByToppingName(toppingName.toLowerCase());
   }
 
   public List<Topping> getAllToppings() {

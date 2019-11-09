@@ -37,7 +37,7 @@ public class StoresApiControllerIntegrationTest {
         objectMapper = new ObjectMapper();
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader("Accept", "application/json");
-        api = new StoresApiController(objectMapper, request);
+        api = new StoresApiController(request);
     }
     @Test
     public void getStoresTestOKStatus() throws Exception {
@@ -51,7 +51,7 @@ public class StoresApiControllerIntegrationTest {
         List<Store> stores = responseEntity.getBody();
         Store first = stores.get(0);
         assertEquals(first.getAddress(), "101 Fremont Ave, Seattle, WA 12345");
-        assertEquals(first.getId(), "1");
+        assertEquals(first.getBranchId(), "1");
         assertEquals(first.getBranchName(), "Fremont Branch");
         Map<DietaryProperty, Boolean> dietProp =  first.getDietaryRestrictions();
         assertEquals(dietProp.get(DietaryProperty.VEGAN), true);
@@ -84,15 +84,15 @@ public class StoresApiControllerIntegrationTest {
         ResponseEntity<List<Store>> responseEntity = api.getStores();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         List<Store> stores = responseEntity.getBody();
-        assertEquals(stores.get(0).getId(),"1");
-        assertEquals(stores.get(1).getId(),"2");
-        assertEquals(stores.get(2).getId(),"3");
+        assertEquals(stores.get(0).getBranchId(),"1");
+        assertEquals(stores.get(1).getBranchId(),"2");
+        assertEquals(stores.get(2).getBranchId(),"3");
     }
     @Test
     public void getStoresTestNoHeader() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         objectMapper = new ObjectMapper();
-        api = new StoresApiController(objectMapper, request);
+        api = new StoresApiController(request);
         ResponseEntity<List<Store>> responseEntity = api.getStores();
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
@@ -103,7 +103,7 @@ public class StoresApiControllerIntegrationTest {
         ResponseEntity<Store> responseEntity = api.getStoresById(id);
         Store first = responseEntity.getBody();
         assertEquals(first.getAddress(), "101 Fremont Ave, Seattle, WA 12345");
-        assertEquals(first.getId(), "1");
+        assertEquals(first.getBranchId(), "1");
         assertEquals(first.getBranchName(), "Fremont Branch");
         Map<DietaryProperty, Boolean> dietProp =  first.getDietaryRestrictions();
         assertEquals(dietProp.get(DietaryProperty.VEGAN), true);
@@ -124,7 +124,7 @@ public class StoresApiControllerIntegrationTest {
     public void getStoresByIdTestNoHeader() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         objectMapper = new ObjectMapper();
-        api = new StoresApiController(objectMapper, request);
+        api = new StoresApiController(request);
         ResponseEntity<Store> responseEntity = api.getStoresById("1");
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }

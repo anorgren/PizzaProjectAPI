@@ -22,8 +22,8 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T01:15:42.292Z[GMT]")
 public class Store {
 
-  @JsonProperty("id")
-  private String id = null;
+  @JsonProperty("branchId")
+  private String branchId = null;
 
   @JsonProperty("branchName")
   private String branchName = null;
@@ -48,7 +48,7 @@ public class Store {
   private List<Advertisement> advertisements = null;
 
   public Store id(String id) {
-    this.id = id;
+    this.branchId = id;
     return this;
   }
 
@@ -60,12 +60,12 @@ public class Store {
   @ApiModelProperty(example = "1", required = true, value = "")
   @NotNull
 
-  public String getId() {
-    return id;
+  public String getBranchId() {
+    return branchId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setBranchId(String id) {
+    this.branchId = id;
   }
 
   public Store branchName(String branchName) {
@@ -230,7 +230,7 @@ public class Store {
       return false;
     }
     Store store = (Store) o;
-    return Objects.equals(this.id, store.id) &&
+    return Objects.equals(this.branchId, store.branchId) &&
         Objects.equals(this.branchName, store.branchName) &&
         Objects.equals(this.address, store.address) &&
         Objects.equals(this.dietaryRestrictions, store.dietaryRestrictions) &&
@@ -242,7 +242,7 @@ public class Store {
   @Override
   public int hashCode() {
     return Objects
-        .hash(id, branchName, address, dietaryRestrictions, availableToppings, availableSizes,
+        .hash(branchId, branchName, address, dietaryRestrictions, availableToppings, availableSizes,
             advertisements);
   }
 
@@ -251,7 +251,7 @@ public class Store {
     StringBuilder sb = new StringBuilder();
     sb.append("class Store {\n");
 
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    id: ").append(toIndentedString(branchId)).append("\n");
     sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("    dietaryRestrictions: ").append(toIndentedString(dietaryRestrictions))

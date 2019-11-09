@@ -3,8 +3,10 @@ package io.swagger.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.service.StoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,28 +27,31 @@ import io.swagger.model.Store;
 public class StoresApiController implements StoresApi {
 
   private static final Logger log = LoggerFactory.getLogger(StoresApiController.class);
-
-  private final ObjectMapper objectMapper;
-
   private final HttpServletRequest request;
 
-  @org.springframework.beans.factory.annotation.Autowired
-  public StoresApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-    this.objectMapper = objectMapper;
+  @Autowired
+  private StoreService storeService;
+
+  @Autowired
+  public StoresApiController(HttpServletRequest request) {
     this.request = request;
   }
 
   public ResponseEntity<List<Store>> getStores() {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
-      try {
-        return new ResponseEntity<List<Store>>(lookupStores(), HttpStatus.OK);
-      } catch (IOException e) {
-        log.error("Couldn't serialize response for content type application/json", e);
-        return new ResponseEntity<List<Store>>(HttpStatus.INTERNAL_SERVER_ERROR);
+      final List<Store> storeList = storeService.getAllStores();
+      if (storeList == null) {
+        return new ResponseEntity<List<Store>>(HttpStatus.NOT_FOUND);
       }
+      return new ResponseEntity<List<Store>>(storeList, HttpStatus.OK);
+//      try {
+//        return new ResponseEntity<List<Store>>(lookupStores(), HttpStatus.OK);
+//      } catch (IOException e) {
+//        log.error("Couldn't serialize response for content type application/json", e);
+//        return new ResponseEntity<List<Store>>(HttpStatus.INTERNAL_SERVER_ERROR);
+//      }
     }
-
     return new ResponseEntity<List<Store>>(HttpStatus.NOT_IMPLEMENTED);
   }
 
@@ -54,32 +59,38 @@ public class StoresApiController implements StoresApi {
       @ApiParam(value = "StoreId", required = true) @PathVariable("id") String id) {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
-      try {
-        return new ResponseEntity<Store>(lookupStoresById(id), HttpStatus.OK);
-      } catch (IllegalArgumentException e) {
-        log.error("Illegal Argument Error: " + e.getMessage());
-        return new ResponseEntity<Store>(HttpStatus.BAD_REQUEST);
-      } catch (IOException e) {
-        log.error("Couldn't serialize response for content type application/json", e);
-        return new ResponseEntity<Store>(HttpStatus.INTERNAL_SERVER_ERROR);
+      Store store = storeService.getStoreById(id);
+      if (store == null) {
+        return new ResponseEntity<Store>(HttpStatus.NOT_FOUND);
       }
+      return new ResponseEntity<Store>(store, HttpStatus.OK);
+
+//      try {
+//        return new ResponseEntity<Store>(lookupStoresById(id), HttpStatus.OK);
+//      } catch (IllegalArgumentException e) {
+//        log.error("Illegal Argument Error: " + e.getMessage());
+//        return new ResponseEntity<Store>(HttpStatus.BAD_REQUEST);
+//      } catch (IOException e) {
+//        log.error("Couldn't serialize response for content type application/json", e);
+//        return new ResponseEntity<Store>(HttpStatus.INTERNAL_SERVER_ERROR);
+//      }
     }
     return new ResponseEntity<Store>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  private List<Store> lookupStores() throws IOException {
-    String json = new String(Files.readAllBytes(Paths.get("StoreList.json")));
-    List<Store> stores = objectMapper.readValue(json, new TypeReference<List<Store>>() {
-    });
-    return stores;
-  }
-
-  private Store lookupStoresById(String storeId) throws IllegalArgumentException, IOException {
-    List<Store> stores = lookupStores();
-    if (stores.stream().anyMatch(store -> store.getId().equals(storeId))) {
-      return stores.stream().filter(store -> store.getId().equals(storeId)).findFirst().get();
-    } else {
-      throw new IllegalArgumentException("Store Id Not Found");
-    }
-  }
+//  private List<Store> lookupStores() throws IOException {
+//    String json = new String(Files.readAllBytes(Paths.get("StoreList.json")));
+//    List<Store> stores = objectMapper.readValue(json, new TypeReference<List<Store>>() {
+//    });
+//    return stores;
+//  }
+//
+//  private Store lookupStoresById(String storeId) throws IllegalArgumentException, IOException {
+//    List<Store> stores = lookupStores();
+//    if (stores.stream().anyMatch(store -> store.getId().equals(storeId))) {
+//      return stores.stream().filter(store -> store.getId().equals(storeId)).findFirst().get();
+//    } else {
+//      throw new IllegalArgumentException("Store Id Not Found");
+//    }
+//  }
 }
