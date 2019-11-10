@@ -1,8 +1,10 @@
 package io.swagger;
 
 import io.swagger.model.PizzaSize;
+import io.swagger.model.Special;
 import io.swagger.model.Topping;
 import io.swagger.repository.PizzaSizeRepository;
+import io.swagger.repository.SpecialsRepository;
 import io.swagger.repository.ToppingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +25,9 @@ public class Application implements CommandLineRunner {
   @Autowired
   private PizzaSizeRepository pizzaSizeRepository;
 
+  @Autowired
+  private SpecialsRepository specialsRepository;
+
   @Override
   public void run(String... arg0) throws Exception {
     if (arg0.length > 0 && arg0[0].equals("exitcode")) {
@@ -30,6 +35,7 @@ public class Application implements CommandLineRunner {
     }
     Topping.initialize(toppingRepository);
     PizzaSize.initialize(pizzaSizeRepository);
+    Special.initialize(specialsRepository);
   }
 
   public static void main(String[] args) throws Exception {

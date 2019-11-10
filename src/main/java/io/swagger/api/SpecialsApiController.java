@@ -3,8 +3,10 @@ package io.swagger.api;
 import io.swagger.model.Special;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.repository.SpecialsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,9 @@ public class SpecialsApiController implements SpecialsApi {
 
     private final HttpServletRequest request;
 
+    @Autowired
+    private SpecialsRepository repository;
+
     @org.springframework.beans.factory.annotation.Autowired
     public SpecialsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
@@ -40,14 +45,12 @@ public class SpecialsApiController implements SpecialsApi {
     public ResponseEntity<List<Special>> getSpecials() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Special>>(objectMapper.readValue("[ {\n  \"description\" : \"Receive the cheapest item for free when you purchase two or more items.\",\n  \"specialId\" : \"BOGO\"\n}, {\n  \"description\" : \"Receive the cheapest item for free when you purchase two or more items.\",\n  \"specialId\" : \"BOGO\"\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Special>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+          List<Special> specials = repository.findAll();
+          if (specials == null) {
+            return new ResponseEntity<List<Special>>(specials, HttpStatus.INTERNAL_SERVER_ERROR);
+          }
+          return new ResponseEntity<List<Special>>(specials, HttpStatus.OK);
         }
-
         return new ResponseEntity<List<Special>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
