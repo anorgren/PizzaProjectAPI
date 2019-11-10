@@ -1,19 +1,18 @@
 package io.swagger.model;
 
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.springframework.validation.annotation.Validated;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.model.PizzaSize;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
+import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Store
@@ -43,10 +42,6 @@ public class Store {
   @Valid
   private List<PizzaSize> availableSizes = null;
 
-  @JsonProperty("advertisements")
-  @Valid
-  private List<Advertisement> advertisements = null;
-
   public Store id(String id) {
     this.branchId = id;
     return this;
@@ -59,13 +54,12 @@ public class Store {
    **/
   @ApiModelProperty(example = "1", required = true, value = "")
   @NotNull
-
   public String getBranchId() {
     return branchId;
   }
 
-  public void setBranchId(String id) {
-    this.branchId = id;
+  public void setBranchId(String branchID) {
+    this.branchId = branchID;
   }
 
   public Store branchName(String branchName) {
@@ -79,8 +73,8 @@ public class Store {
    * @return branchName
    **/
   @ApiModelProperty(example = "Fremont Branch", value = "")
-
-  public String getBranchName() {
+  
+    public String getBranchName() {
     return branchName;
   }
 
@@ -99,8 +93,8 @@ public class Store {
    * @return address
    **/
   @ApiModelProperty(example = "101 Fremont Ave, Seattle, WA 12345", value = "")
-
-  public String getAddress() {
+  
+    public String getAddress() {
     return address;
   }
 
@@ -127,8 +121,8 @@ public class Store {
    * @return dietaryRestrictions
    **/
   @ApiModelProperty(value = "")
-
-  public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
+  
+    public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
     return dietaryRestrictions;
   }
 
@@ -155,8 +149,8 @@ public class Store {
    * @return availableToppings
    **/
   @ApiModelProperty(value = "")
-
-  public List<String> getAvailableToppings() {
+  
+    public List<String> getAvailableToppings() {
     return availableToppings;
   }
 
@@ -183,41 +177,13 @@ public class Store {
    * @return availableSizes
    **/
   @ApiModelProperty(value = "")
-  @Valid
-  public List<PizzaSize> getAvailableSizes() {
+      @Valid
+    public List<PizzaSize> getAvailableSizes() {
     return availableSizes;
   }
 
   public void setAvailableSizes(List<PizzaSize> availableSizes) {
     this.availableSizes = availableSizes;
-  }
-
-  public Store advertisements(List<Advertisement> advertisements) {
-    this.advertisements = advertisements;
-    return this;
-  }
-
-  public Store addAdvertisementsItem(Advertisement advertisementsItem) {
-    if (this.advertisements == null) {
-      this.advertisements = new ArrayList<Advertisement>();
-    }
-    this.advertisements.add(advertisementsItem);
-    return this;
-  }
-
-  /**
-   * Get advertisements
-   *
-   * @return advertisements
-   **/
-  @ApiModelProperty(value = "")
-  @Valid
-  public List<Advertisement> getAdvertisements() {
-    return advertisements;
-  }
-
-  public void setAdvertisements(List<Advertisement> advertisements) {
-    this.advertisements = advertisements;
   }
 
 
@@ -235,15 +201,12 @@ public class Store {
         Objects.equals(this.address, store.address) &&
         Objects.equals(this.dietaryRestrictions, store.dietaryRestrictions) &&
         Objects.equals(this.availableToppings, store.availableToppings) &&
-        Objects.equals(this.availableSizes, store.availableSizes) &&
-        Objects.equals(this.advertisements, store.advertisements);
+        Objects.equals(this.availableSizes, store.availableSizes);
   }
 
   @Override
   public int hashCode() {
-    return Objects
-        .hash(branchId, branchName, address, dietaryRestrictions, availableToppings, availableSizes,
-            advertisements);
+    return Objects.hash(branchId, branchName, address, dietaryRestrictions, availableToppings, availableSizes);
   }
 
   @Override
@@ -258,7 +221,6 @@ public class Store {
         .append("\n");
     sb.append("    availableToppings: ").append(toIndentedString(availableToppings)).append("\n");
     sb.append("    availableSizes: ").append(toIndentedString(availableSizes)).append("\n");
-    sb.append("    advertisements: ").append(toIndentedString(advertisements)).append("\n");
     sb.append("}");
     return sb.toString();
   }
