@@ -267,7 +267,7 @@ components:
               type: boolean
         price:
           type: number
-          example: 1.00
+          example: 2.00
     DietaryProperty:
       type: string
       enum:
