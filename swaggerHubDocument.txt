@@ -269,7 +269,6 @@ components:
       - Vegan
       - Gluten Free
     PizzaSize:
-<<<<<<< HEAD
       type: object
       required:
       - sizeDescription
@@ -296,13 +295,6 @@ components:
         marketingContent:
           type: string
           example: 'Buy my pizza'
-=======
-      type: string
-      enum:
-      - small
-      - medium
-      - large
->>>>>>> a830447b50367e973e62448f6ef740dc3268a247
     PizzaSuggestion:
       type: object
       required:
