@@ -16,7 +16,8 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-19T23:59:29.208Z[GMT]")
-public class Advertisement   {
+public class Advertisement {
+
   @JsonProperty("advertisementType")
   private AdvertisementType advertisementType = null;
 
@@ -30,8 +31,9 @@ public class Advertisement   {
 
   /**
    * Get advertisementType
+   *
    * @return advertisementType
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
@@ -51,8 +53,9 @@ public class Advertisement   {
 
   /**
    * Get marketingContent
+   *
    * @return marketingContent
-  **/
+   **/
   @ApiModelProperty(example = "Buy my pizza", value = "")
 
   public String getMarketingContent() {
@@ -86,7 +89,7 @@ public class Advertisement   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Advertisement {\n");
-    
+
     sb.append("    advertisementType: ").append(toIndentedString(advertisementType)).append("\n");
     sb.append("    marketingContent: ").append(toIndentedString(marketingContent)).append("\n");
     sb.append("}");
@@ -94,8 +97,8 @@ public class Advertisement   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

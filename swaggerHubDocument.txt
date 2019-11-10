@@ -267,7 +267,7 @@ components:
               type: boolean
         price:
           type: number
-          example: 1.00
+          example: 2.00
     DietaryProperty:
       type: string
       enum:
@@ -275,11 +275,17 @@ components:
       - Vegan
       - Gluten Free
     PizzaSize:
-      type: string
-      enum:
-      - small
-      - medium
-      - large
+      type: object
+      required:
+      - sizeDescription
+      - sizeInInches
+      properties:
+        sizeDescription:
+          type: string
+          example: large
+        sizeInInches:
+          type: integer
+          example: 16
     AdvertisementType:
       type: string
       enum:

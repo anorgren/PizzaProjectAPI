@@ -14,27 +14,27 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class SwaggerDocumentationConfig {
 
-    ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-            .title("The Pizza Temple")
-            .description("These are the APIs for delivery at The Pizza Temple Restaurant")
-            .license("Apache 2.0")
-            .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-            .termsOfServiceUrl("")
-            .version("1.0.0")
-            .contact(new Contact("","", "you@your-company.com"))
-            .build();
-    }
+  ApiInfo apiInfo() {
+    return new ApiInfoBuilder()
+        .title("The Pizza Temple")
+        .description("These are the APIs for delivery at The Pizza Temple Restaurant")
+        .license("Apache 2.0")
+        .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+        .termsOfServiceUrl("")
+        .version("1.0.0")
+        .contact(new Contact("", "", "you@your-company.com"))
+        .build();
+  }
 
-    @Bean
-    public Docket customImplementation(){
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                    .apis(RequestHandlerSelectors.basePackage("io.swagger.api"))
-                    .build()
-                .directModelSubstitute(org.threeten.bp.LocalDate.class, java.sql.Date.class)
-                .directModelSubstitute(org.threeten.bp.OffsetDateTime.class, java.util.Date.class)
-                .apiInfo(apiInfo());
-    }
+  @Bean
+  public Docket customImplementation() {
+    return new Docket(DocumentationType.SWAGGER_2)
+        .select()
+        .apis(RequestHandlerSelectors.basePackage("io.swagger.api"))
+        .build()
+        .directModelSubstitute(org.threeten.bp.LocalDate.class, java.sql.Date.class)
+        .directModelSubstitute(org.threeten.bp.OffsetDateTime.class, java.util.Date.class)
+        .apiInfo(apiInfo());
+  }
 
 }

@@ -1,25 +1,30 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.springframework.validation.annotation.Validated;
-
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.ToppingRepository;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
 
-import io.swagger.annotations.ApiModelProperty;
-
-/**
- * Topping
- */
+@Document(collection = "Toppings")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
-public class Topping   {
+public class Topping {
+
+  public static void initialize(ToppingRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
+    DataConfiguration.backfillToppingsRepository(repository);
+  }
+
   @JsonProperty("toppingName")
   private String toppingName = null;
 
@@ -35,13 +40,8 @@ public class Topping   {
     return this;
   }
 
-  /**
-   * Get toppingName
-   * @return toppingName
-  **/
   @ApiModelProperty(example = "tomato", required = true, value = "")
   @NotNull
-
   public String getToppingName() {
     return toppingName;
   }
@@ -65,8 +65,9 @@ public class Topping   {
 
   /**
    * Get dietaryProperties
+   *
    * @return dietaryProperties
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Map<DietaryProperty, Boolean> getDietaryProperties() {
@@ -84,8 +85,9 @@ public class Topping   {
 
   /**
    * Get price
+   *
    * @return price
-  **/
+   **/
   @ApiModelProperty(example = "1", value = "")
 
   @Valid
@@ -121,7 +123,7 @@ public class Topping   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Topping {\n");
-    
+
     sb.append("    toppingName: ").append(toIndentedString(toppingName)).append("\n");
     sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
@@ -130,8 +132,8 @@ public class Topping   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

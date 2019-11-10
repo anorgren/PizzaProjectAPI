@@ -14,7 +14,8 @@ import javax.validation.constraints.*;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T18:44:25.092Z[GMT]")
-public class Price   {
+public class Price {
+
   @JsonProperty("priceInCents")
   private Integer priceInCents = null;
 
@@ -25,8 +26,9 @@ public class Price   {
 
   /**
    * Get priceInCents
+   *
    * @return priceInCents
-  **/
+   **/
   @ApiModelProperty(example = "1000", required = true, value = "")
   @NotNull
 
@@ -60,15 +62,15 @@ public class Price   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Price {\n");
-    
+
     sb.append("    priceInCents: ").append(toIndentedString(priceInCents)).append("\n");
     sb.append("}");
     return sb.toString();
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
