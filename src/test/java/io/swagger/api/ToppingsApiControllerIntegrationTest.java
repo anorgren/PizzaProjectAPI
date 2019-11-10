@@ -37,7 +37,7 @@ public class ToppingsApiControllerIntegrationTest {
     objectMapper = new ObjectMapper();
     MockHttpServletRequest request = new MockHttpServletRequest();
     request.addHeader("Accept", "application/json");
-    api = new ToppingsApiController(objectMapper, request);
+    api = new ToppingsApiController( request);
   }
 
   @Test
@@ -55,10 +55,10 @@ public class ToppingsApiControllerIntegrationTest {
   public void getToppingsTest_NoHeader() throws Exception {
     objectMapper = new ObjectMapper();
     MockHttpServletRequest NoHeaderRequest = new MockHttpServletRequest();
-    ToppingsApi NoHeaderapi = new ToppingsApiController(objectMapper, NoHeaderRequest);
+    ToppingsApi NoHeaderapi = new ToppingsApiController( NoHeaderRequest);
     ResponseEntity<List<Topping>> responseEntity = NoHeaderapi.getToppings();
     assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
-    ResponseEntity<Topping> toppingNameResponse = NoHeaderapi.getToppingsbyName("garlic");
+    ResponseEntity<Topping> toppingNameResponse = NoHeaderapi.getToppingsByName("garlic");
     assertEquals(HttpStatus.NOT_IMPLEMENTED, toppingNameResponse.getStatusCode());
   }
 
@@ -71,7 +71,7 @@ public class ToppingsApiControllerIntegrationTest {
     toppingListFile.renameTo(toppingListTempFile);
     ResponseEntity<List<Topping>> toppingsResponse = api.getToppings();
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, toppingsResponse.getStatusCode());
-    ResponseEntity<Topping> toppingsNameResponse = api.getToppingsbyName("garlic");
+    ResponseEntity<Topping> toppingsNameResponse = api.getToppingsByName("garlic");
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, toppingsNameResponse.getStatusCode());
     toppingListTempFile.renameTo(toppingListFile);
   }
@@ -83,7 +83,7 @@ public class ToppingsApiControllerIntegrationTest {
     List<Topping> toppingLisrRef = objectMapper.readValue(toppingListJson, new TypeReference<List<Topping>>() {
     });
     Topping topping = toppingLisrRef.stream().filter(toppingRef -> toppingRef.getToppingName().toLowerCase().equals(name.toLowerCase())).findFirst().get();
-    ResponseEntity<Topping> responseEntity = api.getToppingsbyName(name);
+    ResponseEntity<Topping> responseEntity = api.getToppingsByName(name);
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     assertEquals(topping,responseEntity.getBody());
   }
@@ -91,7 +91,7 @@ public class ToppingsApiControllerIntegrationTest {
   @Test
   public void getToppingsByNameTest_InvalidName() throws Exception {
     String name = "name_example";
-    ResponseEntity<Topping> responseEntity = api.getToppingsbyName(name);
+    ResponseEntity<Topping> responseEntity = api.getToppingsByName(name);
     assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
   }
 }

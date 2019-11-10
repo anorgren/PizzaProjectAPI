@@ -29,11 +29,11 @@ public class Special   {
   /**
    * Get specialId
    * @return specialId
-  **/
+   **/
   @ApiModelProperty(example = "BOGO", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getSpecialId() {
+  public String getSpecialId() {
     return specialId;
   }
 
@@ -49,11 +49,11 @@ public class Special   {
   /**
    * Get description
    * @return description
-  **/
+   **/
   @ApiModelProperty(example = "Receive the cheapest item for free when you purchase two or more items.", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getDescription() {
+  public String getDescription() {
     return description;
   }
 
@@ -72,7 +72,7 @@ public class Special   {
     }
     Special special = (Special) o;
     return Objects.equals(this.specialId, special.specialId) &&
-        Objects.equals(this.description, special.description);
+            Objects.equals(this.description, special.description);
   }
 
   @Override
@@ -84,7 +84,7 @@ public class Special   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Special {\n");
-    
+
     sb.append("    specialId: ").append(toIndentedString(specialId)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("}");

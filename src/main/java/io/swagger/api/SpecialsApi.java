@@ -5,33 +5,26 @@
  */
 package io.swagger.api;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import io.swagger.model.Special;
-import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import java.util.List;
-import java.util.Map;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-06T23:28:45.897Z[GMT]")
 @Api(value = "specials", description = "the specials API")
 public interface SpecialsApi {
 
     @ApiOperation(value = "returns list of specials in all stores", nickname = "getSpecials", notes = "get list of all specials for all stores ", response = Special.class, responseContainer = "List", tags={ "developers", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "list of all specials for all stores", response = Special.class, responseContainer = "List") })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "list of all specials for all stores", response = Special.class, responseContainer = "List") })
     @RequestMapping(value = "/specials",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
+            produces = { "application/json" },
+            method = RequestMethod.GET)
     ResponseEntity<List<Special>> getSpecials();
 
 }

@@ -18,10 +18,11 @@ import javax.validation.constraints.*;
  * Store
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-06T23:28:45.897Z[GMT]")
-public class Store   {
-  @JsonProperty("id")
-  private String id = null;
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T01:15:42.292Z[GMT]")
+public class Store {
+
+  @JsonProperty("branchId")
+  private String branchId = null;
 
   @JsonProperty("branchName")
   private String branchName = null;
@@ -42,23 +43,23 @@ public class Store   {
   private List<PizzaSize> availableSizes = null;
 
   public Store id(String id) {
-    this.id = id;
+    this.branchId = id;
     return this;
   }
 
   /**
    * Get id
+   *
    * @return id
-  **/
+   **/
   @ApiModelProperty(example = "1", required = true, value = "")
-      @NotNull
-
-    public String getId() {
-    return id;
+  @NotNull
+  public String getBranchId() {
+    return branchId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setBranchId(String branchID) {
+    this.branchId = branchID;
   }
 
   public Store branchName(String branchName) {
@@ -68,8 +69,9 @@ public class Store   {
 
   /**
    * Get branchName
+   *
    * @return branchName
-  **/
+   **/
   @ApiModelProperty(example = "Fremont Branch", value = "")
   
     public String getBranchName() {
@@ -87,8 +89,9 @@ public class Store   {
 
   /**
    * Get address
+   *
    * @return address
-  **/
+   **/
   @ApiModelProperty(example = "101 Fremont Ave, Seattle, WA 12345", value = "")
   
     public String getAddress() {
@@ -114,8 +117,9 @@ public class Store   {
 
   /**
    * Get dietaryRestrictions
+   *
    * @return dietaryRestrictions
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
@@ -141,8 +145,9 @@ public class Store   {
 
   /**
    * Get availableToppings
+   *
    * @return availableToppings
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public List<String> getAvailableToppings() {
@@ -168,8 +173,9 @@ public class Store   {
 
   /**
    * Get availableSizes
+   *
    * @return availableSizes
-  **/
+   **/
   @ApiModelProperty(value = "")
       @Valid
     public List<PizzaSize> getAvailableSizes() {
@@ -190,7 +196,7 @@ public class Store   {
       return false;
     }
     Store store = (Store) o;
-    return Objects.equals(this.id, store.id) &&
+    return Objects.equals(this.branchId, store.branchId) &&
         Objects.equals(this.branchName, store.branchName) &&
         Objects.equals(this.address, store.address) &&
         Objects.equals(this.dietaryRestrictions, store.dietaryRestrictions) &&
@@ -200,18 +206,19 @@ public class Store   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, branchName, address, dietaryRestrictions, availableToppings, availableSizes);
+    return Objects.hash(branchId, branchName, address, dietaryRestrictions, availableToppings, availableSizes);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Store {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+
+    sb.append("    id: ").append(toIndentedString(branchId)).append("\n");
     sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
-    sb.append("    dietaryRestrictions: ").append(toIndentedString(dietaryRestrictions)).append("\n");
+    sb.append("    dietaryRestrictions: ").append(toIndentedString(dietaryRestrictions))
+        .append("\n");
     sb.append("    availableToppings: ").append(toIndentedString(availableToppings)).append("\n");
     sb.append("    availableSizes: ").append(toIndentedString(availableSizes)).append("\n");
     sb.append("}");
@@ -219,8 +226,8 @@ public class Store   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
