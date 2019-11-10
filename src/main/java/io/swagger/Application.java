@@ -1,11 +1,7 @@
 package io.swagger;
 
-import io.swagger.model.PizzaSize;
-import io.swagger.model.Store;
-import io.swagger.model.Topping;
-import io.swagger.repository.PizzaSizeRepository;
-import io.swagger.repository.StoreRepository;
-import io.swagger.repository.ToppingRepository;
+import io.swagger.model.*;
+import io.swagger.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -28,14 +24,32 @@ public class Application implements CommandLineRunner {
   @Autowired
   private StoreRepository storeRepository;
 
+  @Autowired
+  private BreadstickRepository breadstickRepository;
+
+  @Autowired
+  private DessertRepository dessertRepository;
+
+  @Autowired
+  private SodaRepository sodaRepository;
+
   @Override
   public void run(String... arg0) throws Exception {
     if (arg0.length > 0 && arg0[0].equals("exitcode")) {
       throw new ExitException();
     }
+    toppingRepository.deleteAll();
     Topping.initialize(toppingRepository);
+    pizzaSizeRepository.deleteAll();
     PizzaSize.initialize(pizzaSizeRepository);
+    storeRepository.deleteAll();
     Store.initialize(storeRepository);
+    breadstickRepository.deleteAll();
+    Breadstick.initialize(breadstickRepository);
+    dessertRepository.deleteAll();
+    Dessert.initialize(dessertRepository);
+    sodaRepository.deleteAll();
+    Soda.initialize(sodaRepository);
   }
 
   public static void main(String[] args) throws Exception {

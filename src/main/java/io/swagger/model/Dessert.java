@@ -9,6 +9,10 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.DessertRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -16,6 +20,7 @@ import javax.validation.constraints.*;
 /**
  * Dessert
  */
+@Document(collection = "Desserts")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 public class Dessert   {
@@ -27,10 +32,17 @@ public class Dessert   {
 
   @JsonProperty("dietaryProperties")
   @Valid
-  private Map<String, Boolean> dietaryProperties = new HashMap<String, Boolean>();
+  private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
 
   @JsonProperty("price")
   private BigDecimal price = null;
+
+  public static void initialize(DessertRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
+    DataConfiguration.backfillDessertsRepository(repository);
+  }
 
   public Dessert dessertName(String dessertName) {
     this.dessertName = dessertName;
@@ -72,12 +84,12 @@ public class Dessert   {
     this.description = description;
   }
 
-  public Dessert dietaryProperties(Map<String, Boolean> dietaryProperties) {
+  public Dessert dietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
     this.dietaryProperties = dietaryProperties;
     return this;
   }
 
-  public Dessert putDietaryPropertiesItem(String key, Boolean dietaryPropertiesItem) {
+  public Dessert putDietaryPropertiesItem(DietaryProperty key, Boolean dietaryPropertiesItem) {
     this.dietaryProperties.put(key, dietaryPropertiesItem);
     return this;
   }
@@ -89,11 +101,11 @@ public class Dessert   {
   @ApiModelProperty(required = true, value = "")
       @NotNull
 
-    public Map<String, Boolean> getDietaryProperties() {
+    public Map<DietaryProperty, Boolean> getDietaryProperties() {
     return dietaryProperties;
   }
 
-  public void setDietaryProperties(Map<String, Boolean> dietaryProperties) {
+  public void setDietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
     this.dietaryProperties = dietaryProperties;
   }
 

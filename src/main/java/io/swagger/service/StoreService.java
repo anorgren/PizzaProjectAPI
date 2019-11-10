@@ -15,9 +15,6 @@ public class StoreService {
 
   public BasicStoreInfo getStoreById(String storeId) {
     return storeRepository.findStoreByBranchId(storeId);
-//    Store foundStore = new Store();
-//    return foundStore.id(basicStoreInfo.getBranchId()).branchName(basicStoreInfo.getBranchName()).
-//            address(basicStoreInfo.getAddress());
   }
 
   public List<Store> getAllStores() {

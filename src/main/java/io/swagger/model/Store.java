@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.swagger.repository.StoreRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -20,6 +21,7 @@ import javax.validation.constraints.*;
 /**
  * Store
  */
+@Document(collection = "Stores")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T01:15:42.292Z[GMT]")
 public class Store {

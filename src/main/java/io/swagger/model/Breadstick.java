@@ -10,6 +10,11 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.BreadstickRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -17,11 +22,19 @@ import javax.validation.constraints.*;
 /**
  * Breadstick
  */
+@Document(collection = "Breadsticks")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 public class Breadstick   {
   @JsonProperty("name")
   private String name = null;
+
+  public static void initialize(BreadstickRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
+    DataConfiguration.backfillBreadsticksRepository(repository);
+  }
 
   /**
    * Gets or Sets size
@@ -61,7 +74,7 @@ public class Breadstick   {
 
   @JsonProperty("dietaryProperties")
   @Valid
-  private Map<String, Boolean> dietaryProperties = new HashMap<String, Boolean>();
+  private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
 
   @JsonProperty("price")
   private BigDecimal price = null;
@@ -125,12 +138,12 @@ public class Breadstick   {
     this.withCheese = withCheese;
   }
 
-  public Breadstick dietaryProperties(Map<String, Boolean> dietaryProperties) {
+  public Breadstick dietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
     this.dietaryProperties = dietaryProperties;
     return this;
   }
 
-  public Breadstick putDietaryPropertiesItem(String key, Boolean dietaryPropertiesItem) {
+  public Breadstick putDietaryPropertiesItem(DietaryProperty key, Boolean dietaryPropertiesItem) {
     this.dietaryProperties.put(key, dietaryPropertiesItem);
     return this;
   }
@@ -142,11 +155,11 @@ public class Breadstick   {
   @ApiModelProperty(required = true, value = "")
       @NotNull
 
-    public Map<String, Boolean> getDietaryProperties() {
+    public Map<DietaryProperty, Boolean> getDietaryProperties() {
     return dietaryProperties;
   }
 
-  public void setDietaryProperties(Map<String, Boolean> dietaryProperties) {
+  public void setDietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
     this.dietaryProperties = dietaryProperties;
   }
 

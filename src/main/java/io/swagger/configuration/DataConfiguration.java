@@ -1,15 +1,9 @@
 package io.swagger.configuration;
 
-import io.swagger.model.DietaryProperty;
-import io.swagger.model.PizzaSize;
-import io.swagger.model.Store;
-import io.swagger.model.Topping;
-import io.swagger.repository.PizzaSizeRepository;
-import io.swagger.repository.StoreRepository;
-import io.swagger.repository.ToppingRepository;
+import io.swagger.model.*;
+import io.swagger.repository.*;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,6 +41,31 @@ public class DataConfiguration {
     private static final String BRANCH_THREE_ID = "3";
     private static final String BRANCH_THREE_ADDRESS =
             "101 Pine Ave, Seattle, WA 01234";
+
+    private static final String GARLIC_BREADSTICKS = "garlic breadsticks";
+    private static final String CHEESY_BREADSTICKS = "cheesy breadsticks";
+
+    private static final BigDecimal SMALL_BREADSTICK_PRICE = new BigDecimal(3.99);
+    private static final BigDecimal LARGE_BREADSTICK_PRICE = new BigDecimal(5.99);
+    private static final BigDecimal SMALL_CHEESE_BREADSTICK_PRICE = new BigDecimal(5.99);
+    private static final BigDecimal LARGE_CHEESE_BREADSTICK_PRICE = new BigDecimal(6.99);
+
+    private static final String CHOCOLATE_CHIP_COOKIE_NAME = "chocolate chip cookies";
+    private static final String CHOCOLATE_CHIP_COOKIE_DESCRIPTION =
+            "six large chocolate chip cookies baked fresh in our ovens.";
+    private static final BigDecimal CHOCOLATE_CHIP_COOKIE_PRICE = new BigDecimal(3.99);
+
+    private static final String BROWNIE_NAME = "double chocolate chunk brownies";
+    private static final String BROWNIE_DESCRIPTION = "Four large gooey double chocolate brownies.";
+    private static final BigDecimal BROWNIE_PRICE = new BigDecimal(4.99);
+
+    private static final String COCA_COLA_PRODUCT_NAME = "coca cola";
+    private static final String SPRITE_PRODUCT_NAME = "sprite";
+    private static final BigDecimal SIX_PACK_PRICE = new BigDecimal(3.59);
+    private static final BigDecimal TWENTY_OUNCE_PRICE = new BigDecimal(1.59);
+    private static final BigDecimal TWO_LITER_PRICE = new BigDecimal(2.25);
+
+
 
     private static void veganVegetarianGlutenFree() {
         veganVegetarianGlutenFree = new HashMap<>();
@@ -251,8 +270,10 @@ public class DataConfiguration {
     }
 
     private static List<Store> createAllStores() {
+        initializeDietaryProperties();
         List<Store> stores = new LinkedList<>();
         List<String> toppingNames = new LinkedList<>();
+
         List<Topping> toppings = createAllToppings();
         for (Topping topping : toppings) {
             String toppingName = topping.getToppingName();
@@ -280,8 +301,95 @@ public class DataConfiguration {
         return stores;
     }
 
-
     public static void backfillStoresRepository(StoreRepository storeRepository) {
-      storeRepository.insert(createAllStores());
+        storeRepository.insert(createAllStores());
+    }
+
+    private static List<Breadstick> createAllBreadsticks() {
+        initializeDietaryProperties();
+        List<Breadstick> breadsticks = new LinkedList<>();
+
+        Breadstick breadstickSmall = new Breadstick();
+        breadstickSmall.name(GARLIC_BREADSTICKS).size(Breadstick.SizeEnum.SMALL).withCheese(false)
+                .dietaryProperties(vegetarian).price(SMALL_BREADSTICK_PRICE);
+        breadsticks.add(breadstickSmall);
+
+        Breadstick breadstickLarge = new Breadstick();
+        breadstickLarge.name(GARLIC_BREADSTICKS).size(Breadstick.SizeEnum.LARGE).withCheese(false)
+                .dietaryProperties(vegetarian).price(LARGE_BREADSTICK_PRICE);
+        breadsticks.add(breadstickLarge);
+
+        Breadstick cheeseSmall = new Breadstick();
+        cheeseSmall.name(CHEESY_BREADSTICKS).size(Breadstick.SizeEnum.SMALL).withCheese(true)
+                .dietaryProperties(vegetarian).price(SMALL_CHEESE_BREADSTICK_PRICE);
+        breadsticks.add(cheeseSmall);
+
+        Breadstick cheeseLarge = new Breadstick();
+        cheeseLarge.name(CHEESY_BREADSTICKS).size(Breadstick.SizeEnum.LARGE).withCheese(true)
+                .dietaryProperties(vegetarian).price(LARGE_CHEESE_BREADSTICK_PRICE);
+        breadsticks.add(cheeseLarge);
+
+        return breadsticks;
+    }
+
+    public static void backfillBreadsticksRepository(BreadstickRepository repository) {
+        repository.insert(createAllBreadsticks());
+    }
+
+    private static List<Dessert> createAllDesserts() {
+        initializeDietaryProperties();
+        List<Dessert> desserts = new LinkedList<>();
+
+        Dessert chocolateChipCookies = new Dessert();
+        chocolateChipCookies.dessertName(CHOCOLATE_CHIP_COOKIE_NAME).description(CHOCOLATE_CHIP_COOKIE_DESCRIPTION)
+                .dietaryProperties(vegetarian).price(CHOCOLATE_CHIP_COOKIE_PRICE);
+        desserts.add(chocolateChipCookies);
+
+        Dessert brownies = new Dessert();
+        brownies.dessertName(BROWNIE_NAME).description(BROWNIE_DESCRIPTION)
+                .dietaryProperties(vegetarian).price(BROWNIE_PRICE);
+        desserts.add(brownies);
+
+        return desserts;
+    }
+
+    public static void backfillDessertsRepository(DessertRepository dessertRepository) {
+        dessertRepository.insert(createAllDesserts());
+    }
+
+    private static List<Soda> createAllSodas() {
+        initializeDietaryProperties();
+        List<Soda> sodas = new LinkedList<>();
+
+        Soda cokeSixPack = new Soda();
+        cokeSixPack = cokeSixPack.sodaName(COCA_COLA_PRODUCT_NAME).price(SIX_PACK_PRICE)
+                .size(Soda.SizeEnum.SIX_PACK).dietaryProperties(veganVegetarianGlutenFree);
+        sodas.add(cokeSixPack);
+
+        Soda cokeTwoLiter = new Soda();
+        cokeTwoLiter = cokeTwoLiter.sodaName(COCA_COLA_PRODUCT_NAME).price(TWO_LITER_PRICE)
+                .size(Soda.SizeEnum.TWO_LITER).dietaryProperties(veganVegetarianGlutenFree);
+        sodas.add(cokeTwoLiter);
+
+        Soda cokeTwentyOunce= new Soda();
+        cokeTwentyOunce = cokeTwentyOunce.sodaName(COCA_COLA_PRODUCT_NAME).price(TWENTY_OUNCE_PRICE)
+                .size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).dietaryProperties(veganVegetarianGlutenFree);
+        sodas.add(cokeTwentyOunce);
+
+        Soda spriteTwentyOunce= new Soda();
+        spriteTwentyOunce = spriteTwentyOunce.sodaName(SPRITE_PRODUCT_NAME).price(TWENTY_OUNCE_PRICE)
+                .size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).dietaryProperties(veganVegetarianGlutenFree);
+        sodas.add(spriteTwentyOunce);
+
+        Soda spriteTwoLiter = new Soda();
+        spriteTwoLiter = spriteTwoLiter.sodaName(SPRITE_PRODUCT_NAME).price(TWO_LITER_PRICE)
+                .size(Soda.SizeEnum.TWO_LITER).dietaryProperties(veganVegetarianGlutenFree);
+        sodas.add(spriteTwentyOunce);
+
+        return sodas;
+    }
+
+    public static void backfillSodaRepository(SodaRepository repository) {
+        repository.insert(createAllSodas());
     }
 }

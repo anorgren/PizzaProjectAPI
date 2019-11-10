@@ -35,6 +35,6 @@ public interface DessertsApi {
     @RequestMapping(value = "/desserts/{name}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<List<Dessert>> getDessertsByName(@ApiParam(value = "dessertName", required = true) @PathVariable("name") String name);
+    ResponseEntity<Dessert> getDessertsByName(@ApiParam(value = "dessertName", required = true) @PathVariable("name") String name);
 
 }

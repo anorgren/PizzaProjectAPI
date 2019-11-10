@@ -308,8 +308,6 @@ paths:
           content:
             application/json:
               schema:
-               type: array
-               items:
                  $ref: '#/components/schemas/Dessert'
         '400':
           description: bad input parameter
