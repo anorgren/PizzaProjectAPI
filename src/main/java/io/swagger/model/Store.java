@@ -5,11 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
 import io.swagger.model.PizzaSize;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.swagger.repository.StoreRepository;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -32,15 +35,22 @@ public class Store {
 
   @JsonProperty("dietaryRestrictions")
   @Valid
-  private Map<DietaryProperty, Boolean> dietaryRestrictions = null;
+  private Map<DietaryProperty, Boolean> dietaryRestrictions;
 
   @JsonProperty("availableToppings")
   @Valid
-  private List<String> availableToppings = null;
+  private List<String> availableToppings;
 
   @JsonProperty("availableSizes")
   @Valid
-  private List<PizzaSize> availableSizes = null;
+  private List<PizzaSize> availableSizes;
+
+  public static void initialize(StoreRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
+    DataConfiguration.backfillStoresRepository(repository);
+  }
 
   public Store id(String id) {
     this.branchId = id;
@@ -221,6 +231,17 @@ public class Store {
         .append("\n");
     sb.append("    availableToppings: ").append(toIndentedString(availableToppings)).append("\n");
     sb.append("    availableSizes: ").append(toIndentedString(availableSizes)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  public String basicInfoToString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class Store {\n");
+
+    sb.append("    id: ").append(toIndentedString(branchId)).append("\n");
+    sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
+    sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("}");
     return sb.toString();
   }

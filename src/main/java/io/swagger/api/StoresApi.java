@@ -4,6 +4,7 @@
  */
 package io.swagger.api;
 
+import io.swagger.repository.StoreRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public interface StoresApi {
   @RequestMapping(value = "/stores",
       produces = {"application/json"},
       method = RequestMethod.GET)
-  ResponseEntity<List<Store>> getStores();
+  ResponseEntity<List<StoreRepository.BasicStoreInfo>> getStores();
 
 
   @ApiOperation(value = "get store by id", nickname = "getStoresById", notes = "Get store details by id ", response = Store.class, tags = {
@@ -41,7 +42,7 @@ public interface StoresApi {
   @RequestMapping(value = "/stores/{id}",
       produces = {"application/json"},
       method = RequestMethod.GET)
-  ResponseEntity<Store> getStoresById(
+  ResponseEntity<StoreRepository.BasicStoreInfo> getStoresById(
       @ApiParam(value = "StoreId", required = true) @PathVariable("id") String id);
 
 }

@@ -3,6 +3,7 @@ package io.swagger.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.repository.StoreRepository;
 import io.swagger.service.StoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,14 +38,14 @@ public class StoresApiController implements StoresApi {
     this.request = request;
   }
 
-  public ResponseEntity<List<Store>> getStores() {
+  public ResponseEntity<List<StoreRepository.BasicStoreInfo>> getStores() {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
-      final List<Store> storeList = storeService.getAllStores();
+      final List<StoreRepository.BasicStoreInfo> storeList = storeService.getAllStores();
       if (storeList == null) {
-        return new ResponseEntity<List<Store>>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<List<StoreRepository.BasicStoreInfo>>(HttpStatus.NOT_FOUND);
       }
-      return new ResponseEntity<List<Store>>(storeList, HttpStatus.OK);
+      return new ResponseEntity<List<StoreRepository.BasicStoreInfo>>(storeList, HttpStatus.OK);
 //      try {
 //        return new ResponseEntity<List<Store>>(lookupStores(), HttpStatus.OK);
 //      } catch (IOException e) {
@@ -52,45 +53,19 @@ public class StoresApiController implements StoresApi {
 //        return new ResponseEntity<List<Store>>(HttpStatus.INTERNAL_SERVER_ERROR);
 //      }
     }
-    return new ResponseEntity<List<Store>>(HttpStatus.NOT_IMPLEMENTED);
+    return new ResponseEntity<List<StoreRepository.BasicStoreInfo>>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  public ResponseEntity<Store> getStoresById(
+  public ResponseEntity<StoreRepository.BasicStoreInfo> getStoresById(
       @ApiParam(value = "StoreId", required = true) @PathVariable("id") String id) {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
-      Store store = storeService.getStoreById(id);
+      StoreRepository.BasicStoreInfo store = storeService.getStoreById(id);
       if (store == null) {
-        return new ResponseEntity<Store>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<StoreRepository.BasicStoreInfo>(HttpStatus.NOT_FOUND);
       }
-      return new ResponseEntity<Store>(store, HttpStatus.OK);
-
-//      try {
-//        return new ResponseEntity<Store>(lookupStoresById(id), HttpStatus.OK);
-//      } catch (IllegalArgumentException e) {
-//        log.error("Illegal Argument Error: " + e.getMessage());
-//        return new ResponseEntity<Store>(HttpStatus.BAD_REQUEST);
-//      } catch (IOException e) {
-//        log.error("Couldn't serialize response for content type application/json", e);
-//        return new ResponseEntity<Store>(HttpStatus.INTERNAL_SERVER_ERROR);
-//      }
+      return new ResponseEntity<StoreRepository.BasicStoreInfo>(store, HttpStatus.OK);
     }
-    return new ResponseEntity<Store>(HttpStatus.NOT_IMPLEMENTED);
+    return new ResponseEntity<StoreRepository.BasicStoreInfo>(HttpStatus.NOT_IMPLEMENTED);
   }
-
-//  private List<Store> lookupStores() throws IOException {
-//    String json = new String(Files.readAllBytes(Paths.get("StoreList.json")));
-//    List<Store> stores = objectMapper.readValue(json, new TypeReference<List<Store>>() {
-//    });
-//    return stores;
-//  }
-//
-//  private Store lookupStoresById(String storeId) throws IllegalArgumentException, IOException {
-//    List<Store> stores = lookupStores();
-//    if (stores.stream().anyMatch(store -> store.getId().equals(storeId))) {
-//      return stores.stream().filter(store -> store.getId().equals(storeId)).findFirst().get();
-//    } else {
-//      throw new IllegalArgumentException("Store Id Not Found");
-//    }
-//  }
 }
