@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DataConfiguration {
-    
+
     private static final BigDecimal NON_MEAT_PRICE = new BigDecimal(2.00);
     private static final BigDecimal MEAT_PRICE = new BigDecimal(3.00);
 

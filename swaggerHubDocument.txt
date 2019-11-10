@@ -2,6 +2,9 @@ openapi: 3.0.0
 # Added by API Auto Mocking Plugin
 servers:
 # Added by API Auto Mocking Plugin
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ateam_cs5500/PizzaProject/1.0.0
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/acurt7/ThePizzaProject/1.0.0
   - description: SwaggerHub API Auto Mocking
@@ -215,7 +218,145 @@ paths:
             application/json:
               schema:
                $ref: '#/components/schemas/PizzaSuggestion'
-              
+
+        '400':
+          description: bad input parameter
+  /breadsticks:
+    get:
+      tags:
+        - developers
+      summary: returns breadsticks
+      operationId: getBreadsticks
+      description: |
+        Get list of all breadsticks
+      responses:
+        '200':
+          description: list of all breadsticks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Breadstick'
+        '400':
+          description: bad input parameter
+  /breadsticks/{name}:
+    get:
+      tags:
+        - developers
+      summary: returns breadstick information of the given breadstick
+      operationId: getBreadsticksByName
+      description: |
+        Get information of the given breadstick
+      parameters:
+        - name: name
+          in: path
+          description: breadstickName
+          required: true
+          schema:
+            type: string
+            example: garlic breadsticks
+      responses:
+        '200':
+          description: breadstick information about the given breadstick
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                 $ref: '#/components/schemas/Breadstick'
+        '400':
+          description: bad input parameter
+  /desserts:
+    get:
+      tags:
+        - developers
+      summary: returns desserts
+      operationId: getDesserts
+      description: |
+        Get list of all desserts
+      responses:
+        '200':
+          description: list of all desserts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dessert'
+        '400':
+          description: bad input parameter
+  /desserts/{name}:
+    get:
+      tags:
+        - developers
+      summary: returns dessert information about the given dessert.
+      operationId: getDessertsByName
+      description: |
+        Get information of the given dessert
+      parameters:
+        - name: name
+          in: path
+          description: dessertName
+          required: true
+          schema:
+            type: string
+            example: double chocolate brownies
+      responses:
+        '200':
+          description: information about the given dessert
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                 $ref: '#/components/schemas/Dessert'
+        '400':
+          description: bad input parameter
+  /sodas:
+    get:
+      tags:
+        - developers
+      summary: returns all sodas
+      operationId: getSodas
+      description: |
+        Get list of all sodas
+      responses:
+        '200':
+          description: list of all sodas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Soda'
+        '400':
+          description: bad input parameter
+  /sodas/{name}:
+    get:
+      tags:
+        - developers
+      summary: returns soda information about the given soda.
+      operationId: getSodasByName
+      description: |
+        Get information of the given dessert
+      parameters:
+        - name: name
+          in: path
+          description: sodaName
+          required: true
+          schema:
+            type: string
+            example: sprite
+      responses:
+        '200':
+          description: information about the given soda
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                 $ref: '#/components/schemas/Soda'
         '400':
           description: bad input parameter
 components:
@@ -306,7 +447,7 @@ components:
           example: 1000
     Special:
       type: object
-      required: 
+      required:
       - specialId
       - description
       properties:
@@ -316,4 +457,75 @@ components:
         description:
           type: string
           example: Receive the cheapest item for free when you purchase two or more items.
+    Breadstick:
+      type: object
+      required:
+      - breadstickName
+      - size
+      - withCheese
+      - dietaryProperties
+      - price
+      properties:
+        name:
+          type: string
+          example: "garlic breadsticks"
+        size:
+          type: string
+          enum:
+            - SMALL
+            - LARGE
+        withCheese:
+          type: boolean
+        dietaryProperties:
+          type: object
+          additionalProperties:
+              type: boolean
+        price:
+          type: number
+          example: 3.99
+    Dessert:
+      type: object
+      required:
+      - dessertName
+      - description
+      - dietaryProperties
+      - price
+      properties:
+        dessertName:
+          type: string
+          example: "double chocolate brownies"
+        description:
+          type: string
+          example: "four large gooey chocolate brownies with chocolate chunks"
+        dietaryProperties:
+          type: object
+          additionalProperties:
+              type: boolean
+        price:
+          type: number
+          example: 4.99
+    Soda:
+      type: object
+      required:
+      - sodaName
+      - size
+      - dietaryProperties
+      - price
+      properties:
+        sodaName:
+          type: string
+          example: "sprite"
+        size:
+          type: string
+          enum:
+            - SIX_PACK
+            - TWO_LITER
+            - TWENTY_OUNCE_BOTTLE
+        dietaryProperties:
+          type: object
+          additionalProperties:
+              type: boolean
+        price:
+          type: number
+          example: 1.99
           
