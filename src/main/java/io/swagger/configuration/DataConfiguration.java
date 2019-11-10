@@ -238,13 +238,13 @@ public class DataConfiguration {
 
   public static void backfillSpecialsRepository(SpecialsRepository repository) {
     Special freeItem = new Special().specialId("OneFree").description("Get one item free. The cost"
-        + " of the cheapest item will be discounted from the order");
+        + " of the cheapest item will be discounted from the order.");
     repository.insert(freeItem);
     Special buyOneGetOne = new Special().specialId("BOGO").description("Purchase two or more items"
         + " and receive the cheapest item free!");
     repository.insert(buyOneGetOne);
-    Special flatDiscount = new Special().specialId("flatDiscount").description("Recieve $20 off your"
-            + "order of one or more items.");
+    Special flatDiscount = new Special().specialId("FlatDiscount").description("Receive up to $20"
+        + " off your order of one or more items.");
     repository.insert(flatDiscount);
   }
 }
