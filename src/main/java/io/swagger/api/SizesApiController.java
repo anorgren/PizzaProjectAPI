@@ -1,53 +1,43 @@
 package io.swagger.api;
 
 import io.swagger.model.PizzaSize;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.*;
+import io.swagger.repository.PizzaSizeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
+
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-19T23:59:29.208Z[GMT]")
 @Controller
 public class SizesApiController implements SizesApi {
 
     private static final Logger log = LoggerFactory.getLogger(SizesApiController.class);
 
-    private final ObjectMapper objectMapper;
-
     private final HttpServletRequest request;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    public SizesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-        this.objectMapper = objectMapper;
+    @Autowired
+    private PizzaSizeRepository pizzaSizeRepository;
+
+    @Autowired
+    public SizesApiController(HttpServletRequest request) {
         this.request = request;
     }
 
     public ResponseEntity<List<PizzaSize>> getSizes() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<PizzaSize>>(objectMapper.readValue("[ {\n  \"sizeInInches\" : 16,\n  \"sizeDescription\" : \"large\"\n}, {\n  \"sizeInInches\" : 16,\n  \"sizeDescription\" : \"large\"\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<PizzaSize>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            List<PizzaSize> pizzaSizes = pizzaSizeRepository.findAll();
+            if (pizzaSizes == null) {
+                return new ResponseEntity<List<PizzaSize>>(HttpStatus.NOT_FOUND);
             }
-        }
+            return new ResponseEntity<List<PizzaSize>>(pizzaSizes, HttpStatus.OK);
 
+        }
         return new ResponseEntity<List<PizzaSize>>(HttpStatus.NOT_IMPLEMENTED);
     }
 

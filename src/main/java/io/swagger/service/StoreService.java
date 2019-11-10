@@ -20,8 +20,8 @@ public class StoreService {
 //            address(basicStoreInfo.getAddress());
   }
 
-  public List<BasicStoreInfo> getAllStores() {
-    return storeRepository.findAllStores();
+  public List<Store> getAllStores() {
+    return storeRepository.findAll();
   }
 
 }

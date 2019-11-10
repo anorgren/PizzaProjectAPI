@@ -15,15 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-06T23:28:45.897Z[GMT]")
 @Api(value = "specials", description = "the specials API")
 public interface SpecialsApi {
 
-    @ApiOperation(value = "returns list of specials in all stores", nickname = "getSpecials", notes = "get list of all specials for all stores ", response = Special.class, responseContainer = "List", tags={ "developers", })
+    @ApiOperation(value = "returns list of specials in all stores", nickname = "getSpecials", notes = "get list of all specials for all stores ", response = Special.class, responseContainer = "List", tags = {"developers",})
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "list of all specials for all stores", response = Special.class, responseContainer = "List") })
+            @ApiResponse(code = 200, message = "list of all specials for all stores", response = Special.class, responseContainer = "List")})
     @RequestMapping(value = "/specials",
-            produces = { "application/json" },
+            produces = {"application/json"},
             method = RequestMethod.GET)
     ResponseEntity<List<Special>> getSpecials();
 
