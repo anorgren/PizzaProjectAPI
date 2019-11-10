@@ -280,21 +280,6 @@ components:
         sizeInInches:
           type: integer
           example: 16
-    AdvertisementType:
-      type: string
-      enum:
-      - Special
-      - Coupon
-    Advertisement:
-      type: object
-      required:
-      - advertisementType
-      properties:
-        advertisementType:
-          $ref: '#/components/schemas/AdvertisementType'
-        marketingContent:
-          type: string
-          example: 'Buy my pizza'
     PizzaSuggestion:
       type: object
       required:
