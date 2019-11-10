@@ -2,7 +2,6 @@ package io.swagger.api;
 
 import io.swagger.model.PizzaSize;
 import io.swagger.model.PizzaSuggestion;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 public class SuggestionsApiController implements SuggestionsApi {
 
   private static final Logger log = LoggerFactory.getLogger(SuggestionsApiController.class);
-  private final ObjectMapper objectMapper;
   private final HttpServletRequest request;
 
   private static final int SLICES_PER_ADULT = 3;
@@ -34,8 +32,7 @@ public class SuggestionsApiController implements SuggestionsApi {
   private final String SIZE_THREE_DESCRIPTION = "large";
 
   @org.springframework.beans.factory.annotation.Autowired
-  public SuggestionsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-    this.objectMapper = objectMapper;
+  public SuggestionsApiController(HttpServletRequest request) {
     this.request = request;
   }
 
@@ -46,6 +43,10 @@ public class SuggestionsApiController implements SuggestionsApi {
       @Valid @RequestParam(value = "children", required = true) Integer children,
       @ApiParam(value = "The preferred size, if given all suggested pizzas will be this size. Must be a valid size (small, medium, large).")
       @Valid @RequestParam(value = "preferredSize", required = false) String preferredSize) {
+
+    if (children < 0 | adults < 0) {
+      return new ResponseEntity<PizzaSuggestion>(HttpStatus.BAD_REQUEST);
+    }
 
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
@@ -141,6 +142,4 @@ public class SuggestionsApiController implements SuggestionsApi {
     suggestion.setLarge(large);
     return suggestion;
   }
-
-
 }
