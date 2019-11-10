@@ -35,6 +35,7 @@ public class Application implements CommandLineRunner {
     }
     Topping.initialize(toppingRepository);
     PizzaSize.initialize(pizzaSizeRepository);
+    specialsRepository.deleteAll();
     Special.initialize(specialsRepository);
   }
 
