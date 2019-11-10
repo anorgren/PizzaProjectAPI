@@ -16,16 +16,17 @@ import org.springframework.validation.annotation.Validated;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
 public class PizzaSize {
 
-  public static void initialize(PizzaSizeRepository repository) {
-    if (repository.count() > 0) {
-      return;
-    }
-  }
-
   @JsonProperty("sizeDescription")
   private String sizeDescription = null;
   @JsonProperty("sizeInInches")
   private Integer sizeInInches = null;
+
+  public static void initialize(PizzaSizeRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
+    DataConfiguration.backfillPizzaSizesRepository(repository);
+  }
 
   public PizzaSize(String sizeDescription, Integer sizeInInches) {
     this.sizeDescription = sizeDescription;

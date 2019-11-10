@@ -1,7 +1,9 @@
 package io.swagger.configuration;
 
 import io.swagger.model.DietaryProperty;
+import io.swagger.model.PizzaSize;
 import io.swagger.model.Topping;
+import io.swagger.repository.PizzaSizeRepository;
 import io.swagger.repository.ToppingRepository;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -12,6 +14,13 @@ public class DataConfiguration {
 
   private static final BigDecimal NON_MEAT_PRICE = new BigDecimal(2.00);
   private static final BigDecimal MEAT_PRICE = new BigDecimal(3.00);
+
+  private static final String SMALL_DESCRIPTION = "small";
+  private static final String MEDIUM_DESCRIPTION = "medium";
+  private static final String LARGE_DESCRIPTION = "large";
+  private static final Integer SMALL_SIZE_INCHES = 12;
+  private static final Integer MEDIUM_SIZE_INCHES = 14;
+  private static final Integer LARGE_SIZE_INCHES = 16;
 
   private static HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
   private static HashMap<DietaryProperty, Boolean> veganVegetarian;
@@ -72,8 +81,7 @@ public class DataConfiguration {
 
   }
 
-  public static List<Topping> backfillToppingsRepository(ToppingRepository toppingRepository) {
-    toppingRepository.deleteAll();
+  private static List<Topping> createAllToppings() {
     initializeDietaryProperties();
     List<Topping> defaultToppings = new LinkedList<>();
 
@@ -197,7 +205,32 @@ public class DataConfiguration {
         .dietaryProperties(notAnything);
     defaultToppings.add(phillySteak);
 
-    toppingRepository.insert(defaultToppings);
     return defaultToppings;
+  }
+
+  public static void backfillToppingsRepository(ToppingRepository toppingRepository) {
+    toppingRepository.deleteAll();
+    List<Topping> allToppings = createAllToppings();
+    toppingRepository.insert(allToppings);
+  }
+
+  private static List<PizzaSize> createAllPizzaSizes() {
+    List<PizzaSize> pizzaSizes = new LinkedList<>();
+
+    PizzaSize pizzaSizeSmall = new PizzaSize(SMALL_DESCRIPTION, SMALL_SIZE_INCHES);
+    pizzaSizes.add(pizzaSizeSmall);
+
+    PizzaSize pizzaSizeMedium = new PizzaSize(MEDIUM_DESCRIPTION, MEDIUM_SIZE_INCHES);
+    pizzaSizes.add(pizzaSizeMedium);
+
+    PizzaSize pizzaSizeLarge = new PizzaSize(LARGE_DESCRIPTION, LARGE_SIZE_INCHES);
+    pizzaSizes.add(pizzaSizeLarge);
+
+    return pizzaSizes;
+  }
+
+  public static void backfillPizzaSizesRepository(PizzaSizeRepository pizzaSizeRepository) {
+    List<PizzaSize> pizzaSizes = createAllPizzaSizes();
+    pizzaSizeRepository.insert(pizzaSizes);
   }
 }
