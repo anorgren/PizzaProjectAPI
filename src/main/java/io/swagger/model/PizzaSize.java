@@ -29,7 +29,7 @@ public class PizzaSize {
   }
 
   public PizzaSize(String sizeDescription, Integer sizeInInches) {
-    this.sizeDescription = sizeDescription;
+    this.sizeDescription = sizeDescription.toLowerCase();
     this.sizeInInches = sizeInInches;
   }
 
