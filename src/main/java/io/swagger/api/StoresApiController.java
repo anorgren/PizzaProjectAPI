@@ -30,28 +30,28 @@ public class StoresApiController implements StoresApi {
         this.request = request;
     }
 
-    public ResponseEntity<List<Store>> getStores() {
+    public ResponseEntity<List<StoreRepository.BasicStoreInfo>> getStores() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            final List<Store> storeList = storeService.getAllStores();
+            final List<StoreRepository.BasicStoreInfo> storeList = storeService.getAllBasicInfoStores();
             if (storeList == null) {
-                return new ResponseEntity<List<Store>>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<StoreRepository.BasicStoreInfo>>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<List<Store>>(storeList, HttpStatus.OK);
+            return new ResponseEntity<List<StoreRepository.BasicStoreInfo>>(storeList, HttpStatus.OK);
         }
-        return new ResponseEntity<List<Store>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<List<StoreRepository.BasicStoreInfo>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<StoreRepository.BasicStoreInfo> getStoresById(
+    public ResponseEntity<Store> getStoresById(
             @ApiParam(value = "StoreId", required = true) @PathVariable("id") String id) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            StoreRepository.BasicStoreInfo store = storeService.getStoreById(id);
+            Store store = storeService.getStoreById(id);
             if (store == null) {
-                return new ResponseEntity<StoreRepository.BasicStoreInfo>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<Store>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<StoreRepository.BasicStoreInfo>(store, HttpStatus.OK);
+            return new ResponseEntity<Store>(store, HttpStatus.OK);
         }
-        return new ResponseEntity<StoreRepository.BasicStoreInfo>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<Store>(HttpStatus.NOT_IMPLEMENTED);
     }
 }

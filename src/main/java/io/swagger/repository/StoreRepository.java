@@ -2,7 +2,6 @@ package io.swagger.repository;
 
 import io.swagger.model.Store;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
@@ -13,9 +12,13 @@ public interface StoreRepository extends MongoRepository<Store, String> {
      */
     interface BasicStoreInfo {
         String getBranchName();
+
         String getBranchId();
+
         String getAddress();
     }
 
-    BasicStoreInfo findStoreByBranchId(String branchId);
+    List<BasicStoreInfo> getAllByBranchIdExists(Boolean bool);
+
+    Store findStoreByBranchId(String branchId);
 }

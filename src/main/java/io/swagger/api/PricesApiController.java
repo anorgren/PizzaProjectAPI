@@ -1,41 +1,50 @@
-package io.swagger.api;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-
-import javax.servlet.http.HttpServletRequest;
-
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T18:44:25.092Z[GMT]")
-@Controller
-public class PricesApiController {
-
-    private static final Logger log = LoggerFactory.getLogger(PricesApiController.class);
-
-    private final ObjectMapper objectMapper;
-
-    private final HttpServletRequest request;
-
-    private final Integer SMALL_BASE_PRICE = 800;
-    private final Integer MEDIUM_BASE_PRICE = 1000;
-    private final Integer LARGE_BASE_PRICE = 1200;
-    private final Integer DOLLARS_TO_CENTS = 100;
-    private Integer toppingsPrice = 0;
-
-    @org.springframework.beans.factory.annotation.Autowired
-    public PricesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-        this.objectMapper = objectMapper;
-        this.request = request;
-    }
-
-    /**
-     * Calculates the price of a pizza with a given size and toppings.
-     *
-     * @param size The size of the pizza (small, medium, large)
-     * @param toppings A list of the names of all the toppings
-     * @return The price of a pizza
-     */
+//package io.swagger.api;
+//
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import io.swagger.annotations.ApiParam;
+//import io.swagger.model.PizzaSize;
+//import io.swagger.model.Price;
+//import io.swagger.model.Topping;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.http.ResponseEntity;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.RequestParam;
+//
+//import javax.servlet.http.HttpServletRequest;
+//import javax.validation.Valid;
+//import javax.validation.constraints.NotNull;
+//import java.util.List;
+//
+//@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T18:44:25.092Z[GMT]")
+//@Controller
+//public class PricesApiController {
+//
+//    private static final Logger log = LoggerFactory.getLogger(PricesApiController.class);
+//
+//    private final ObjectMapper objectMapper;
+//
+//    private final HttpServletRequest request;
+//
+//    private final Integer SMALL_BASE_PRICE = 800;
+//    private final Integer MEDIUM_BASE_PRICE = 1000;
+//    private final Integer LARGE_BASE_PRICE = 1200;
+//    private final Integer DOLLARS_TO_CENTS = 100;
+//    private Integer toppingsPrice = 0;
+//
+//    @org.springframework.beans.factory.annotation.Autowired
+//    public PricesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+//        this.objectMapper = objectMapper;
+//        this.request = request;
+//    }
+//
+//    /**
+//     * Calculates the price of a pizza with a given size and toppings.
+//     *
+//     * @param size The size of the pizza (small, medium, large)
+//     * @param toppings A list of the names of all the toppings
+//     * @return The price of a pizza
+//     */
 //  public ResponseEntity<Price> getPizzaPrice(
 //      @NotNull @ApiParam(value = "Size of pizza", required = true)
 //      @Valid @RequestParam(value = "size", required = true) String size,
@@ -114,4 +123,4 @@ public class PricesApiController {
 //    }
 //    return price;
 //  }
-}
+//}

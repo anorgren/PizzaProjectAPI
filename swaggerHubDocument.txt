@@ -240,33 +240,6 @@ paths:
                   $ref: '#/components/schemas/Breadstick'
         '400':
           description: bad input parameter
-  /breadsticks/{name}:
-    get:
-      tags:
-        - developers
-      summary: returns breadstick information of the given breadstick
-      operationId: getBreadsticksByName
-      description: |
-        Get information of the given breadstick
-      parameters:
-        - name: name
-          in: path
-          description: breadstickName
-          required: true
-          schema:
-            type: string
-            example: garlic breadsticks
-      responses:
-        '200':
-          description: breadstick information about the given breadstick
-          content:
-            application/json:
-              schema:
-               type: array
-               items:
-                 $ref: '#/components/schemas/Breadstick'
-        '400':
-          description: bad input parameter
   /desserts:
     get:
       tags:
@@ -594,11 +567,9 @@ components:
     Breadstick:
       type: object
       required:
-      - breadstickName
       - size
       - withCheese
       - dietaryProperties
-      - price
       properties:
         name:
           type: string
@@ -644,7 +615,6 @@ components:
       - sodaName
       - size
       - dietaryProperties
-      - price
       properties:
         sodaName:
           type: string
