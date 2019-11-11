@@ -72,6 +72,9 @@ public class Order   {
   @JsonProperty("status")
   private StatusEnum status = null;
 
+  @JsonProperty("specialId")
+  private String specialId = null;
+
   public Order orderId(String orderId) {
     this.orderId = orderId;
     return this;
@@ -210,6 +213,25 @@ public class Order   {
     this.status = status;
   }
 
+  public Order specialId(String specialId) {
+    this.specialId = specialId;
+    return this;
+  }
+
+  /**
+   * Get specialId
+   * @return specialId
+  **/
+  @ApiModelProperty(value = "")
+
+    public String getSpecialId() {
+    return specialId;
+  }
+
+  public void setSpecialId(String specialId) {
+    this.specialId = specialId;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -226,12 +248,13 @@ public class Order   {
         Objects.equals(this.tentativeAmount, order.tentativeAmount) &&
         Objects.equals(this.calculatedAmount, order.calculatedAmount) &&
         Objects.equals(this.payementInformation, order.payementInformation) &&
-        Objects.equals(this.status, order.status);
+        Objects.equals(this.status, order.status) &&
+        Objects.equals(this.specialId, order.specialId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(orderId, storeId, itemList, tentativeAmount, calculatedAmount, payementInformation, status);
+    return Objects.hash(orderId, storeId, itemList, tentativeAmount, calculatedAmount, payementInformation, status, specialId);
   }
 
   @Override
@@ -246,6 +269,7 @@ public class Order   {
     sb.append("    calculatedAmount: ").append(toIndentedString(calculatedAmount)).append("\n");
     sb.append("    payementInformation: ").append(toIndentedString(payementInformation)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    specialId: ").append(toIndentedString(specialId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
