@@ -955,6 +955,9 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Topping'
+            price:
+              type: number
+              example: 12.99
     Item:
       type: object
       required: 

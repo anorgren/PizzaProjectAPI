@@ -122,7 +122,7 @@ public class Dessert extends Item  {
   **/
   @ApiModelProperty(example = "4.99", required = true, value = "")
       @NotNull
-
+    @Override
     @Valid
     public BigDecimal getPrice() {
     return price;
