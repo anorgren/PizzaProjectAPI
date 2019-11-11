@@ -50,7 +50,7 @@ public class DessertsApiController implements DessertsApi {
     public ResponseEntity<Dessert> getDessertsByName(@ApiParam(value = "dessertName", required = true) @PathVariable("name") String name) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            Dessert dessert = dessertService.getDessert(name);
+            Dessert dessert = dessertService.getDessert(name.toLowerCase());
             if (dessert == null) {
                 return new ResponseEntity<Dessert>(HttpStatus.NOT_FOUND);
             }

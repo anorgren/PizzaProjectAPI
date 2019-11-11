@@ -51,7 +51,7 @@ public class SodasApiController implements SodasApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             List<Soda> sodas = new LinkedList<>();
-            sodas = sodaService.getSodasByBrandName(name);
+            sodas = sodaService.getSodasByBrandName(name.toLowerCase());
             if (sodas == null) {
                 return new ResponseEntity<List<Soda>>(HttpStatus.NOT_FOUND);
             }

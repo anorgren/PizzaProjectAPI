@@ -13,6 +13,7 @@ import java.util.Map;
 
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.SodaRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -20,6 +21,7 @@ import javax.validation.constraints.*;
 /**
  * Soda
  */
+@Document(collection = "Sodas")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 public class Soda   {

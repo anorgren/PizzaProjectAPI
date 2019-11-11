@@ -4,6 +4,7 @@ import io.swagger.model.*;
 import io.swagger.repository.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +66,19 @@ public class DataConfiguration {
     private static final BigDecimal TWENTY_OUNCE_PRICE = new BigDecimal(1.59);
     private static final BigDecimal TWO_LITER_PRICE = new BigDecimal(2.25);
 
+    private static final String SAUCE_ORIGINAL_NAME = "original";
+    private static final String SAUCE_ROBUST_NAME = "robust italian";
+    private static final BigDecimal SAUCE_ORIGINAL_PRICE = new BigDecimal(0);
+    private static final BigDecimal SAUCE_ROBUST_PRICE = new BigDecimal(0.5);
 
+    private static final String CRUST_ORIGINAL_NAME = "original crust";
+    private static final String CRUST_THIN_NAME = "thin crust";
+    private static final String CRUST_GLUTEN_FREE_NAME = "gluten free crust";
+    private static final BigDecimal CRUST_ORIGINAL_PRICE = new BigDecimal(0);
+    private static final BigDecimal CRUST_THIN_PRICE = new BigDecimal(0);
+    private static final BigDecimal CRUST_GLUTEN_FREE_PRICE = new BigDecimal(1.5);
+    private static List<PizzaSize> ALL_SIZES = new ArrayList<>();
+    private static List<PizzaSize> SMALL_LARGE_SIZE = new ArrayList<>();
 
     private static void veganVegetarianGlutenFree() {
         veganVegetarianGlutenFree = new HashMap<>();
@@ -116,7 +129,6 @@ public class DataConfiguration {
         vegetarian();
         veganVegetarian();
         veganVegetarianGlutenFree();
-
     }
 
     private static List<Topping> createAllToppings() {
@@ -391,5 +403,66 @@ public class DataConfiguration {
 
     public static void backfillSodaRepository(SodaRepository repository) {
         repository.insert(createAllSodas());
+    }
+
+    private static List<Sauce> createAllSauces() {
+        initializeDietaryProperties();
+        List<Sauce> sauces = new LinkedList<>();
+
+        Sauce sauceOriginal = new Sauce();
+        sauceOriginal.sauceName(SAUCE_ORIGINAL_NAME)
+                .dietaryProperties(veganVegetarianGlutenFree).price(SAUCE_ORIGINAL_PRICE);
+        sauces.add(sauceOriginal);
+
+        Sauce sauceRobust = new Sauce();
+        sauceRobust.sauceName(SAUCE_ROBUST_NAME)
+                .dietaryProperties(veganVegetarianGlutenFree).price(SAUCE_ROBUST_PRICE);
+        sauces.add(sauceRobust);
+
+        return sauces;
+    }
+
+    public static void backfillSauceRepository(SauceRepository sauceRepository) {
+        sauceRepository.insert(createAllSauces());
+    }
+
+    private static void initializeAvailableSizes() {
+        PizzaSize pizzaSizeSmall = new PizzaSize(SMALL_DESCRIPTION, SMALL_SIZE_INCHES);
+        SMALL_LARGE_SIZE.add(pizzaSizeSmall);
+        ALL_SIZES.add(pizzaSizeSmall);
+
+        PizzaSize pizzaSizeMedium = new PizzaSize(MEDIUM_DESCRIPTION, MEDIUM_SIZE_INCHES);
+        ALL_SIZES.add(pizzaSizeMedium);
+
+        PizzaSize pizzaSizeLarge = new PizzaSize(LARGE_DESCRIPTION, LARGE_SIZE_INCHES);
+        SMALL_LARGE_SIZE.add(pizzaSizeLarge);
+        ALL_SIZES.add(pizzaSizeLarge);
+    }
+
+
+    private static List<Crust> createAllCrusts() {
+        initializeDietaryProperties();
+        initializeAvailableSizes();
+        List<Crust> crusts = new LinkedList<>();
+
+        Crust crustOriginal = new Crust();
+        crustOriginal.crustName(CRUST_ORIGINAL_NAME).availableSizes(ALL_SIZES)
+                .price(CRUST_ORIGINAL_PRICE).dietaryProperties(vegetarian);
+        crusts.add(crustOriginal);
+
+        Crust crustThin = new Crust();
+        crustThin.crustName(CRUST_THIN_NAME).availableSizes(ALL_SIZES)
+                .price(CRUST_THIN_PRICE).dietaryProperties(vegetarian);
+        crusts.add(crustThin);
+
+        Crust crustGlutenFree = new Crust();
+        crustGlutenFree.crustName(CRUST_GLUTEN_FREE_NAME).availableSizes(SMALL_LARGE_SIZE)
+                .price(CRUST_GLUTEN_FREE_PRICE).dietaryProperties(veganVegetarianGlutenFree);
+        crusts.add(crustGlutenFree);
+        return crusts;
+    }
+
+    public static void backfillCrustRepository(CrustRepository crustRepository) {
+        crustRepository.insert(createAllCrusts());
     }
 }

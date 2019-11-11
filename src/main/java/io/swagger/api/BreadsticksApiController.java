@@ -50,7 +50,7 @@ public class BreadsticksApiController implements BreadsticksApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             List<Breadstick> breadsticks = new LinkedList<>();
-            breadsticks = breadstickService.getBreadsticksByName(name);
+            breadsticks = breadstickService.getBreadsticksByName(name.toLowerCase());
             if (breadsticks == null) {
                 return new ResponseEntity<List<Breadstick>>(HttpStatus.NOT_FOUND);
             }

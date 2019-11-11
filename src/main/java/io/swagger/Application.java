@@ -33,6 +33,12 @@ public class Application implements CommandLineRunner {
   @Autowired
   private SodaRepository sodaRepository;
 
+  @Autowired
+  private SauceRepository sauceRepository;
+
+  @Autowired
+  private CrustRepository crustRepository;
+
   @Override
   public void run(String... arg0) throws Exception {
     if (arg0.length > 0 && arg0[0].equals("exitcode")) {
@@ -50,6 +56,11 @@ public class Application implements CommandLineRunner {
     Dessert.initialize(dessertRepository);
     sodaRepository.deleteAll();
     Soda.initialize(sodaRepository);
+    sauceRepository.deleteAll();
+    Sauce.initialize(sauceRepository);
+    crustRepository.deleteAll();
+    Crust.initialize(crustRepository);
+
   }
 
   public static void main(String[] args) throws Exception {
