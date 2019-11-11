@@ -1,5 +1,8 @@
 package io.swagger.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,6 +17,7 @@ import javax.validation.constraints.*;
  * Pizza
  */
 @Validated
+@JsonTypeName("Pizza")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T21:13:59.483Z[GMT]")
 public class Pizza extends Item  {
   @JsonProperty("pizzaName")
@@ -28,6 +32,9 @@ public class Pizza extends Item  {
   @JsonProperty("crust")
   private Crust crust = null;
 
+  @JsonProperty("dietaryProperties")
+  private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<>();
+
   @JsonProperty("toppings")
   @Valid
   private List<Topping> toppings = new ArrayList<Topping>();
@@ -37,6 +44,9 @@ public class Pizza extends Item  {
 
   public Pizza pizzaName(String pizzaName) {
     this.pizzaName = pizzaName;
+    this.dietaryProperties.put(DietaryProperty.VEGAN, true);
+    this.dietaryProperties.put(DietaryProperty.VEGETARIAN, true);
+    this.dietaryProperties.put(DietaryProperty.GLUTEN_FREE, true);
     return this;
   }
 
@@ -78,7 +88,16 @@ public class Pizza extends Item  {
 
   public Pizza sauce(Sauce sauce) {
     this.sauce = sauce;
+    checkSauceDietaryProperties(sauce);
     return this;
+  }
+
+  private void checkSauceDietaryProperties(Sauce sauce) {
+    for(Map.Entry<DietaryProperty, Boolean> entry : sauce.getDietaryProperties().entrySet()) {
+      if (entry.getValue().equals(false)) {
+        dietaryProperties.put(entry.getKey(), false);
+      }
+    }
   }
 
   /**
@@ -197,6 +216,7 @@ public class Pizza extends Item  {
     sb.append("    sauce: ").append(toIndentedString(sauce)).append("\n");
     sb.append("    crust: ").append(toIndentedString(crust)).append("\n");
     sb.append("    toppings: ").append(toIndentedString(toppings)).append("\n");
+    sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("}");
     return sb.toString();
