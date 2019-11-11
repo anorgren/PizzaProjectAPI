@@ -46,7 +46,7 @@ public class ToppingsApiController implements ToppingsApi {
             @ApiParam(value = "toppingName", required = true) @PathVariable("name") String name) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            final Topping topping = toppingService.getTopping(name);
+            final Topping topping = toppingService.getTopping(name.toLowerCase());
             if (topping == null) {
                 return new ResponseEntity<Topping>(topping, HttpStatus.NOT_FOUND);
             }

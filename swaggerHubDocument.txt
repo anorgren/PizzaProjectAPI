@@ -334,10 +334,10 @@ paths:
     get:
       tags:
         - developers
-      summary: returns soda information about the given soda.
+      summary: returns all size options and information about the given soda.
       operationId: getSodasByName
       description: |
-        Get information of the given dessert
+        Get information of the given soda
       parameters:
         - name: name
           in: path
@@ -348,7 +348,7 @@ paths:
             example: sprite
       responses:
         '200':
-          description: information about the given soda
+          description: all available sizes and information about the given soda
           content:
             application/json:
               schema:
@@ -357,6 +357,142 @@ paths:
                  $ref: '#/components/schemas/Soda'
         '400':
           description: bad input parameter
+  /pizzas:
+    get:
+      tags:
+        - developers
+      summary: returns all pizzas
+      operationId: getPizzas
+      description: |
+        Get list of all pizzas
+      responses:
+        '200':
+          description: list of all pizzas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pizza'
+        '400':
+          description: bad input parameter
+  /pizzas/{pizzaName}:
+    get:
+      tags:
+        - developers
+      summary: returns information about the given pizza.
+      operationId: getPizzaByName
+      description: |
+        Get information of the given pizza
+      parameters:
+        - name: pizzaName
+          in: path
+          description: pizzaName
+          required: true
+          schema:
+            type: string
+            example: meat lovers
+      responses:
+        '200':
+          description: information about the given pizza
+          content:
+            application/json:
+              schema:
+               items:
+                 $ref: '#/components/schemas/Pizza'
+        '400':
+          description: bad input parameter
+  /crusts:
+    get:
+      tags:
+        - developers
+      summary: returns all crust options
+      operationId: getCrusts
+      description: |
+        Get list of all crusts
+      responses:
+        '200':
+          description: list of all crusts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Crust'
+        '400':
+          description: bad input parameter
+  /crusts/{crustName}:
+    get:
+      tags:
+        - developers
+      summary: returns information about the given crust.
+      operationId: getCrustByName
+      description: |
+        Get information of the given crust
+      parameters:
+        - name: crustName
+          in: path
+          description: crustName
+          required: true
+          schema:
+            type: string
+            example: original crust
+      responses:
+        '200':
+          description: information about the given crust
+          content:
+            application/json:
+              schema:
+               items:
+                 $ref: '#/components/schemas/Crust'
+        '400':
+          description: bad input parameter
+
+  /sauces:
+    get:
+      tags:
+        - developers
+      summary: returns all sauces
+      operationId: getSauces
+      description: Get list of all sauces
+      responses:
+        '200':
+          description: list of all sauces
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                $ref: '#/components/schemas/Sauce'
+        '400':
+          description: bad input parameter
+  /sauces/{sauceName}:
+    get:
+      tags:
+        - developers
+      summary: returns information about the given sauce.
+      operationId: getSauceByName
+      description: |
+        Get information of the given sauce
+      parameters:
+        - name: sauceName
+          in: path
+          description: sauceName
+          required: true
+          schema:
+            type: string
+            example: original
+      responses:
+        '200':
+          description: information about the given sauce
+          content:
+            application/json:
+              schema:
+               items:
+                 $ref: '#/components/schemas/Sauce'
+        '400':
+          description: bad input parameter
+
 components:
   schemas:
     Store:
@@ -526,4 +662,67 @@ components:
         price:
           type: number
           example: 1.99
-          
+    Sauce:
+      type: object
+      required:
+      - sauceName
+      - dietaryProperties
+      - price
+      properties:
+        sauceName:
+          type: string
+          example: "original"
+        dietaryProperties:
+          type: object
+          additionalProperties:
+            type: boolean
+        price:
+          type: number
+          example: 0
+    Crust:
+      type: object
+      required:
+      - crustName
+      - dietaryProperties
+      - price
+      - availableSizes
+      properties:
+        crustName:
+          type: string
+          example: "thin crust"
+        dietaryProperties:
+          type: object
+          additionalProperties:
+            type: boolean
+        price:
+          type: number
+          example: 1.00
+        availableSizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PizzaSize'
+    Pizza:
+      type: object
+      required:
+      - pizzaName
+      - size
+      - sauce
+      - crust
+      - toppings
+      properties:
+        pizzaName:
+          type: string
+          example: "meat lovers"
+        size:
+          type: object
+          $ref: '#/components/schemas/PizzaSize'
+        sauce:
+          type: object
+          $ref: '#/components/schemas/Sauce'
+        crust:
+          type: object
+          $ref: '#/components/schemas/Crust'
+        toppings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Topping'
