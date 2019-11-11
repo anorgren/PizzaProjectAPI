@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class FlatDiscountSpecial implements ApplicableSpecial {
 
   private static final Integer DISCOUNT_AMOUNT = 2000;
-  private static final String SPECIAL_ID = "FlatDiscountSpecial";
+  private static final String SPECIAL_ID = "FlatDiscount";
 
   @Autowired
   private OrderRepository repository;
