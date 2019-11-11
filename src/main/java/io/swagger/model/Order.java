@@ -1,10 +1,12 @@
 package io.swagger.model;
 
+import io.swagger.repository.OrderRepository;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -12,6 +14,7 @@ import javax.validation.constraints.*;
 /**
  * Order
  */
+@Document(collection = "Orders")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T18:52:07.371Z[GMT]")
 public class Order   {
