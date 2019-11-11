@@ -1,0 +1,287 @@
+package io.swagger.model;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import org.springframework.validation.annotation.Validated;
+
+import java.util.Objects;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * Order
+ */
+@Validated
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
+public class Order   {
+  @JsonProperty("orderId")
+  private String orderId = null;
+
+  @JsonProperty("storeId")
+  private String storeId = null;
+
+  @JsonProperty("itemList")
+  private ItemList itemList = null;
+
+  @JsonProperty("tentativeAmount")
+  private Price tentativeAmount = null;
+
+  @JsonProperty("calculatedAmount")
+  private Price calculatedAmount = null;
+
+  @JsonProperty("payementInformation")
+  private PaymentInformation payementInformation = null;
+
+  /**
+   * Gets or Sets status
+   */
+  public enum StatusEnum {
+    CREATED("Created"),
+    
+    INPROCESS("InProcess"),
+    
+    COMPLETED("Completed");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static StatusEnum fromValue(String text) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }
+  @JsonProperty("status")
+  private StatusEnum status = null;
+
+  @JsonProperty("specialId")
+  private String specialId = null;
+
+  public Order orderId(String orderId) {
+    this.orderId = orderId;
+    return this;
+  }
+
+  /**
+   * Get orderId
+   * @return orderId
+  **/
+  @ApiModelProperty(example = "1", required = true, value = "")
+      @NotNull
+
+    public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
+
+  public Order storeId(String storeId) {
+    this.storeId = storeId;
+    return this;
+  }
+
+  /**
+   * Get storeId
+   * @return storeId
+  **/
+  @ApiModelProperty(example = "1", value = "")
+  
+    public String getStoreId() {
+    return storeId;
+  }
+
+  public void setStoreId(String storeId) {
+    this.storeId = storeId;
+  }
+
+  public Order itemList(ItemList itemList) {
+    this.itemList = itemList;
+    return this;
+  }
+
+  /**
+   * Get itemList
+   * @return itemList
+  **/
+  @ApiModelProperty(value = "")
+  
+    @Valid
+    public ItemList getItemList() {
+    return itemList;
+  }
+
+  public void setItemList(ItemList itemList) {
+    this.itemList = itemList;
+  }
+
+  public Order tentativeAmount(Price tentativeAmount) {
+    this.tentativeAmount = tentativeAmount;
+    return this;
+  }
+
+  /**
+   * Get tentativeAmount
+   * @return tentativeAmount
+  **/
+  @ApiModelProperty(value = "")
+  
+    @Valid
+    public Price getTentativeAmount() {
+    return tentativeAmount;
+  }
+
+  public void setTentativeAmount(Price tentativeAmount) {
+    this.tentativeAmount = tentativeAmount;
+  }
+
+  public Order calculatedAmount(Price calculatedAmount) {
+    this.calculatedAmount = calculatedAmount;
+    return this;
+  }
+
+  /**
+   * Get calculatedAmount
+   * @return calculatedAmount
+  **/
+  @ApiModelProperty(value = "")
+  
+    @Valid
+    public Price getCalculatedAmount() {
+    return calculatedAmount;
+  }
+
+  public void setCalculatedAmount(Price calculatedAmount) {
+    this.calculatedAmount = calculatedAmount;
+  }
+
+  public Order payementInformation(PaymentInformation payementInformation) {
+    this.payementInformation = payementInformation;
+    return this;
+  }
+
+  /**
+   * Get payementInformation
+   * @return payementInformation
+  **/
+  @ApiModelProperty(value = "")
+  
+    @Valid
+    public PaymentInformation getPayementInformation() {
+    return payementInformation;
+  }
+
+  public void setPayementInformation(PaymentInformation payementInformation) {
+    this.payementInformation = payementInformation;
+  }
+
+  public Order status(StatusEnum status) {
+    this.status = status;
+    return this;
+  }
+
+  /**
+   * Get status
+   * @return status
+  **/
+  @ApiModelProperty(value = "")
+  
+    public StatusEnum getStatus() {
+    return status;
+  }
+
+  public void setStatus(StatusEnum status) {
+    this.status = status;
+  }
+
+  public Order specialId(String specialId) {
+    this.specialId = specialId;
+    return this;
+  }
+
+  /**
+   * Get specialId
+   * @return specialId
+  **/
+  @ApiModelProperty(value = "")
+
+    public String getSpecialId() {
+    return specialId;
+  }
+
+  public void setSpecialId(String specialId) {
+    this.specialId = specialId;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Order order = (Order) o;
+    return Objects.equals(this.orderId, order.orderId) &&
+        Objects.equals(this.storeId, order.storeId) &&
+        Objects.equals(this.itemList, order.itemList) &&
+        Objects.equals(this.tentativeAmount, order.tentativeAmount) &&
+        Objects.equals(this.calculatedAmount, order.calculatedAmount) &&
+        Objects.equals(this.payementInformation, order.payementInformation) &&
+        Objects.equals(this.status, order.status) &&
+        Objects.equals(this.specialId, order.specialId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(orderId, storeId, itemList, tentativeAmount, calculatedAmount, payementInformation, status, specialId);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class Order {\n");
+    
+    sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
+    sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
+    sb.append("    itemList: ").append(toIndentedString(itemList)).append("\n");
+    sb.append("    tentativeAmount: ").append(toIndentedString(tentativeAmount)).append("\n");
+    sb.append("    calculatedAmount: ").append(toIndentedString(calculatedAmount)).append("\n");
+    sb.append("    payementInformation: ").append(toIndentedString(payementInformation)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    specialId: ").append(toIndentedString(specialId)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+}

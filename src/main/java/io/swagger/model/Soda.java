@@ -1,30 +1,33 @@
 package io.swagger.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import io.swagger.configuration.DataConfiguration;
-import io.swagger.repository.SodaRepository;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.SodaRepository;
 
 /**
  * Soda
  */
 @Document(collection = "Sodas")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
-public class Soda   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
+@JsonTypeName("Soda")
+public class Soda extends Item  {
 
   public static void initialize(SodaRepository repository) {
     if (repository.count() > 0) {
@@ -178,19 +181,20 @@ public class Soda   {
     return Objects.equals(this.sodaName, soda.sodaName) &&
         Objects.equals(this.size, soda.size) &&
         Objects.equals(this.dietaryProperties, soda.dietaryProperties) &&
-        Objects.equals(this.price, soda.price);
+        Objects.equals(this.price, soda.price) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sodaName, size, dietaryProperties, price);
+    return Objects.hash(sodaName, size, dietaryProperties, price, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Soda {\n");
-    
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    sodaName: ").append(toIndentedString(sodaName)).append("\n");
     sb.append("    size: ").append(toIndentedString(size)).append("\n");
     sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
