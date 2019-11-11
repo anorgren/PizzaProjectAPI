@@ -987,6 +987,8 @@ components:
           $ref: '#/components/schemas/Price'
         calculatedAmount:
           $ref: '#/components/schemas/Price'
+        discountAmount:
+          $ref: '#/components/schemas/Price'
         payementInformation:
           $ref: '#/components/schemas/PaymentInformation'
         status:

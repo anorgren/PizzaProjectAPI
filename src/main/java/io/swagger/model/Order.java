@@ -1,23 +1,19 @@
 package io.swagger.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import org.springframework.validation.annotation.Validated;
-
 import java.util.Objects;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Order
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T18:52:07.371Z[GMT]")
 public class Order   {
   @JsonProperty("orderId")
   private String orderId = null;
@@ -33,6 +29,9 @@ public class Order   {
 
   @JsonProperty("calculatedAmount")
   private Price calculatedAmount = null;
+
+  @JsonProperty("discountAmount")
+  private Price discountAmount = null;
 
   @JsonProperty("payementInformation")
   private PaymentInformation payementInformation = null;
@@ -174,6 +173,26 @@ public class Order   {
     this.calculatedAmount = calculatedAmount;
   }
 
+  public Order discountAmount(Price discountAmount) {
+    this.discountAmount = discountAmount;
+    return this;
+  }
+
+  /**
+   * Get discountAmount
+   * @return discountAmount
+  **/
+  @ApiModelProperty(value = "")
+  
+    @Valid
+    public Price getDiscountAmount() {
+    return discountAmount;
+  }
+
+  public void setDiscountAmount(Price discountAmount) {
+    this.discountAmount = discountAmount;
+  }
+
   public Order payementInformation(PaymentInformation payementInformation) {
     this.payementInformation = payementInformation;
     return this;
@@ -223,7 +242,7 @@ public class Order   {
    * @return specialId
   **/
   @ApiModelProperty(value = "")
-
+  
     public String getSpecialId() {
     return specialId;
   }
@@ -247,6 +266,7 @@ public class Order   {
         Objects.equals(this.itemList, order.itemList) &&
         Objects.equals(this.tentativeAmount, order.tentativeAmount) &&
         Objects.equals(this.calculatedAmount, order.calculatedAmount) &&
+        Objects.equals(this.discountAmount, order.discountAmount) &&
         Objects.equals(this.payementInformation, order.payementInformation) &&
         Objects.equals(this.status, order.status) &&
         Objects.equals(this.specialId, order.specialId);
@@ -254,7 +274,7 @@ public class Order   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(orderId, storeId, itemList, tentativeAmount, calculatedAmount, payementInformation, status, specialId);
+    return Objects.hash(orderId, storeId, itemList, tentativeAmount, calculatedAmount, discountAmount, payementInformation, status, specialId);
   }
 
   @Override
@@ -267,6 +287,7 @@ public class Order   {
     sb.append("    itemList: ").append(toIndentedString(itemList)).append("\n");
     sb.append("    tentativeAmount: ").append(toIndentedString(tentativeAmount)).append("\n");
     sb.append("    calculatedAmount: ").append(toIndentedString(calculatedAmount)).append("\n");
+    sb.append("    discountAmount: ").append(toIndentedString(discountAmount)).append("\n");
     sb.append("    payementInformation: ").append(toIndentedString(payementInformation)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    specialId: ").append(toIndentedString(specialId)).append("\n");
