@@ -1,11 +1,8 @@
 package io.swagger;
 
-import io.swagger.model.PizzaSize;
-import io.swagger.model.Special;
-import io.swagger.model.Topping;
-import io.swagger.repository.PizzaSizeRepository;
-import io.swagger.repository.SpecialsRepository;
-import io.swagger.repository.ToppingRepository;
+import io.swagger.model.*;
+import io.swagger.repository.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -27,16 +24,49 @@ public class Application implements CommandLineRunner {
 
   @Autowired
   private SpecialsRepository specialsRepository;
+  
+  @Autowired
+  private StoreRepository storeRepository;
+
+  @Autowired
+  private BreadstickRepository breadstickRepository;
+
+  @Autowired
+  private DessertRepository dessertRepository;
+
+  @Autowired
+  private SodaRepository sodaRepository;
+
+  @Autowired
+  private SauceRepository sauceRepository;
+
+  @Autowired
+  private CrustRepository crustRepository;
 
   @Override
   public void run(String... arg0) throws Exception {
     if (arg0.length > 0 && arg0[0].equals("exitcode")) {
       throw new ExitException();
     }
+    toppingRepository.deleteAll();
     Topping.initialize(toppingRepository);
+    pizzaSizeRepository.deleteAll();
     PizzaSize.initialize(pizzaSizeRepository);
+    storeRepository.deleteAll();
+    Store.initialize(storeRepository);
+    breadstickRepository.deleteAll();
+    Breadstick.initialize(breadstickRepository);
+    dessertRepository.deleteAll();
+    Dessert.initialize(dessertRepository);
+    sodaRepository.deleteAll();
+    Soda.initialize(sodaRepository);
+    sauceRepository.deleteAll();
+    Sauce.initialize(sauceRepository);
+    crustRepository.deleteAll();
+    Crust.initialize(crustRepository);
     specialsRepository.deleteAll();
     Special.initialize(specialsRepository);
+
   }
 
   public static void main(String[] args) throws Exception {
@@ -51,6 +81,5 @@ public class Application implements CommandLineRunner {
     public int getExitCode() {
       return 10;
     }
-
   }
 }
