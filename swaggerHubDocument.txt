@@ -404,7 +404,7 @@ paths:
     put:
       tags:
         - developers
-      summary: creates a Pizza
+      summary: creates a Pizza 
       operationId: createPizza
       description: |
         Validates and creates pizza object using the parameters provided
@@ -439,7 +439,7 @@ paths:
             example: original
       responses:
         '200':
-          description: pizza
+          description: pizza 
           content:
             application/json:
               schema:
@@ -655,6 +655,31 @@ paths:
                 $ref: '#/components/schemas/Order'
         '400':
           description: bad input parameter
+  /applySpecial:
+    put:
+      tags:
+        - developers
+      summary: Completes the given order
+      operationId: applySpecial
+      description: |
+        applies the Special/Discount to order
+      parameters:
+        - name: specialId
+          in: path
+          description: orderId
+          required: true
+          schema:
+            type: string
+            example: 1
+      responses:
+        '200':
+          description: Updated Order Record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: bad input parameter
   /completeOrder:
     put:
       tags:
@@ -665,7 +690,7 @@ paths:
         Finalizes the order with payement information and marking order complete. Once completed the order can not be modified.
       parameters:
         - name: id
-          in: path
+          in: query
           description: orderId
           required: true
           schema:
@@ -682,7 +707,7 @@ paths:
           description: tentative amount of order in cents
           required: true
           schema:
-            $ref: '#/components/schemas/Price'
+            $ref: '#/components/schemas/Price' 
       responses:
         '200':
           description: Completed Order Record
@@ -932,7 +957,7 @@ components:
                 $ref: '#/components/schemas/Topping'
     Item:
       type: object
-      required:
+      required: 
         - itemType
       properties:
         itemType:
@@ -966,10 +991,12 @@ components:
           $ref: '#/components/schemas/PaymentInformation'
         status:
           type: string
-          enum:
+          enum: 
             - Created
             - InProcess
             - Completed
+        specialId:
+          type: string
     PaymentInformation:
       type: object
       required:
@@ -993,4 +1020,3 @@ components:
           type: string
           minLength: 3
           maxLength: 4
-
