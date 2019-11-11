@@ -1,26 +1,28 @@
 package io.swagger.model;
 
-import java.util.*;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.Crust;
-import io.swagger.model.PizzaSize;
-import io.swagger.model.Sauce;
-import io.swagger.model.Topping;
-import io.swagger.model.DietaryProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import org.springframework.validation.annotation.Validated;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Pizza
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T22:37:07.679Z[GMT]")
-public class Pizza   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
+@JsonTypeName("Pizza")
+public class Pizza extends Item  {
   @JsonProperty("pizzaName")
   private String pizzaName = null;
 
@@ -169,19 +171,20 @@ public class Pizza   {
         Objects.equals(this.size, pizza.size) &&
         Objects.equals(this.sauce, pizza.sauce) &&
         Objects.equals(this.crust, pizza.crust) &&
-        Objects.equals(this.toppings, pizza.toppings);
+        Objects.equals(this.toppings, pizza.toppings) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pizzaName, size, sauce, crust, toppings);
+    return Objects.hash(pizzaName, size, sauce, crust, toppings, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Pizza {\n");
-    
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    pizzaName: ").append(toIndentedString(pizzaName)).append("\n");
     sb.append("    size: ").append(toIndentedString(size)).append("\n");
     sb.append("    sauce: ").append(toIndentedString(sauce)).append("\n");

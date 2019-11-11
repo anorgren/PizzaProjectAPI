@@ -1,15 +1,28 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiParam;
+import io.swagger.model.Price;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T18:44:25.092Z[GMT]")
 @Controller
-public class PricesApiController {
+public class PricesApiController implements PricesApi {
 
     private static final Logger log = LoggerFactory.getLogger(PricesApiController.class);
 
@@ -29,6 +42,19 @@ public class PricesApiController {
         this.request = request;
     }
 
+    public ResponseEntity<Price> getOrderPrice(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<Price>(objectMapper.readValue("{\n  \"priceInCents\" : 1000\n}", Price.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<Price>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<Price>(HttpStatus.NOT_IMPLEMENTED);
+    }
     /**
      * Calculates the price of a pizza with a given size and toppings.
      *
@@ -36,11 +62,11 @@ public class PricesApiController {
      * @param toppings A list of the names of all the toppings
      * @return The price of a pizza
      */
-//  public ResponseEntity<Price> getPizzaPrice(
-//      @NotNull @ApiParam(value = "Size of pizza", required = true)
-//      @Valid @RequestParam(value = "size", required = true) String size,
-//      @ApiParam(value = "Topping to include on pizza")
-//      @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
+  public ResponseEntity<Price> getPizzaPrice(
+      @NotNull @ApiParam(value = "Size of pizza", required = true)
+      @Valid @RequestParam(value = "size", required = true) String size,
+      @ApiParam(value = "Topping to include on pizza")
+      @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
 //    String accept = request.getHeader("Accept");
 //    if (accept != null && accept.contains("application/json")) {
 //      try {
@@ -113,5 +139,6 @@ public class PricesApiController {
 //        break;
 //    }
 //    return price;
-//  }
+    return null;
+  }
 }
