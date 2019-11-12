@@ -27,14 +27,4 @@ public interface BreadsticksApi {
             method = RequestMethod.GET)
     ResponseEntity<List<Breadstick>> getBreadsticks();
 
-
-    @ApiOperation(value = "returns breadstick information of the given breadstick", nickname = "getBreadsticksByName", notes = "Get information of the given breadstick ", response = Breadstick.class, responseContainer = "List", tags = {"developers",})
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "breadstick information about the given breadstick", response = Breadstick.class, responseContainer = "List"),
-            @ApiResponse(code = 400, message = "bad input parameter")})
-    @RequestMapping(value = "/breadsticks/{name}",
-            produces = {"application/json"},
-            method = RequestMethod.GET)
-    ResponseEntity<List<Breadstick>> getBreadsticksByName(@ApiParam(value = "breadstickName", required = true) @PathVariable("name") String name);
-
 }

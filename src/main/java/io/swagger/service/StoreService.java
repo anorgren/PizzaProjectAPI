@@ -13,12 +13,15 @@ public class StoreService {
   @Autowired
   StoreRepository storeRepository;
 
-  public BasicStoreInfo getStoreById(String storeId) {
+  public Store getStoreById(String storeId) {
     return storeRepository.findStoreByBranchId(storeId);
   }
 
   public List<Store> getAllStores() {
     return storeRepository.findAll();
+  }
+  public List<BasicStoreInfo> getAllBasicInfoStores() {
+    return storeRepository.getAllByBranchIdExists(true);
   }
 
 }

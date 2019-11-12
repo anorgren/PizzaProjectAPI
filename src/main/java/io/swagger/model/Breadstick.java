@@ -25,11 +25,12 @@ import io.swagger.repository.BreadstickRepository;
  */
 @Document(collection = "Breadsticks")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
 @JsonTypeName("Breadstick")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 public class Breadstick extends Item  {
-  @JsonProperty("name")
-  private String name = null;
+  private static final BigDecimal SMALL_PRICE = new BigDecimal(2.99);
+  private static final BigDecimal LARGE_PRICE = new BigDecimal(4.99);
+  private static final BigDecimal WITH_CHEESE_PRICE = new BigDecimal(2.00);
 
   public static void initialize(BreadstickRepository repository) {
     if (repository.count() > 0) {
@@ -42,9 +43,8 @@ public class Breadstick extends Item  {
    * Gets or Sets size
    */
   public enum SizeEnum {
-    SMALL("SMALL"),
-    
-    LARGE("LARGE");
+    SMALL("small"),
+    LARGE("large");
 
     private String value;
 
@@ -68,6 +68,7 @@ public class Breadstick extends Item  {
       return null;
     }
   }
+
   @JsonProperty("size")
   private SizeEnum size = null;
 
@@ -79,29 +80,18 @@ public class Breadstick extends Item  {
   private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
 
   @JsonProperty("price")
-  private BigDecimal price = null;
-
-  public Breadstick name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(example = "garlic breadsticks", value = "")
-  
-    public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
+  private BigDecimal price = new BigDecimal(0);
 
   public Breadstick size(SizeEnum size) {
     this.size = size;
+    switch (this.size) {
+      case SMALL:
+        this.price = this.price.add(SMALL_PRICE);
+        break;
+      case LARGE:
+        this.price = this.price.add(LARGE_PRICE);
+        break;
+    }
     return this;
   }
 
@@ -110,18 +100,16 @@ public class Breadstick extends Item  {
    * @return size
   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
-
-    public SizeEnum getSize() {
+  @NotNull
+  public SizeEnum getSize() {
     return size;
-  }
-
-  public void setSize(SizeEnum size) {
-    this.size = size;
   }
 
   public Breadstick withCheese(Boolean withCheese) {
     this.withCheese = withCheese;
+    if (this.withCheese) {
+      this.price = this.price.add(WITH_CHEESE_PRICE);
+    }
     return this;
   }
 
@@ -129,15 +117,10 @@ public class Breadstick extends Item  {
    * Get withCheese
    * @return withCheese
   **/
-  @ApiModelProperty(required = true, value = "")
-      @NotNull
-
-    public Boolean isWithCheese() {
+  @ApiModelProperty(required = true, value = "true/false")
+  @NotNull
+  public Boolean isWithCheese() {
     return withCheese;
-  }
-
-  public void setWithCheese(Boolean withCheese) {
-    this.withCheese = withCheese;
   }
 
   public Breadstick dietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
@@ -155,19 +138,10 @@ public class Breadstick extends Item  {
    * @return dietaryProperties
   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public Map<DietaryProperty, Boolean> getDietaryProperties() {
+  public Map<DietaryProperty, Boolean> getDietaryProperties() {
     return dietaryProperties;
-  }
-
-  public void setDietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
-    this.dietaryProperties = dietaryProperties;
-  }
-
-  public Breadstick price(BigDecimal price) {
-    this.price = price;
-    return this;
   }
 
   /**
@@ -175,17 +149,12 @@ public class Breadstick extends Item  {
    * @return price
   **/
   @ApiModelProperty(example = "3.99", required = true, value = "")
-      @NotNull
-    @Override
-    @Valid
-    public BigDecimal getPrice() {
+  @NotNull
+  @Override
+  @Valid
+  public BigDecimal getPrice() {
     return price;
   }
-
-  public void setPrice(BigDecimal price) {
-    this.price = price;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -196,8 +165,7 @@ public class Breadstick extends Item  {
       return false;
     }
     Breadstick breadstick = (Breadstick) o;
-    return Objects.equals(this.name, breadstick.name) &&
-        Objects.equals(this.size, breadstick.size) &&
+    return Objects.equals(this.size, breadstick.size) &&
         Objects.equals(this.withCheese, breadstick.withCheese) &&
         Objects.equals(this.dietaryProperties, breadstick.dietaryProperties) &&
         Objects.equals(this.price, breadstick.price) &&
@@ -206,7 +174,7 @@ public class Breadstick extends Item  {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, size, withCheese, dietaryProperties, price, super.hashCode());
+    return Objects.hash(size, withCheese, dietaryProperties, price, super.hashCode());
   }
 
   @Override
@@ -214,7 +182,6 @@ public class Breadstick extends Item  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Breadstick {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    size: ").append(toIndentedString(size)).append("\n");
     sb.append("    withCheese: ").append(toIndentedString(withCheese)).append("\n");
     sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");

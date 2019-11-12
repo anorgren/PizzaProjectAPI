@@ -79,14 +79,6 @@ public class DataConfiguration {
     private static final String BRANCH_THREE_ADDRESS =
             "101 Pine Ave, Seattle, WA 01234";
 
-    private static final String GARLIC_BREADSTICKS = "garlic breadsticks";
-    private static final String CHEESY_BREADSTICKS = "cheesy breadsticks";
-
-    private static final BigDecimal SMALL_BREADSTICK_PRICE = new BigDecimal(3.99);
-    private static final BigDecimal LARGE_BREADSTICK_PRICE = new BigDecimal(5.99);
-    private static final BigDecimal SMALL_CHEESE_BREADSTICK_PRICE = new BigDecimal(5.99);
-    private static final BigDecimal LARGE_CHEESE_BREADSTICK_PRICE = new BigDecimal(6.99);
-
     private static final String CHOCOLATE_CHIP_COOKIE_NAME = "chocolate chip cookies";
     private static final String CHOCOLATE_CHIP_COOKIE_DESCRIPTION =
             "six large chocolate chip cookies baked fresh in our ovens.";
@@ -98,14 +90,9 @@ public class DataConfiguration {
 
     private static final String COCA_COLA_PRODUCT_NAME = "coca cola";
     private static final String SPRITE_PRODUCT_NAME = "sprite";
-    private static final BigDecimal SIX_PACK_PRICE = new BigDecimal(3.59);
-    private static final BigDecimal TWENTY_OUNCE_PRICE = new BigDecimal(1.59);
-    private static final BigDecimal TWO_LITER_PRICE = new BigDecimal(2.25);
 
     private static final String SAUCE_ORIGINAL_NAME = "original";
     private static final String SAUCE_ROBUST_NAME = "robust italian";
-    private static final BigDecimal SAUCE_ORIGINAL_PRICE = new BigDecimal(0);
-    private static final BigDecimal SAUCE_ROBUST_PRICE = new BigDecimal(0.5);
 
     private static final String CRUST_ORIGINAL_NAME = "original crust";
     private static final String CRUST_THIN_NAME = "thin crust";
@@ -327,23 +314,23 @@ public class DataConfiguration {
         List<Breadstick> breadsticks = new LinkedList<>();
 
         Breadstick breadstickSmall = new Breadstick();
-        breadstickSmall.name(GARLIC_BREADSTICKS).size(Breadstick.SizeEnum.SMALL).withCheese(false)
-                .dietaryProperties(vegetarian).price(SMALL_BREADSTICK_PRICE);
+        breadstickSmall.size(Breadstick.SizeEnum.SMALL).withCheese(false)
+                .dietaryProperties(vegetarian);
         breadsticks.add(breadstickSmall);
 
         Breadstick breadstickLarge = new Breadstick();
-        breadstickLarge.name(GARLIC_BREADSTICKS).size(Breadstick.SizeEnum.LARGE).withCheese(false)
-                .dietaryProperties(vegetarian).price(LARGE_BREADSTICK_PRICE);
+        breadstickLarge.size(Breadstick.SizeEnum.LARGE).withCheese(false)
+                .dietaryProperties(vegetarian);
         breadsticks.add(breadstickLarge);
 
         Breadstick cheeseSmall = new Breadstick();
-        cheeseSmall.name(CHEESY_BREADSTICKS).size(Breadstick.SizeEnum.SMALL).withCheese(true)
-                .dietaryProperties(vegetarian).price(SMALL_CHEESE_BREADSTICK_PRICE);
+        cheeseSmall.size(Breadstick.SizeEnum.SMALL).withCheese(true)
+                .dietaryProperties(vegetarian);
         breadsticks.add(cheeseSmall);
 
         Breadstick cheeseLarge = new Breadstick();
-        cheeseLarge.name(CHEESY_BREADSTICKS).size(Breadstick.SizeEnum.LARGE).withCheese(true)
-                .dietaryProperties(vegetarian).price(LARGE_CHEESE_BREADSTICK_PRICE);
+        cheeseLarge.size(Breadstick.SizeEnum.LARGE).withCheese(true)
+                .dietaryProperties(vegetarian);
         breadsticks.add(cheeseLarge);
 
         return breadsticks;
@@ -379,29 +366,34 @@ public class DataConfiguration {
         List<Soda> sodas = new LinkedList<>();
 
         Soda cokeSixPack = new Soda();
-        cokeSixPack = cokeSixPack.sodaName(COCA_COLA_PRODUCT_NAME).price(SIX_PACK_PRICE)
-                .size(Soda.SizeEnum.SIX_PACK).dietaryProperties(veganVegetarianGlutenFree);
+        cokeSixPack = cokeSixPack.sodaName(COCA_COLA_PRODUCT_NAME)
+                .size(Soda.SizeEnum.SIX_PACK)
+                .dietaryProperties(veganVegetarianGlutenFree);
         sodas.add(cokeSixPack);
 
         Soda cokeTwoLiter = new Soda();
-        cokeTwoLiter = cokeTwoLiter.sodaName(COCA_COLA_PRODUCT_NAME).price(TWO_LITER_PRICE)
-                .size(Soda.SizeEnum.TWO_LITER).dietaryProperties(veganVegetarianGlutenFree);
+        cokeTwoLiter = cokeTwoLiter.sodaName(COCA_COLA_PRODUCT_NAME)
+                .size(Soda.SizeEnum.TWO_LITER)
+                .dietaryProperties(veganVegetarianGlutenFree);
         sodas.add(cokeTwoLiter);
 
         Soda cokeTwentyOunce= new Soda();
-        cokeTwentyOunce = cokeTwentyOunce.sodaName(COCA_COLA_PRODUCT_NAME).price(TWENTY_OUNCE_PRICE)
-                .size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).dietaryProperties(veganVegetarianGlutenFree);
+        cokeTwentyOunce = cokeTwentyOunce.sodaName(COCA_COLA_PRODUCT_NAME)
+                .size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE)
+                .dietaryProperties(veganVegetarianGlutenFree);
         sodas.add(cokeTwentyOunce);
 
         Soda spriteTwentyOunce= new Soda();
-        spriteTwentyOunce = spriteTwentyOunce.sodaName(SPRITE_PRODUCT_NAME).price(TWENTY_OUNCE_PRICE)
-                .size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).dietaryProperties(veganVegetarianGlutenFree);
+        spriteTwentyOunce = spriteTwentyOunce.sodaName(SPRITE_PRODUCT_NAME)
+                .size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE)
+                .dietaryProperties(veganVegetarianGlutenFree);
         sodas.add(spriteTwentyOunce);
 
         Soda spriteTwoLiter = new Soda();
-        spriteTwoLiter = spriteTwoLiter.sodaName(SPRITE_PRODUCT_NAME).price(TWO_LITER_PRICE)
-                .size(Soda.SizeEnum.TWO_LITER).dietaryProperties(veganVegetarianGlutenFree);
-        sodas.add(spriteTwentyOunce);
+        spriteTwoLiter = spriteTwoLiter.sodaName(SPRITE_PRODUCT_NAME)
+                .size(Soda.SizeEnum.TWO_LITER)
+                .dietaryProperties(veganVegetarianGlutenFree);
+        sodas.add(spriteTwoLiter);
 
         return sodas;
     }
@@ -416,12 +408,12 @@ public class DataConfiguration {
 
         Sauce sauceOriginal = new Sauce();
         sauceOriginal.sauceName(SAUCE_ORIGINAL_NAME)
-                .dietaryProperties(veganVegetarianGlutenFree).price(SAUCE_ORIGINAL_PRICE);
+                .dietaryProperties(veganVegetarianGlutenFree);
         sauces.add(sauceOriginal);
 
         Sauce sauceRobust = new Sauce();
         sauceRobust.sauceName(SAUCE_ROBUST_NAME)
-                .dietaryProperties(veganVegetarianGlutenFree).price(SAUCE_ROBUST_PRICE);
+                .dietaryProperties(veganVegetarianGlutenFree);
         sauces.add(sauceRobust);
 
         return sauces;
@@ -443,7 +435,6 @@ public class DataConfiguration {
         SMALL_LARGE_SIZE.add(pizzaSizeLarge);
         ALL_SIZES.add(pizzaSizeLarge);
     }
-
 
     private static List<Crust> createAllCrusts() {
         initializeDietaryProperties();

@@ -16,8 +16,4 @@ public class BreadstickService {
     public List<Breadstick> getAllBreadsticks() {
         return breadstickRepository.findAll();
     }
-
-    public List<Breadstick> getBreadsticksByName(String name) {
-        return breadstickRepository.getBreadstickByName(name);
-    }
 }

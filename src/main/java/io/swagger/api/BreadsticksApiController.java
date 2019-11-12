@@ -46,17 +46,4 @@ public class BreadsticksApiController implements BreadsticksApi {
         return new ResponseEntity<List<Breadstick>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<List<Breadstick>> getBreadsticksByName(@ApiParam(value = "breadstickName", required = true) @PathVariable("name") String name) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            List<Breadstick> breadsticks = new LinkedList<>();
-            breadsticks = breadstickService.getBreadsticksByName(name.toLowerCase());
-            if (breadsticks == null) {
-                return new ResponseEntity<List<Breadstick>>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<List<Breadstick>>(breadsticks, HttpStatus.OK);
-        }
-        return new ResponseEntity<List<Breadstick>>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
 }
