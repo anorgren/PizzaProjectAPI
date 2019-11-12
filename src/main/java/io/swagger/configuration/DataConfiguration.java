@@ -57,8 +57,6 @@ public class DataConfiguration {
 
     private static final String SAUCE_ORIGINAL_NAME = "original";
     private static final String SAUCE_ROBUST_NAME = "robust italian";
-    private static final BigDecimal SAUCE_ORIGINAL_PRICE = new BigDecimal(0);
-    private static final BigDecimal SAUCE_ROBUST_PRICE = new BigDecimal(0.5);
 
     private static final String CRUST_ORIGINAL_NAME = "original crust";
     private static final String CRUST_THIN_NAME = "thin crust";
@@ -405,12 +403,12 @@ public class DataConfiguration {
 
         Sauce sauceOriginal = new Sauce();
         sauceOriginal.sauceName(SAUCE_ORIGINAL_NAME)
-                .dietaryProperties(veganVegetarianGlutenFree).price(SAUCE_ORIGINAL_PRICE);
+                .dietaryProperties(veganVegetarianGlutenFree);
         sauces.add(sauceOriginal);
 
         Sauce sauceRobust = new Sauce();
         sauceRobust.sauceName(SAUCE_ROBUST_NAME)
-                .dietaryProperties(veganVegetarianGlutenFree).price(SAUCE_ROBUST_PRICE);
+                .dietaryProperties(veganVegetarianGlutenFree);
         sauces.add(sauceRobust);
 
         return sauces;

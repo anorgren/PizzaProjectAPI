@@ -31,9 +31,6 @@ public class Sauce   {
   @Valid
   private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
 
-  @JsonProperty("price")
-  private BigDecimal price = null;
-
   public Sauce sauceName(String sauceName) {
     this.sauceName = sauceName;
     return this;
@@ -78,23 +75,6 @@ public class Sauce   {
     return dietaryProperties;
   }
 
-  public Sauce price(BigDecimal price) {
-    this.price = price;
-    return this;
-  }
-
-  /**
-   * Get price
-   * @return price
-  **/
-  @ApiModelProperty(example = "0", required = true, value = "")
-      @NotNull
-
-    @Valid
-    public BigDecimal getPrice() {
-    return price;
-  }
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -105,13 +85,12 @@ public class Sauce   {
     }
     Sauce sauce = (Sauce) o;
     return Objects.equals(this.sauceName, sauce.sauceName) &&
-        Objects.equals(this.dietaryProperties, sauce.dietaryProperties) &&
-        Objects.equals(this.price, sauce.price);
+        Objects.equals(this.dietaryProperties, sauce.dietaryProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sauceName, dietaryProperties, price);
+    return Objects.hash(sauceName, dietaryProperties);
   }
 
   @Override
@@ -121,7 +100,6 @@ public class Sauce   {
     
     sb.append("    sauceName: ").append(toIndentedString(sauceName)).append("\n");
     sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
-    sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("}");
     return sb.toString();
   }

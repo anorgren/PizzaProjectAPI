@@ -585,9 +585,6 @@ components:
           type: object
           additionalProperties:
               type: boolean
-        price:
-          type: number
-          example: 3.99
     Dessert:
       type: object
       required:
@@ -637,7 +634,6 @@ components:
       required:
       - sauceName
       - dietaryProperties
-      - price
       properties:
         sauceName:
           type: string
@@ -646,9 +642,6 @@ components:
           type: object
           additionalProperties:
             type: boolean
-        price:
-          type: number
-          example: 0
     Crust:
       type: object
       required:
