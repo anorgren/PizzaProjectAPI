@@ -2,24 +2,20 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.SodaRepository;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.configuration.DataConfiguration;
-import io.swagger.repository.SodaRepository;
 
 /**
  * Soda
@@ -28,10 +24,10 @@ import io.swagger.repository.SodaRepository;
 @Validated
 @JsonTypeName("Soda")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
-public class Soda extends Item{
-  private static final BigDecimal TWO_LITER_PRICE = new BigDecimal(2.59);
-  private static final BigDecimal TWENTY_OUNCE_PRICE = new BigDecimal(1.75);
-  private static final BigDecimal SIX_PACK_PRICE = new BigDecimal(3.49);
+public class Soda extends Item {
+    private static final BigDecimal TWO_LITER_PRICE = new BigDecimal(2.59);
+    private static final BigDecimal TWENTY_OUNCE_PRICE = new BigDecimal(1.75);
+    private static final BigDecimal SIX_PACK_PRICE = new BigDecimal(3.49);
 
     public static void initialize(SodaRepository repository) {
         if (repository.count() > 0) {
@@ -106,15 +102,15 @@ public class Soda extends Item{
     public Soda size(SizeEnum size) {
         this.size = size;
         switch (this.size) {
-          case TWO_LITER:
-            this.price = TWO_LITER_PRICE;
-            break;
-          case TWENTY_OUNCE_BOTTLE:
-            this.price = TWENTY_OUNCE_PRICE;
-            break;
-          case SIX_PACK:
-            this.price = SIX_PACK_PRICE;
-            break;
+            case TWO_LITER:
+                this.price = TWO_LITER_PRICE;
+                break;
+            case TWENTY_OUNCE_BOTTLE:
+                this.price = TWENTY_OUNCE_PRICE;
+                break;
+            case SIX_PACK:
+                this.price = SIX_PACK_PRICE;
+                break;
         }
         return this;
     }
@@ -152,11 +148,12 @@ public class Soda extends Item{
     public Map<DietaryProperty, Boolean> getDietaryProperties() {
         return dietaryProperties;
     }
-  
+
     /**
      * Get price
+     *
      * @return price
-    **/
+     **/
     @ApiModelProperty(example = "1.99", required = true, value = "")
     @NotNull
     @Override
@@ -194,17 +191,18 @@ public class Soda extends Item{
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
+    }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Soda {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    sodaName: ").append(toIndentedString(sodaName)).append("\n");
-    sb.append("    size: ").append(toIndentedString(size)).append("\n");
-    sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
-    sb.append("    price: ").append(toIndentedString(price)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Soda {\n");
+        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+        sb.append("    sodaName: ").append(toIndentedString(sodaName)).append("\n");
+        sb.append("    size: ").append(toIndentedString(size)).append("\n");
+        sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
+        sb.append("    price: ").append(toIndentedString(price)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
 }
