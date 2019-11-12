@@ -1,29 +1,31 @@
 package io.swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import io.swagger.configuration.DataConfiguration;
-import io.swagger.repository.DessertRepository;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.DessertRepository;
 
 /**
  * Dessert
  */
 @Document(collection = "Desserts")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
-public class Dessert   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
+@JsonTypeName("Dessert")
+public class Dessert extends Item  {
   @JsonProperty("dessertName")
   private String dessertName = null;
 
@@ -120,7 +122,7 @@ public class Dessert   {
   **/
   @ApiModelProperty(example = "4.99", required = true, value = "")
       @NotNull
-
+    @Override
     @Valid
     public BigDecimal getPrice() {
     return price;
@@ -143,19 +145,20 @@ public class Dessert   {
     return Objects.equals(this.dessertName, dessert.dessertName) &&
         Objects.equals(this.description, dessert.description) &&
         Objects.equals(this.dietaryProperties, dessert.dietaryProperties) &&
-        Objects.equals(this.price, dessert.price);
+        Objects.equals(this.price, dessert.price) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dessertName, description, dietaryProperties, price);
+    return Objects.hash(dessertName, description, dietaryProperties, price, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Dessert {\n");
-    
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    dessertName: ").append(toIndentedString(dessertName)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");

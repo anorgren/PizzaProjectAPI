@@ -1,5 +1,6 @@
 package io.swagger.configuration;
 
+
 import io.swagger.model.*;
 import io.swagger.repository.*;
 
@@ -11,22 +12,57 @@ import java.util.List;
 
 public class DataConfiguration {
 
-    private static final BigDecimal NON_MEAT_PRICE = new BigDecimal(2.00);
-    private static final BigDecimal MEAT_PRICE = new BigDecimal(3.00);
+  private static final BigDecimal NON_MEAT_PRICE = new BigDecimal(2.00);
+  private static final BigDecimal MEAT_PRICE = new BigDecimal(3.00);
 
-    private static final String SMALL_DESCRIPTION = "small";
-    private static final String MEDIUM_DESCRIPTION = "medium";
-    private static final String LARGE_DESCRIPTION = "large";
-    private static final Integer SMALL_SIZE_INCHES = 12;
-    private static final Integer MEDIUM_SIZE_INCHES = 14;
-    private static final Integer LARGE_SIZE_INCHES = 16;
+  private static final String SMALL_DESCRIPTION = "small";
+  private static final String MEDIUM_DESCRIPTION = "medium";
+  private static final String LARGE_DESCRIPTION = "large";
+  private static final Integer SMALL_SIZE_INCHES = 12;
+  private static final Integer MEDIUM_SIZE_INCHES = 14;
+  private static final Integer LARGE_SIZE_INCHES = 16;
 
-    private static HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
-    private static HashMap<DietaryProperty, Boolean> veganVegetarian;
-    private static HashMap<DietaryProperty, Boolean> vegetarian;
-    private static HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-    private static HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
-    private static HashMap<DietaryProperty, Boolean> notAnything;
+  private static HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
+  private static HashMap<DietaryProperty, Boolean> veganVegetarian;
+  private static HashMap<DietaryProperty, Boolean> vegetarian;
+  private static HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+  private static HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
+  private static HashMap<DietaryProperty, Boolean> notAnything;
+
+  private static void initializeDietaryProperties() {
+    notAnything();
+    notVegetarianIsGlutenFree();
+    vegetarianGlutenFree();
+    vegetarian();
+    veganVegetarian();
+    veganVegetarianGlutenFree();
+  }
+
+  public static void backfillToppingsRepository(ToppingRepository toppingRepository) {
+    toppingRepository.deleteAll();
+    List<Topping> allToppings = createAllToppings();
+    toppingRepository.insert(allToppings);
+  }
+
+  private static List<PizzaSize> createAllPizzaSizes() {
+    List<PizzaSize> pizzaSizes = new LinkedList<>();
+
+    PizzaSize pizzaSizeSmall = new PizzaSize(SMALL_DESCRIPTION, SMALL_SIZE_INCHES);
+    pizzaSizes.add(pizzaSizeSmall);
+
+    PizzaSize pizzaSizeMedium = new PizzaSize(MEDIUM_DESCRIPTION, MEDIUM_SIZE_INCHES);
+    pizzaSizes.add(pizzaSizeMedium);
+
+    PizzaSize pizzaSizeLarge = new PizzaSize(LARGE_DESCRIPTION, LARGE_SIZE_INCHES);
+    pizzaSizes.add(pizzaSizeLarge);
+
+    return pizzaSizes;
+  }
+
+  public static void backfillPizzaSizesRepository(PizzaSizeRepository pizzaSizeRepository) {
+    List<PizzaSize> pizzaSizes = createAllPizzaSizes();
+    pizzaSizeRepository.insert(pizzaSizes);
+  }
 
     private static final String BRANCH_ONE_NAME = "Fremont Branch";
     private static final String BRANCH_ONE_ID = "1";
@@ -107,15 +143,6 @@ public class DataConfiguration {
         notAnything.put(DietaryProperty.VEGAN, false);
         notAnything.put(DietaryProperty.VEGETARIAN, false);
         notAnything.put(DietaryProperty.GLUTEN_FREE, false);
-    }
-
-    private static void initializeDietaryProperties() {
-        notAnything();
-        notVegetarianIsGlutenFree();
-        vegetarianGlutenFree();
-        vegetarian();
-        veganVegetarian();
-        veganVegetarianGlutenFree();
     }
 
     private static List<Topping> createAllToppings() {
@@ -245,28 +272,6 @@ public class DataConfiguration {
         return defaultToppings;
     }
 
-    public static void backfillToppingsRepository(ToppingRepository toppingRepository) {
-        toppingRepository.insert(createAllToppings());
-    }
-
-    private static List<PizzaSize> createAllPizzaSizes() {
-        List<PizzaSize> pizzaSizes = new LinkedList<>();
-
-        PizzaSize pizzaSizeSmall = new PizzaSize(SMALL_DESCRIPTION, SMALL_SIZE_INCHES);
-        pizzaSizes.add(pizzaSizeSmall);
-
-        PizzaSize pizzaSizeMedium = new PizzaSize(MEDIUM_DESCRIPTION, MEDIUM_SIZE_INCHES);
-        pizzaSizes.add(pizzaSizeMedium);
-
-        PizzaSize pizzaSizeLarge = new PizzaSize(LARGE_DESCRIPTION, LARGE_SIZE_INCHES);
-        pizzaSizes.add(pizzaSizeLarge);
-
-        return pizzaSizes;
-    }
-
-    public static void backfillPizzaSizesRepository(PizzaSizeRepository pizzaSizeRepository) {
-        pizzaSizeRepository.insert(createAllPizzaSizes());
-    }
 
     private static List<Store> createAllStores() {
         initializeDietaryProperties();
@@ -456,4 +461,16 @@ public class DataConfiguration {
     public static void backfillCrustRepository(CrustRepository crustRepository) {
         crustRepository.insert(createAllCrusts());
     }
+  
+    public static void backfillSpecialsRepository(SpecialsRepository repository) {
+        Special freeItem = new Special().specialId("OneFree").description("Get one item free. The cost"
+            + " of the cheapest item will be discounted from the order.");
+        repository.insert(freeItem);
+        Special buyOneGetOne = new Special().specialId("BOGO").description("Purchase two or more items"
+            + " and receive the cheapest item free!");
+        repository.insert(buyOneGetOne);
+        Special flatDiscount = new Special().specialId("FlatDiscount").description("Receive up to $20"
+            + " off your order of one or more items.");
+        repository.insert(flatDiscount);
+  }
 }

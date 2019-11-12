@@ -183,6 +183,31 @@ paths:
                $ref: '#/components/schemas/Price'
         '400':
           description: bad input parameter
+  /prices/{orderId}:
+    get:
+      tags:
+        - developers
+      summary: get order by id
+      operationId: getOrderPrice
+      description: |
+        Get price of the given order
+      parameters:
+      - name: orderId
+        in: path
+        description: orderId
+        required: true
+        schema:
+          type: string
+          example: 1
+      responses:
+        '200':
+          description: the price of the order in cents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+        '400':
+          description: bad input parameter
   /suggestions:
     get:
       tags:
@@ -349,6 +374,51 @@ paths:
                   $ref: '#/components/schemas/Pizza'
         '400':
           description: bad input parameter
+    put:
+      tags:
+        - developers
+      summary: creates a Pizza 
+      operationId: createPizza
+      description: |
+        Validates and creates pizza object using the parameters provided
+      parameters:
+        - name: pizzaName
+          in: query
+          description: pizza name
+          required: false
+          schema:
+            type: string
+            example: 'meat Lovers'
+        - name: size
+          in: query
+          description: size description
+          required: true
+          schema:
+            type: string
+            example: 'large'
+        - name: crustName
+          in: query
+          description: crustName
+          required: true
+          schema:
+            type: string
+            example: original crust
+        - name: sauceName
+          in: query
+          description: sauceName
+          required: true
+          schema:
+            type: string
+            example: original
+      responses:
+        '200':
+          description: pizza 
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Pizza'
+        '400':
+          description: bad input parameter
   /pizzas/{pizzaName}:
     get:
       tags:
@@ -371,7 +441,6 @@ paths:
           content:
             application/json:
               schema:
-               items:
                  $ref: '#/components/schemas/Pizza'
         '400':
           description: bad input parameter
@@ -416,7 +485,6 @@ paths:
           content:
             application/json:
               schema:
-               items:
                  $ref: '#/components/schemas/Crust'
         '400':
           description: bad input parameter
@@ -461,11 +529,167 @@ paths:
           content:
             application/json:
               schema:
-               items:
                  $ref: '#/components/schemas/Sauce'
         '400':
           description: bad input parameter
-
+  /order:
+    get:
+      tags:
+        - developers
+      summary: returns all orders
+      operationId: getOrders
+      description: |
+        Get list of all orders
+      responses:
+        '200':
+          description: list of all orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        '400':
+          description: bad input parameter
+    put:
+      tags:
+        - developers
+      summary: creates a new order
+      operationId: createOrder
+      description: |
+        Creates a new order with provided ItemList(optional). Returns order object.
+      parameters:
+        - name: itemList
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ItemList'
+      responses:
+        '200':
+          description: Created order object with order id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: bad input parameter
+  /order/{id}:
+    get:
+      tags:
+        - developers
+      summary: get order by id
+      operationId: getOrdersById
+      description: |
+        Get order details by id
+      parameters:
+      - name: id
+        in: path
+        description: orderId
+        required: true
+        schema:
+          type: string
+          example: 1
+      responses:
+        '200':
+          description: Details of the order of the given Id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: bad input parameter
+    put:
+      tags:
+        - developers
+      summary: updates the given order
+      operationId: updateOrder
+      description: |
+        update the given order with given parameters.
+      parameters:
+        - name: id
+          in: path
+          description: orderId
+          required: true
+          schema:
+            type: string
+            example: 1
+        - name: itemList
+          in: query
+          description: updated ItemList
+          required: true
+          schema:
+            $ref: '#/components/schemas/ItemList'
+      responses:
+        '200':
+          description: Updated Order Record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: bad input parameter
+  /applySpecial:
+    put:
+      tags:
+        - developers
+      summary: Completes the given order
+      operationId: applySpecial
+      description: |
+        applies the Special/Discount to order
+      parameters:
+        - name: specialId
+          in: path
+          description: orderId
+          required: true
+          schema:
+            type: string
+            example: 1
+      responses:
+        '200':
+          description: Updated Order Record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: bad input parameter
+  /completeOrder:
+    put:
+      tags:
+        - developers
+      summary: Completes the given order
+      operationId: completeOrder
+      description: |
+        Finalizes the order with payement information and marking order complete. Once completed the order can not be modified.
+      parameters:
+        - name: id
+          in: query
+          description: orderId
+          required: true
+          schema:
+            type: string
+            example: 1
+        - name: paymentInformation
+          in: query
+          description: updated ItemList
+          required: true
+          schema:
+            $ref: '#/components/schemas/PaymentInformation'
+        - name: tentativeAmount
+          in: query
+          description: tentative amount of order in cents
+          required: true
+          schema:
+            $ref: '#/components/schemas/Price' 
+      responses:
+        '200':
+          description: Completed Order Record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: bad input parameter
 components:
   schemas:
     Store:
@@ -565,70 +789,76 @@ components:
           type: string
           example: Receive the cheapest item for free when you purchase two or more items.
     Breadstick:
-      type: object
-      required:
-      - size
-      - withCheese
-      - dietaryProperties
-      properties:
-        name:
-          type: string
-          example: "garlic breadsticks"
-        size:
-          type: string
-          enum:
-            - SMALL
-            - LARGE
-        withCheese:
-          type: boolean
-        dietaryProperties:
-          type: object
-          additionalProperties:
+      allOf:
+        - $ref: '#/components/schemas/Item'
+        - type: object
+          required:
+          - size
+          - withCheese
+          - dietaryProperties
+          properties:
+            size:
+              type: string
+              enum:
+                - SMALL
+                - LARGE
+            withCheese:
               type: boolean
+            dietaryProperties:
+              type: object
+              additionalProperties:
+                  type: boolean
+            price:
+              type: number
+              example: 3.99
     Dessert:
-      type: object
-      required:
-      - dessertName
-      - description
-      - dietaryProperties
-      - price
-      properties:
-        dessertName:
-          type: string
-          example: "double chocolate brownies"
-        description:
-          type: string
-          example: "four large gooey chocolate brownies with chocolate chunks"
-        dietaryProperties:
-          type: object
-          additionalProperties:
-              type: boolean
-        price:
-          type: number
-          example: 4.99
+      allOf:
+        - $ref: '#/components/schemas/Item'
+        - type: object
+          required:
+          - dessertName
+          - description
+          - dietaryProperties
+          - price
+          properties:
+            dessertName:
+              type: string
+              example: "double chocolate brownies"
+            description:
+              type: string
+              example: "four large gooey chocolate brownies with chocolate chunks"
+            dietaryProperties:
+              type: object
+              additionalProperties:
+                  type: boolean
+            price:
+              type: number
+              example: 4.99
     Soda:
-      type: object
-      required:
-      - sodaName
-      - size
-      - dietaryProperties
-      properties:
-        sodaName:
-          type: string
-          example: "sprite"
-        size:
-          type: string
-          enum:
-            - SIX_PACK
-            - TWO_LITER
-            - TWENTY_OUNCE_BOTTLE
-        dietaryProperties:
-          type: object
-          additionalProperties:
-              type: boolean
-        price:
-          type: number
-          example: 1.99
+      allOf:
+        - $ref: '#/components/schemas/Item'
+        - type: object
+          required:
+          - sodaName
+          - size
+          - dietaryProperties
+          properties:
+            sodaName:
+              type: string
+              example: "sprite"
+            size:
+              type: string
+              enum:
+                - SIX_PACK
+                - TWO_LITER
+                - TWENTY_OUNCE_BOTTLE
+            dietaryProperties:
+              type: object
+              additionalProperties:
+                  type: boolean
+            price:
+              type: number
+              example: 1.99
     Sauce:
       type: object
       required:
@@ -665,27 +895,96 @@ components:
           items:
             $ref: '#/components/schemas/PizzaSize'
     Pizza:
+      allOf:
+        - $ref: '#/components/schemas/Item'
+        - type: object
+          required:
+          - pizzaName
+          - size
+          - sauce
+          - crust
+          - toppings
+          properties:
+            pizzaName:
+              type: string
+              example: "meat lovers"
+            size:
+              $ref: '#/components/schemas/PizzaSize'
+            sauce:
+              $ref: '#/components/schemas/Sauce'
+            crust:
+              $ref: '#/components/schemas/Crust'
+            toppings:
+              type: array
+              items:
+                $ref: '#/components/schemas/Topping'
+            price:
+              type: number
+              example: 12.99
+    Item:
       type: object
-      required:
-      - pizzaName
-      - size
-      - sauce
-      - crust
-      - toppings
+      required: 
+        - itemType
       properties:
-        pizzaName:
+        itemType:
           type: string
-          example: "meat lovers"
-        size:
-          type: object
-          $ref: '#/components/schemas/PizzaSize'
-        sauce:
-          type: object
-          $ref: '#/components/schemas/Sauce'
-        crust:
-          type: object
-          $ref: '#/components/schemas/Crust'
-        toppings:
+          example: 'Item'
+    ItemList:
+      type: object
+      properties:
+        orderItems:
           type: array
           items:
-            $ref: '#/components/schemas/Topping'
+            $ref: '#/components/schemas/Item'
+    Order:
+      type: object
+      required:
+        - orderId
+      properties:
+        orderId:
+          type: string
+          example: '1'
+        storeId:
+          type: string
+          example: '1'
+        itemList:
+          $ref: '#/components/schemas/ItemList'
+        tentativeAmount:
+          $ref: '#/components/schemas/Price'
+        calculatedAmount:
+          $ref: '#/components/schemas/Price'
+        discountAmount:
+          $ref: '#/components/schemas/Price'
+        payementInformation:
+          $ref: '#/components/schemas/PaymentInformation'
+        status:
+          type: string
+          enum: 
+            - Created
+            - InProcess
+            - Completed
+        specialId:
+          type: string
+    PaymentInformation:
+      type: object
+      required:
+        - cardNumber
+        - cardExpiry
+        - nameOnCard
+        - cardSecurityCode
+      properties:
+        cardNumber:
+          type: string
+          minLength: 15
+          maxLength: 16
+        cardExpiry:
+          type: string
+          format: '^\d{2}/\d{2}$'
+          example: '01/20'
+        nameOnCard:
+          type: string
+          example: 'Jon Doe'
+        cardSecurityCode:
+          type: string
+          minLength: 3
+          maxLength: 4

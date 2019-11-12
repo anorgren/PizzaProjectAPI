@@ -1,31 +1,33 @@
 package io.swagger.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import io.swagger.configuration.DataConfiguration;
-import io.swagger.repository.BreadstickRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.BreadstickRepository;
 
 /**
  * Breadstick
  */
 @Document(collection = "Breadsticks")
 @Validated
+@JsonTypeName("Breadstick")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
-public class Breadstick   {
+public class Breadstick extends Item  {
   private static final BigDecimal SMALL_PRICE = new BigDecimal(2.99);
   private static final BigDecimal LARGE_PRICE = new BigDecimal(4.99);
   private static final BigDecimal WITH_CHEESE_PRICE = new BigDecimal(2.00);
@@ -148,6 +150,7 @@ public class Breadstick   {
   **/
   @ApiModelProperty(example = "3.99", required = true, value = "")
   @NotNull
+  @Override
   @Valid
   public BigDecimal getPrice() {
     return price;
@@ -165,19 +168,20 @@ public class Breadstick   {
     return Objects.equals(this.size, breadstick.size) &&
         Objects.equals(this.withCheese, breadstick.withCheese) &&
         Objects.equals(this.dietaryProperties, breadstick.dietaryProperties) &&
-        Objects.equals(this.price, breadstick.price);
+        Objects.equals(this.price, breadstick.price) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(size, withCheese, dietaryProperties, price);
+    return Objects.hash(size, withCheese, dietaryProperties, price, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Breadstick {\n");
-
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    size: ").append(toIndentedString(size)).append("\n");
     sb.append("    withCheese: ").append(toIndentedString(withCheese)).append("\n");
     sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");

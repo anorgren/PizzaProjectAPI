@@ -2,6 +2,7 @@ package io.swagger;
 
 import io.swagger.model.*;
 import io.swagger.repository.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -21,6 +22,9 @@ public class Application implements CommandLineRunner {
   @Autowired
   private PizzaSizeRepository pizzaSizeRepository;
 
+  @Autowired
+  private SpecialsRepository specialsRepository;
+  
   @Autowired
   private StoreRepository storeRepository;
 
@@ -60,6 +64,8 @@ public class Application implements CommandLineRunner {
     Sauce.initialize(sauceRepository);
     crustRepository.deleteAll();
     Crust.initialize(crustRepository);
+    specialsRepository.deleteAll();
+    Special.initialize(specialsRepository);
 
   }
 
@@ -75,6 +81,5 @@ public class Application implements CommandLineRunner {
     public int getExitCode() {
       return 10;
     }
-
   }
 }

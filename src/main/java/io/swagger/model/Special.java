@@ -1,10 +1,13 @@
 package io.swagger.model;
 
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.SpecialsRepository;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -12,6 +15,7 @@ import javax.validation.constraints.*;
 /**
  * Special
  */
+@Document(collection = "Specials")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-06T23:28:45.897Z[GMT]")
 public class Special   {
@@ -24,6 +28,13 @@ public class Special   {
   public Special specialId(String specialId) {
     this.specialId = specialId;
     return this;
+  }
+
+  public static void initialize(SpecialsRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
+    DataConfiguration.backfillSpecialsRepository(repository);
   }
 
   /**
