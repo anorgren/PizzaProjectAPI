@@ -9,7 +9,7 @@ public class ApplicableSpecialFactory {
    * @return An object implementing the ApplicableSpecial interface that can be used to apply a
    * special to an order.
    */
-  public ApplicableSpecial getApplicableSpecial(String specialId) {
+  public static ApplicableSpecial getApplicableSpecial(String specialId) {
     if (specialId.equals("FlatDiscount")) {
       return new FlatDiscountSpecial();
     } else if (specialId.equals("OneFree")) {
