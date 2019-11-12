@@ -53,7 +53,7 @@ public class FlatDiscountSpecialTest {
     Order firstOrder = new Order();
     firstOrder.setOrderId(ORDER_ONE_ID);
     Soda cokeTwoLiter = new Soda();
-    cokeTwoLiter = cokeTwoLiter.sodaName(COCA_COLA_PRODUCT_NAME).price(TWO_LITER_PRICE)
+    cokeTwoLiter = cokeTwoLiter.sodaName(COCA_COLA_PRODUCT_NAME)
         .size(Soda.SizeEnum.TWO_LITER);
     Dessert brownies = new Dessert();
     brownies.dessertName(BROWNIE_NAME).description(BROWNIE_DESCRIPTION)
