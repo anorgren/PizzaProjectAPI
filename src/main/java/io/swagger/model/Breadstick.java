@@ -176,7 +176,7 @@ public class Breadstick extends Item  {
   **/
   @ApiModelProperty(example = "3.99", required = true, value = "")
       @NotNull
-
+    @Override
     @Valid
     public BigDecimal getPrice() {
     return price;

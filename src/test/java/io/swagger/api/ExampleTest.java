@@ -11,7 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@TestPropertySource("classpath:/applicaiton-test.properties")
+@TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest
 public class ExampleTest {
 

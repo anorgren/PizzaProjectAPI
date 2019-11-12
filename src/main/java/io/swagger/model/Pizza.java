@@ -1,27 +1,24 @@
 package io.swagger.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import org.springframework.validation.annotation.Validated;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Pizza
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
 @JsonTypeName("Pizza")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T21:13:59.483Z[GMT]")
 public class Pizza extends Item  {
   @JsonProperty("pizzaName")
   private String pizzaName = null;
@@ -41,6 +38,9 @@ public class Pizza extends Item  {
   @JsonProperty("toppings")
   @Valid
   private List<Topping> toppings = new ArrayList<Topping>();
+
+  @JsonProperty("price")
+  private BigDecimal price = null;
 
   public Pizza pizzaName(String pizzaName) {
     this.pizzaName = pizzaName;
@@ -82,11 +82,16 @@ public class Pizza extends Item  {
     return size;
   }
 
+  public void setSize(PizzaSize size) {
+    this.size = size;
+  }
+
   public Pizza sauce(Sauce sauce) {
     this.sauce = sauce;
     checkSauceDietaryProperties(sauce);
     return this;
   }
+
   private void checkSauceDietaryProperties(Sauce sauce) {
     for(Map.Entry<DietaryProperty, Boolean> entry : sauce.getDietaryProperties().entrySet()) {
       if (entry.getValue().equals(false)) {
@@ -157,6 +162,26 @@ public class Pizza extends Item  {
     this.toppings = toppings;
   }
 
+  public Pizza price(BigDecimal price) {
+    this.price = price;
+    return this;
+  }
+
+  /**
+   * Get price
+   * @return price
+  **/
+  @ApiModelProperty(example = "12.99", value = "")
+    @Override
+    @Valid
+  public BigDecimal getPrice() {
+    return price;
+  }
+
+  public void setPrice(BigDecimal price) {
+    this.price = price;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -172,12 +197,13 @@ public class Pizza extends Item  {
         Objects.equals(this.sauce, pizza.sauce) &&
         Objects.equals(this.crust, pizza.crust) &&
         Objects.equals(this.toppings, pizza.toppings) &&
+        Objects.equals(this.price, pizza.price) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pizzaName, size, sauce, crust, toppings, super.hashCode());
+    return Objects.hash(pizzaName, size, sauce, crust, toppings, price, super.hashCode());
   }
 
   @Override
@@ -191,6 +217,7 @@ public class Pizza extends Item  {
     sb.append("    crust: ").append(toIndentedString(crust)).append("\n");
     sb.append("    toppings: ").append(toIndentedString(toppings)).append("\n");
     sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
+    sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("}");
     return sb.toString();
   }

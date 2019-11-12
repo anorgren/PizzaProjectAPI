@@ -7,8 +7,15 @@ import io.swagger.repository.ToppingRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@TestPropertySource("classpath:/application-test.properties")
+@SpringBootTest
 public class ToppingServiceTest {
   @Autowired
   ToppingRepository toppingRepository;
@@ -23,8 +30,11 @@ public class ToppingServiceTest {
 
   @Test
   public void getTopping() {
-    ToppingService toppingService = new ToppingService();
-    //System.out.println(toppingRepository.findToppingByToppingName("dafads"));
+  }
+
+  @Test
+  public void nonExistentToppingNameReturnsNull() {
+    assertNull(toppingRepository.findToppingByToppingName("this topping name does not exist"));
   }
 
   @Test

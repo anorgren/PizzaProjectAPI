@@ -955,6 +955,9 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Topping'
+            price:
+              type: number
+              example: 12.99
     Item:
       type: object
       required: 
@@ -986,6 +989,8 @@ components:
         tentativeAmount:
           $ref: '#/components/schemas/Price'
         calculatedAmount:
+          $ref: '#/components/schemas/Price'
+        discountAmount:
           $ref: '#/components/schemas/Price'
         payementInformation:
           $ref: '#/components/schemas/PaymentInformation'
