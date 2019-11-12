@@ -1,4 +1,4 @@
-package io.swagger.service.specialUtility;
+package io.swagger.service.specials;
 
 import io.swagger.model.Item;
 import io.swagger.model.Order;
@@ -7,7 +7,9 @@ import io.swagger.repository.OrderRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
 
   private static final String SPECIAL_ID = "BOGO";

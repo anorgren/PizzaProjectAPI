@@ -1,4 +1,4 @@
-package io.swagger.service.specialUtility;
+package io.swagger.service.specials;
 
 public interface ApplicableSpecial {
 
