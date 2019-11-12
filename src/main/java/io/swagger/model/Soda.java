@@ -190,10 +190,11 @@ public class Soda extends Item{
      * (except the first line).
      */
     private String toIndentedString(java.lang.Object o) {
-        if (o == null) {
-            return "null";
-        }
-        return o.toString().replace("\n", "\n    ");
+      if (o == null) {
+        return "null";
+      }
+      return o.toString().replace("\n", "\n    ");
+    }
 
   @Override
   public String toString() {
