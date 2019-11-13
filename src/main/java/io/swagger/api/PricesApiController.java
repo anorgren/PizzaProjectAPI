@@ -89,6 +89,8 @@ public class PricesApiController implements PricesApi {
    *
    * @param size     The size of the pizza (small, medium, large)
    * @param toppings A list of the names of all the toppings
+   * @param crust    Crust selected for pizza
+   * @param sauce    Sauce selected for pizza
    * @return The price of a pizza
    */
   public ResponseEntity<Price> getPizzaPrice(
