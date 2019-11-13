@@ -1,8 +1,9 @@
-package io.swagger.service;
+package io.swagger.repository;
 
 import io.swagger.model.Dessert;
 import io.swagger.model.DietaryProperty;
 import io.swagger.repository.DessertRepository;
+import io.swagger.service.DessertService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest
-public class DessertServiceTest {
+public class DessertRepositoryTest {
 
     @Autowired
     private DessertRepository dessertRepository;

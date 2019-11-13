@@ -1,8 +1,9 @@
-package io.swagger.service;
+package io.swagger.repository;
 
 import io.swagger.model.Crust;
 import io.swagger.model.DietaryProperty;
 import io.swagger.repository.CrustRepository;
+import io.swagger.service.CrustService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,13 +24,10 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest
-public class CrustServiceTest {
+public class CrustRepositoryTest {
 
     @Autowired
     private CrustRepository crustRepository;
-
-    @Autowired
-    private CrustService crustService;
 
     private BigDecimal price;
     private Crust crustOriginal;
@@ -63,31 +62,21 @@ public class CrustServiceTest {
 
     @Test
     public void getCrustByCorrectName() {
-        Crust actual = crustService.getCrustByName("gluten free");
+        Crust actual = crustRepository.getCrustByCrustName("gluten free");
         assertThat(actual).isEqualToComparingFieldByField(crustGlutenFree);
     }
 
     @Test
-    public void getCrustByCorrectNameMixedCase() {
-        Crust actual = crustService.getCrustByName("OrIginAL");
-        assertThat(actual).isEqualToComparingFieldByField(crustOriginal);
-    }
-
-    @Test
     public void getCrustByNonExistentName() {
-        Crust actual = crustService.getCrustByName("non existent crust");
+        Crust actual = crustRepository.getCrustByCrustName("non existent crust");
         assertNull(actual);
     }
 
     @Test
     public void getAllCrusts() {
-        List<Crust> actual = crustService.getAllCrusts();
-        assertTrue(actual.stream().anyMatch(crust -> crustOriginal.equals(crust)) &
-                actual.stream().anyMatch(crust -> crustGlutenFree.equals(crust)));
-    }
-
-    @Test
-    public void getAllCrustsCheckLength() {
-        assertEquals(2, crustService.getAllCrusts().size());
+        List<Crust> actual = crustRepository.findAll();
+        List<Crust> expected = Arrays.asList(crustGlutenFree, crustOriginal);
+        assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
+                && actual.containsAll(expected));
     }
 }

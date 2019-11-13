@@ -18,6 +18,12 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T18:52:07.371Z[GMT]")
 public class Order   {
+  private String id;
+
+//  public String getID() {
+//    return this.id;
+//  }
+
   @JsonProperty("orderId")
   private String orderId = null;
 

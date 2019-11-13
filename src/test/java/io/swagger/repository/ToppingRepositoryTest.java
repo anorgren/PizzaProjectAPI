@@ -1,4 +1,4 @@
-package io.swagger.service;
+package io.swagger.repository;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest
-public class ToppingServiceTest {
+public class ToppingRepositoryTest {
   @Autowired
   ToppingRepository toppingRepository;
 
