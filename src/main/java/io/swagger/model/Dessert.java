@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -37,7 +36,7 @@ public class Dessert extends Item  {
   private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
 
   @JsonProperty("price")
-  private BigDecimal price = null;
+  private Double price = null;
 
   public static void initialize(DessertRepository repository) {
     if (repository.count() > 0) {
@@ -111,7 +110,7 @@ public class Dessert extends Item  {
     this.dietaryProperties = dietaryProperties;
   }
 
-  public Dessert price(BigDecimal price) {
+  public Dessert price(Double price) {
     this.price = price;
     return this;
   }
@@ -124,11 +123,11 @@ public class Dessert extends Item  {
       @NotNull
     @Override
     @Valid
-    public BigDecimal getPrice() {
+    public Double getPrice() {
     return price;
   }
 
-  public void setPrice(BigDecimal price) {
+  public void setPrice(Double price) {
     this.price = price;
   }
 

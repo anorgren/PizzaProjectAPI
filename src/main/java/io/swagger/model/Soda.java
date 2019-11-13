@@ -2,14 +2,12 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,9 +27,9 @@ import io.swagger.repository.SodaRepository;
 @JsonTypeName("Soda")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 public class Soda extends Item{
-  private static final BigDecimal TWO_LITER_PRICE = new BigDecimal(2.59);
-  private static final BigDecimal TWENTY_OUNCE_PRICE = new BigDecimal(1.75);
-  private static final BigDecimal SIX_PACK_PRICE = new BigDecimal(3.49);
+  private static final Double TWO_LITER_PRICE = new Double(2.59);
+  private static final Double TWENTY_OUNCE_PRICE = new Double(1.75);
+  private static final Double SIX_PACK_PRICE = new Double(3.49);
 
     public static void initialize(SodaRepository repository) {
         if (repository.count() > 0) {
@@ -84,7 +82,7 @@ public class Soda extends Item{
     private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
 
     @JsonProperty("price")
-    private BigDecimal price = new BigDecimal(0);
+    private Double price = new Double(0);
 
     public Soda sodaName(String sodaName) {
         this.sodaName = sodaName;
@@ -161,7 +159,7 @@ public class Soda extends Item{
     @NotNull
     @Override
     @Valid
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 

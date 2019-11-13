@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import java.math.BigDecimal;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Objects;
@@ -54,7 +53,7 @@ public class Item {
   }
 
   //must be overridden by subtypes
-  public BigDecimal getPrice() {
+  public Double getPrice() {
     return null;
   }
 
