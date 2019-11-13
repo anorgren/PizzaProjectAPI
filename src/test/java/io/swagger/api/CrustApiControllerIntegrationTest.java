@@ -1,9 +1,9 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.Crust;
 import io.swagger.model.DietaryProperty;
-import io.swagger.model.Topping;
-import io.swagger.repository.ToppingRepository;
+import io.swagger.repository.CrustRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,11 +32,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebMvcTest(ToppingsApiController.class)
+@WebMvcTest(CrustsApiController.class)
 @WebAppConfiguration
 @ContextConfiguration(classes =
-        {ToppingsApiController.class, TestContext.class, WebApplicationContext.class})
-public class ToppingsApiControllerIntegrationTest {
+        {CrustsApiController.class, TestContext.class, WebApplicationContext.class})
+public class CrustApiControllerIntegrationTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -45,43 +45,32 @@ public class ToppingsApiControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ToppingRepository repository;
+    private CrustRepository repository;
 
     private ObjectMapper objectMapper;
 
-    private HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-    private HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
     private Double price;
-    private Topping pepperoni;
-    private Topping ham;
-    private Topping cheese;
-    private List<Topping> toppings;
+    private Crust crustOriginal;
+    private Crust crustGlutenFree;
+    private List<Crust> crusts;
+    private static HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
 
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
 
-        price = 5d;
-        pepperoni = new Topping();
-        ham = new Topping();
-        cheese = new Topping();
+        price = 100d;
+
         vegetarianGlutenFree = new HashMap<>();
-        notVegetarianIsGlutenFree = new HashMap<>();
         vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
         vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
         vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
-        notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
-        notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
-        notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-        pepperoni.toppingName("pepperoni").price(price)
-                .dietaryProperties(notVegetarianIsGlutenFree);
-        ham.toppingName("ham").price(price)
-                .dietaryProperties(notVegetarianIsGlutenFree);
-        cheese.toppingName("cheese").price(price)
-                .dietaryProperties(vegetarianGlutenFree);
-
-        toppings = Arrays.asList(pepperoni, ham, cheese);
+        crustOriginal = new Crust();
+        crustGlutenFree = new Crust();
+        crustOriginal.crustName("original").price(price);
+        crustGlutenFree.crustName("glutenfree").price(price).dietaryProperties(vegetarianGlutenFree);
+        crusts = Arrays.asList(crustGlutenFree, crustOriginal);
 
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -94,9 +83,9 @@ public class ToppingsApiControllerIntegrationTest {
     }
 
     @Test
-    public void getToppingsEmptyToppingList() throws Exception {
+    public void getCrustsEmptyList() throws Exception {
         when(repository.findAll()).thenReturn(null);
-        this.mockMvc.perform(get("/toppings")
+        this.mockMvc.perform(get("/crusts")
                 .header("Accept", "application/json"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -105,58 +94,56 @@ public class ToppingsApiControllerIntegrationTest {
 
 
     @Test
-    public void getToppingsOneTopping() throws Exception {
-        List<Topping> singleTopping = Arrays.asList(pepperoni);
-        String stringToppingsList = objectMapper.writeValueAsString(singleTopping);
-        when(repository.findAll()).thenReturn(singleTopping);
-        this.mockMvc.perform(get("/toppings")
+    public void getCrustsOneInRepository() throws Exception {
+        List<Crust> singleObject = Arrays.asList(crustOriginal);
+        String stringSingleObject = objectMapper.writeValueAsString(singleObject);
+        when(repository.findAll()).thenReturn(singleObject);
+        this.mockMvc.perform(get("/crusts")
                 .header("Accept", "application/json"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringToppingsList));
+                .andExpect(content().json(stringSingleObject));
     }
 
     @Test
-    public void getToppingsMultipleToppingsReturned() throws Exception {
-        String stringToppingsList = objectMapper.writeValueAsString(toppings);
-        when(repository.findAll()).thenReturn(toppings);
-        this.mockMvc.perform(get("/toppings")
+    public void getCrustsMultipleReturned() throws Exception {
+        String stringMultipleObjects = objectMapper.writeValueAsString(crusts);
+        when(repository.findAll()).thenReturn(crusts);
+        this.mockMvc.perform(get("/crusts")
                 .header("Accept", "application/json"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringToppingsList));
+                .andExpect(content().json(stringMultipleObjects));
     }
 
     @Test
-    public void getToppingsByNameValidName() throws Exception {
-        String stringHam = objectMapper.writeValueAsString(ham);
-        when(repository.findToppingByToppingName(any()))
+    public void getCrustsByNameValidName() throws Exception {
+        String objectToGet = objectMapper.writeValueAsString(crustOriginal);
+        when(repository.getCrustByCrustName(any()))
                 .thenAnswer(invocationOnMock -> {
-                    for (Topping topping : toppings) {
-                        if (topping.getToppingName()
+                    for (Crust crust : crusts) {
+                        if (crust.getCrustName()
                                 .equals(invocationOnMock.getArguments()[0])) {
-                            return topping;
+                            return crust;
                         }
                     }
                     return null;
                 });
-        this.mockMvc.perform(get("/toppings/ham")
+        this.mockMvc.perform(get("/crusts/original")
                 .header("Accept", "application/json"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringHam));
+                .andExpect(content().json(objectToGet));
     }
 
     @Test
-    public void getToppingsByNameInvalidName() throws Exception {
-        Topping emptyTopping = new Topping();
-        String stringEmptyTopping = objectMapper.writeValueAsString(emptyTopping);
-        when(repository.findToppingByToppingName(any()))
+    public void getCrustsByNameInvalidName() throws Exception {
+        when(repository.getCrustByCrustName(any()))
                 .thenAnswer(invocationOnMock -> {
-                    for (Topping topping : toppings) {
-                        if (topping.getToppingName()
+                    for (Crust crust : crusts) {
+                        if (crust.getCrustName()
                                 .equals(invocationOnMock.getArguments()[0])) {
-                            return topping;
+                            return crust;
                         }
                     }
                     return null;
@@ -168,15 +155,15 @@ public class ToppingsApiControllerIntegrationTest {
     }
 
     @Test
-    public void getToppingByNameTestInvalidHeader() throws Exception {
-        this.mockMvc.perform(get("/toppings/ham")
+    public void getCrustByNameTestInvalidHeader() throws Exception {
+        this.mockMvc.perform(get("/crusts/original")
                 .header("null", "null"))
                 .andExpect(status().isNotImplemented());
     }
 
     @Test
-    public void getToppingsTestInvalidHeader() throws Exception {
-        this.mockMvc.perform(get("/toppings")
+    public void getCrustTestInvalidHeader() throws Exception {
+        this.mockMvc.perform(get("/crusts")
                 .header("null", "null"))
                 .andExpect(status().isNotImplemented());
     }

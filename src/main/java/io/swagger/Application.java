@@ -9,11 +9,12 @@ import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackages = {"io.swagger", "io.swagger.api", "io.swagger.configuration"})
+@ComponentScan(basePackages = {"io.swagger", "io.swagger.api", "io.swagger.configuration", "io.swagger.repository"})
 public class Application implements CommandLineRunner {
 
   @Autowired
@@ -48,6 +49,7 @@ public class Application implements CommandLineRunner {
     if (arg0.length > 0 && arg0[0].equals("exitcode")) {
       throw new ExitException();
     }
+    //TODO: Remove the delete all statements before submission.
     toppingRepository.deleteAll();
     Topping.initialize(toppingRepository);
     pizzaSizeRepository.deleteAll();
