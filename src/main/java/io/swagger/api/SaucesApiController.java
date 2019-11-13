@@ -22,6 +22,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T22:37:07.679Z[GMT]")
@@ -58,7 +59,7 @@ public class SaucesApiController implements SaucesApi {
         if (accept != null && accept.contains("application/json")) {
             List<Sauce> sauces = sauceRepository.findAll();
             if (sauces == null) {
-                return new ResponseEntity<List<Sauce>>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<Sauce>>(Collections.emptyList(), HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<List<Sauce>>(sauces, HttpStatus.OK);
         }
