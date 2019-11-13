@@ -1,14 +1,5 @@
 package io.swagger.service.specials;
 
-import static org.junit.Assert.*;
-
-import io.swagger.model.Dessert;
-import io.swagger.model.ItemList;
-import io.swagger.model.Order;
-import io.swagger.model.Soda;
-import io.swagger.model.Special;
-import io.swagger.repository.OrderRepository;
-import java.math.BigDecimal;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.swagger.model.Dessert;
+import io.swagger.model.ItemList;
+import io.swagger.model.Order;
+import io.swagger.model.Soda;
+import io.swagger.repository.OrderRepository;
+
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")
@@ -28,9 +27,9 @@ public class FlatDiscountSpecialTest {
 
   private static final String BROWNIE_NAME = "double chocolate chunk brownies";
   private static final String BROWNIE_DESCRIPTION = "Four large gooey double chocolate brownies.";
-  private static final BigDecimal BROWNIE_PRICE = new BigDecimal(4.99);
+  private static final Double BROWNIE_PRICE = new Double(4.99);
   private static final String COCA_COLA_PRODUCT_NAME = "coca cola";
-  private static final BigDecimal TWO_LITER_PRICE = new BigDecimal(2.25);
+  private static final Double TWO_LITER_PRICE = new Double(2.25);
 
   private static final String ORDER_ONE_ID = "1";
   private static final String ORDER_TWO_ID = "2";
