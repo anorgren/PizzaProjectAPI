@@ -1,22 +1,21 @@
 package io.swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.configuration.DataConfiguration;
-import io.swagger.model.PizzaSize;
-import java.math.BigDecimal;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-import io.swagger.repository.CrustRepository;
-import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.CrustRepository;
 
 /**
  * Crust
@@ -32,7 +31,7 @@ public class Crust   {
   private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
 
   @JsonProperty("price")
-  private BigDecimal price = null;
+  private Double price = null;
 
   @JsonProperty("availableSizes")
   @Valid
@@ -89,7 +88,7 @@ public class Crust   {
     this.dietaryProperties = dietaryProperties;
   }
 
-  public Crust price(BigDecimal price) {
+  public Crust price(Double price) {
     this.price = price;
     return this;
   }
@@ -102,11 +101,11 @@ public class Crust   {
       @NotNull
 
     @Valid
-    public BigDecimal getPrice() {
+    public Double getPrice() {
     return price;
   }
 
-  public void setPrice(BigDecimal price) {
+  public void setPrice(Double price) {
     this.price = price;
   }
 

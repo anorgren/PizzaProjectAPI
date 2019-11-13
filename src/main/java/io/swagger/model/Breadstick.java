@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -28,9 +27,9 @@ import io.swagger.repository.BreadstickRepository;
 @JsonTypeName("Breadstick")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 public class Breadstick extends Item  {
-  private static final BigDecimal SMALL_PRICE = new BigDecimal(2.99);
-  private static final BigDecimal LARGE_PRICE = new BigDecimal(4.99);
-  private static final BigDecimal WITH_CHEESE_PRICE = new BigDecimal(2.00);
+  private static final Double SMALL_PRICE = new Double(2.99);
+  private static final Double LARGE_PRICE = new Double(4.99);
+  private static final Double WITH_CHEESE_PRICE = new Double(2.00);
 
   public static void initialize(BreadstickRepository repository) {
     if (repository.count() > 0) {
@@ -80,16 +79,16 @@ public class Breadstick extends Item  {
   private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
 
   @JsonProperty("price")
-  private BigDecimal price = new BigDecimal(0);
+  private Double price = new Double(0);
 
   public Breadstick size(SizeEnum size) {
     this.size = size;
     switch (this.size) {
       case SMALL:
-        this.price = this.price.add(SMALL_PRICE);
+        this.price += SMALL_PRICE;
         break;
       case LARGE:
-        this.price = this.price.add(LARGE_PRICE);
+        this.price += LARGE_PRICE;
         break;
     }
     return this;
@@ -108,7 +107,7 @@ public class Breadstick extends Item  {
   public Breadstick withCheese(Boolean withCheese) {
     this.withCheese = withCheese;
     if (this.withCheese) {
-      this.price = this.price.add(WITH_CHEESE_PRICE);
+      this.price += WITH_CHEESE_PRICE;
     }
     return this;
   }
@@ -152,7 +151,7 @@ public class Breadstick extends Item  {
   @NotNull
   @Override
   @Valid
-  public BigDecimal getPrice() {
+  public Double getPrice() {
     return price;
   }
 
