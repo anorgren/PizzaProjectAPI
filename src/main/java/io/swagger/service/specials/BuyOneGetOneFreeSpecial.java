@@ -1,5 +1,6 @@
 package io.swagger.service.specials;
 
+import io.swagger.model.ItemList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
   private static final String SPECIAL_ID = "BOGO";
   private static final Double MAX_DISCOUNT = new Double(20.00);
   private static final Double DOLLARS_TO_CENTS = new Double(100);
+  private static final Integer REQUIRED_NUM_ITEMS = 2;
 
   @Autowired
   private OrderRepository repository;
@@ -30,26 +32,28 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
   @Override
   public boolean isApplicable(String orderId) {
     Order order = repository.findByOrderId(orderId);
-    if (order == null || order.getItemList().getOrderItems().size() < 2) {
+    if (order == null) {
       return false;
-    } else {
-      return true;
     }
+    ItemList itemList = order.getItemList();
+    if(itemList == null) {
+      return false;
+    }
+    List<Item> orderItems = itemList.getOrderItems();
+    return !(orderItems == null || orderItems.size() < REQUIRED_NUM_ITEMS);
   }
-
   /**
    * Applies the special by updating the specialID and discountAmount of the order. Overwrites
    * previous changes. The cost of the cheapest item will be set to the discount amount. Maximum
    * discount of 20.00. Must be at least 2 items in the order.
-   *
    * @param orderId the id of an existing order, no change if order doesn't exist.
    */
   @Override
   public void apply(String orderId) {
-    Order order = repository.findByOrderId(orderId);
-    if (order == null || order.getItemList().getOrderItems().size() < 2) {
+    if (!isApplicable(orderId)) {
       return;
     }
+    Order order = repository.findByOrderId(orderId);
     List<Item> items = order.getItemList().getOrderItems();
     Double discount = MAX_DISCOUNT;
     for (Item toCheck : items) {
@@ -59,6 +63,7 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
     }
     order.setDiscountAmount(new Price().priceInCents((int) (discount * DOLLARS_TO_CENTS)));
     order.setSpecialId(SPECIAL_ID);
+    repository.save(order);
   }
 
 }
