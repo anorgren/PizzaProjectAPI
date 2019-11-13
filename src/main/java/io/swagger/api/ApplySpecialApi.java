@@ -23,7 +23,7 @@ import io.swagger.model.Order;
 @Api(value = "applySpecial", description = "the applySpecial API")
 public interface ApplySpecialApi {
 
-  @ApiOperation(value = "Completes the given order", nickname = "applySpecial", notes = "applies the Special/Discount to order ", response = Order.class, tags = {"developers",})
+  @ApiOperation(value = "Applies the given specialId to order if applicable", nickname = "applySpecial", notes = "applies the Special/Discount to order ", response = Order.class, tags = {"developers",})
   @ApiResponses(value = {
           @ApiResponse(code = 200, message = "Updated Order Record", response = Order.class),
           @ApiResponse(code = 400, message = "bad input parameter")})
