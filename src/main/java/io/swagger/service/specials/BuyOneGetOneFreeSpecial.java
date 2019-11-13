@@ -45,7 +45,6 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
    * Applies the special by updating the specialID and discountAmount of the order. Overwrites
    * previous changes. The cost of the cheapest item will be set to the discount amount. Maximum
    * discount of 20.00. Must be at least 2 items in the order.
-   *
    * @param orderId the id of an existing order, no change if order doesn't exist.
    */
   @Override
@@ -61,7 +60,6 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
         discount = toCheck.getPrice();
       }
     }
-    System.out.println("made it");
     order.setDiscountAmount(new Price().priceInCents((int) (discount * DOLLARS_TO_CENTS)));
     order.setSpecialId(SPECIAL_ID);
     repository.save(order);
