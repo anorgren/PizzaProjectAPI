@@ -26,7 +26,7 @@ public class FlatDiscountSpecial implements ApplicableSpecial {
     Order order = repository.findByOrderId(orderId);
     if (order == null) {
       return false;
-    } else if ( order.getTentativeAmount() != null){
+    } else if (order.getTentativeAmount() != null){
       return order.getTentativeAmount().getPriceInCents() > DISCOUNT_MINIMUM;
     } else {
       return false;
@@ -40,11 +40,15 @@ public class FlatDiscountSpecial implements ApplicableSpecial {
    */
   @Override
   public void apply(String orderId) {
+    if (!isApplicable(orderId)) {
+      return;
+    }
     Order order = repository.findByOrderId(orderId);
     if (order == null) {
       return;
     }
     order.setDiscountAmount(new Price().priceInCents(DISCOUNT_AMOUNT));
     order.setSpecialId(SPECIAL_ID);
+    repository.save(order);
   }
 }

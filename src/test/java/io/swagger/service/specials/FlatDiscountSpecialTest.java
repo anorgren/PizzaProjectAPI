@@ -1,5 +1,7 @@
 package io.swagger.service.specials;
 
+import static org.junit.Assert.*;
+
 import io.swagger.model.Price;
 import org.junit.After;
 import org.junit.Before;
@@ -35,6 +37,9 @@ public class FlatDiscountSpecialTest {
 
   private static final String ORDER_ONE_ID = "1";
   private static final String ORDER_TWO_ID = "2";
+  private static final Integer DISCOUNT_AMOUNT = 2000;
+  private static final String SPECIAL_ID = "FlatDiscount";
+
 
   @Autowired
   private ApplicableSpecialFactory applicableSpecialFactory;
@@ -85,6 +90,27 @@ public class FlatDiscountSpecialTest {
   }
 
   @Test
-  public void apply() {
+  public void isApplicableNonExistentOrder() {
+    ApplicableSpecial special = applicableSpecialFactory.getApplicableSpecial(SPECIAL_ID);
+    assertFalse(special.isApplicable("I don't exist"));
   }
+
+  @Test
+  public void applyToValidOrder() {
+    Order secondOrder = new Order();
+    secondOrder.setOrderId(ORDER_TWO_ID);
+    secondOrder.setItemList(new ItemList());
+    //must be more than 5000
+    secondOrder.setTentativeAmount(new Price().priceInCents(5500));
+    orderRepository.insert(secondOrder);
+
+    ApplicableSpecial special = applicableSpecialFactory.getApplicableSpecial(SPECIAL_ID);
+
+    special.apply(ORDER_TWO_ID);
+
+    Order modifiedOrderOne = orderRepository.findByOrderId(ORDER_TWO_ID);
+    assertEquals( new Price().priceInCents(DISCOUNT_AMOUNT), modifiedOrderOne.getDiscountAmount());
+    assertEquals(SPECIAL_ID, modifiedOrderOne.getSpecialId());
+  }
+
 }
