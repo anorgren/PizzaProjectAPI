@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +19,18 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiParam;
+import io.swagger.model.Crust;
 import io.swagger.model.Order;
+import io.swagger.model.Pizza;
+import io.swagger.model.PizzaSize;
 import io.swagger.model.Price;
+import io.swagger.model.Sauce;
+import io.swagger.model.Topping;
 import io.swagger.repository.OrderRepository;
+import io.swagger.service.CrustService;
+import io.swagger.service.PizzaSizeService;
+import io.swagger.service.SauceService;
+import io.swagger.service.ToppingService;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T18:44:25.092Z[GMT]")
 @Controller
@@ -32,14 +42,22 @@ public class PricesApiController implements PricesApi {
 
   private final HttpServletRequest request;
 
-  private final Integer SMALL_BASE_PRICE = 800;
-  private final Integer MEDIUM_BASE_PRICE = 1000;
-  private final Integer LARGE_BASE_PRICE = 1200;
-  private final Integer DOLLARS_TO_CENTS = 100;
-  private Integer toppingsPrice = 0;
-
   @Autowired
   private OrderRepository repository;
+
+  @Autowired
+  PizzaSizeService pizzaSizeService;
+
+  @Autowired
+  CrustService crustService;
+
+  @Autowired
+  SauceService sauceService;
+
+  @Autowired
+  ToppingService toppingService;
+
+  private static final int MAX_ALLOWED_TOPPINGS = 5;
 
   @org.springframework.beans.factory.annotation.Autowired
   public PricesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -77,8 +95,46 @@ public class PricesApiController implements PricesApi {
           @NotNull @ApiParam(value = "Size of pizza", required = true)
           @Valid @RequestParam(value = "size", required = true) String size,
           @ApiParam(value = "Topping to include on pizza")
-          @Valid @RequestParam(value = "toppings", required = false) List<String> toppings) {
-    return null;
+          @Valid @RequestParam(value = "toppings", required = false) List<String> toppings,
+          @NotNull @ApiParam(value = "crustName", required = true) @Valid @RequestParam(value = "crustName", required = true) String crustName,
+          @NotNull @ApiParam(value = "sauceName", required = true) @Valid @RequestParam(value = "sauceName", required = true) String sauceName) {
+    String accept = request.getHeader("Accept");
+    if (accept != null && accept.contains("application/json")) {
+      try {
+        if (toppings.size() > MAX_ALLOWED_TOPPINGS) {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        PizzaSize pizzaSize = pizzaSizeService.getPizzaSizeBySizeDescription(size.toLowerCase());
+        if (pizzaSize == null) {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Crust pizzaCrust = crustService.getCrustByName(crustName.toLowerCase());
+        if (pizzaCrust == null) {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Sauce pizzaSauce = sauceService.getSauceBySauceName(sauceName.toLowerCase());
+        if (pizzaSauce == null) {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Topping> toppingList = new ArrayList<>();
+        toppings.forEach(toppingName -> {
+          Topping topping = toppingService.getTopping(toppingName.toLowerCase());
+          if (topping == null) {
+            throw new IllegalArgumentException("Invalid topping: " + toppingName);
+          }
+          toppingList.add(topping);
+        });
+        Pizza pizza = new Pizza().size(pizzaSize)
+                .crust(pizzaCrust)
+                .sauce(pizzaSauce)
+                .toppings(toppingList);
+        return new ResponseEntity<Price>(new Price().priceInCents((int) (pizza.getPrice() * 100)), HttpStatus.OK);
+      } catch (Exception e) {
+        log.error("Error getting orders", e.getMessage());
+        return new ResponseEntity<Price>(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
+    return new ResponseEntity<Price>(HttpStatus.NOT_IMPLEMENTED);
   }
 }
 

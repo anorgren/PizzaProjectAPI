@@ -68,28 +68,32 @@ public class PizzasApiController implements PizzasApi {
     if (accept != null && accept.contains("application/json")) {
       try {
         if(toppingNames.size() > MAX_ALLOWED_TOPPINGS){
-          throw new IllegalArgumentException("Number of Toppings exceeded");
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         PizzaSize pizzaSize = pizzaSizeService.getPizzaSizeBySizeDescription(size.toLowerCase());
         if(pizzaSize == null){
-          throw new IllegalArgumentException("Invalid Pizza size");
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Crust pizzaCrust = crustService.getCrustByName(crustName.toLowerCase());
         if(pizzaCrust == null){
-          throw new IllegalArgumentException("Invalid Pizza crust");
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Sauce pizzaSauce = sauceService.getSauceBySauceName(sauceName.toLowerCase());
         if(pizzaSauce == null){
-          throw new IllegalArgumentException("Invalid Pizza sauce");
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<Topping> toppingList = new ArrayList<>();
-        toppingNames.forEach(toppingName -> {
-          Topping topping = toppingService.getTopping(toppingName.toLowerCase());
-          if(topping == null){
-            throw new IllegalArgumentException("Invalid topping: " + toppingName);
-          }
-          toppingList.add(topping);
-        });
+        try {
+          toppingNames.forEach(toppingName -> {
+            Topping topping = toppingService.getTopping(toppingName.toLowerCase());
+            if (topping == null) {
+              throw new IllegalArgumentException("Invalid topping: " + toppingName);
+            }
+            toppingList.add(topping);
+          });
+        } catch (IllegalArgumentException e){
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         Pizza pizza = new Pizza().size(pizzaSize)
                 .crust(pizzaCrust)
                 .sauce(pizzaSauce)

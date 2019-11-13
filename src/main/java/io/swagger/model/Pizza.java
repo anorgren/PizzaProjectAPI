@@ -22,7 +22,11 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @JsonTypeName("Pizza")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T21:13:59.483Z[GMT]")
-public class Pizza extends Item  {
+public class Pizza extends Item {
+  private final Double SMALL_BASE_PRICE = 8.00;
+  private final Double MEDIUM_BASE_PRICE = 10.00;
+  private final Double LARGE_BASE_PRICE = 12.00;
+
   @JsonProperty("pizzaName")
   private String pizzaName = null;
 
@@ -55,12 +59,13 @@ public class Pizza extends Item  {
 
   /**
    * Get pizzaName
+   *
    * @return pizzaName
-  **/
+   **/
   @ApiModelProperty(example = "meat lovers", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getPizzaName() {
+  public String getPizzaName() {
     return pizzaName;
   }
 
@@ -75,13 +80,14 @@ public class Pizza extends Item  {
 
   /**
    * Get size
+   *
    * @return size
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    @Valid
-    public PizzaSize getSize() {
+  @Valid
+  public PizzaSize getSize() {
     return size;
   }
 
@@ -96,7 +102,7 @@ public class Pizza extends Item  {
   }
 
   private void checkSauceDietaryProperties(Sauce sauce) {
-    for(Map.Entry<DietaryProperty, Boolean> entry : sauce.getDietaryProperties().entrySet()) {
+    for (Map.Entry<DietaryProperty, Boolean> entry : sauce.getDietaryProperties().entrySet()) {
       if (entry.getValue().equals(false)) {
         dietaryProperties.put(entry.getKey(), false);
       }
@@ -105,13 +111,14 @@ public class Pizza extends Item  {
 
   /**
    * Get sauce
+   *
    * @return sauce
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    @Valid
-    public Sauce getSauce() {
+  @Valid
+  public Sauce getSauce() {
     return sauce;
   }
 
@@ -126,13 +133,14 @@ public class Pizza extends Item  {
 
   /**
    * Get crust
+   *
    * @return crust
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    @Valid
-    public Crust getCrust() {
+  @Valid
+  public Crust getCrust() {
     return crust;
   }
 
@@ -152,12 +160,13 @@ public class Pizza extends Item  {
 
   /**
    * Get toppings
+   *
    * @return toppings
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
-    @Valid
-    public List<Topping> getToppings() {
+  @NotNull
+  @Valid
+  public List<Topping> getToppings() {
     return toppings;
   }
 
@@ -172,13 +181,17 @@ public class Pizza extends Item  {
 
   /**
    * Get price
+   *
    * @return price
-  **/
+   **/
   @ApiModelProperty(example = "12.99", value = "")
-    @Override
-    @Valid
+  @Override
+  @Valid
   public Double getPrice() {
-    return price;
+    Double sum = getBasePrice();
+    sum += this.getToppings().stream().mapToDouble(Topping::getPrice).sum();
+    sum += this.getCrust().getPrice();
+    return sum;
   }
 
   public void setPrice(Double price) {
@@ -200,12 +213,12 @@ public class Pizza extends Item  {
     }
     Pizza pizza = (Pizza) o;
     return Objects.equals(this.pizzaName, pizza.pizzaName) &&
-        Objects.equals(this.size, pizza.size) &&
-        Objects.equals(this.sauce, pizza.sauce) &&
-        Objects.equals(this.crust, pizza.crust) &&
-        Objects.equals(this.toppings, pizza.toppings) &&
-        Objects.equals(this.price, pizza.price) &&
-        super.equals(o);
+            Objects.equals(this.size, pizza.size) &&
+            Objects.equals(this.sauce, pizza.sauce) &&
+            Objects.equals(this.crust, pizza.crust) &&
+            Objects.equals(this.toppings, pizza.toppings) &&
+            Objects.equals(this.price, pizza.price) &&
+            super.equals(o);
   }
 
   @Override
@@ -230,13 +243,29 @@ public class Pizza extends Item  {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  private Double getBasePrice() {  //  private Integer getBasePrice(String size) {
+    Double price = 0.0;  //    Integer price = 0;
+    switch (this.size.getSizeDescription()) {  //    switch (pizzaSize) {
+      case "small":  //      case SMALL:
+        price = SMALL_BASE_PRICE;  //        price = SMALL_BASE_PRICE;
+        break;  //        break;
+      case "medium":  //      case MEDIUM:
+        price = MEDIUM_BASE_PRICE;  //        price = MEDIUM_BASE_PRICE;
+        break;  //        break;
+      case "large":  //      case LARGE:
+        price = LARGE_BASE_PRICE;  //        price = LARGE_BASE_PRICE;
+        break;  //        break;
+    }  //    }
+    return price;  //    return price;
   }
 }
