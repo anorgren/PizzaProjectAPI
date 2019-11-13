@@ -6,7 +6,7 @@
 package io.swagger.api;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +21,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.model.Order;
 import io.swagger.model.PaymentInformation;
-import io.swagger.model.Price;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
 @Api(value = "completeOrder", description = "the completeOrder API")
 public interface CompleteOrderApi {
@@ -32,7 +31,8 @@ public interface CompleteOrderApi {
         @ApiResponse(code = 400, message = "bad input parameter") })
     @RequestMapping(value = "/completeOrder",
         produces = { "application/json" }, 
+        consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Order> completeOrder(@ApiParam(value = "orderId",required=true) @PathVariable("id") String id,@NotNull @ApiParam(value = "updated ItemList", required = true) @Valid @RequestParam(value = "paymentInformation", required = true) PaymentInformation paymentInformation,@NotNull @ApiParam(value = "tentative amount of order in cents", required = true) @Valid @RequestParam(value = "tentativeAmount", required = true) Price tentativeAmount);
+    ResponseEntity<Order> completeOrder(@NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "id", required = true) String id,@NotNull @ApiParam(value = "tentative amount of order in cents", required = true) @Valid @RequestParam(value = "tentativeAmount", required = true) int tentativeAmount,@ApiParam(value = "Payment Information"  )  @Valid @RequestBody PaymentInformation body);
 
 }

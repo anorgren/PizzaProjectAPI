@@ -185,6 +185,10 @@ public class Pizza extends Item  {
     this.price = price;
   }
 
+  @Override
+  public String getItemType() {
+    return "Pizza";
+  }
 
   @Override
   public boolean equals(java.lang.Object o) {

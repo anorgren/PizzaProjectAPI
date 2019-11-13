@@ -1,15 +1,21 @@
 package io.swagger.model;
 
-import io.swagger.repository.OrderRepository;
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModelProperty;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Order
@@ -17,7 +23,11 @@ import javax.validation.constraints.*;
 @Document(collection = "Orders")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T18:52:07.371Z[GMT]")
-public class Order   {
+public class Order {
+
+  @JsonIgnore
+  private String id = null;
+
   @JsonProperty("orderId")
   private String orderId = null;
 
@@ -25,7 +35,8 @@ public class Order   {
   private String storeId = null;
 
   @JsonProperty("itemList")
-  private ItemList itemList = null;
+  @Valid
+  private List<Item> itemList = null;
 
   @JsonProperty("tentativeAmount")
   private Price tentativeAmount = null;
@@ -44,9 +55,9 @@ public class Order   {
    */
   public enum StatusEnum {
     CREATED("Created"),
-    
+
     INPROCESS("InProcess"),
-    
+
     COMPLETED("Completed");
 
     private String value;
@@ -71,6 +82,7 @@ public class Order   {
       return null;
     }
   }
+
   @JsonProperty("status")
   private StatusEnum status = null;
 
@@ -84,12 +96,13 @@ public class Order   {
 
   /**
    * Get orderId
+   *
    * @return orderId
-  **/
+   **/
   @ApiModelProperty(example = "1", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getOrderId() {
+  public String getOrderId() {
     return orderId;
   }
 
@@ -104,11 +117,12 @@ public class Order   {
 
   /**
    * Get storeId
+   *
    * @return storeId
-  **/
+   **/
   @ApiModelProperty(example = "1", value = "")
-  
-    public String getStoreId() {
+
+  public String getStoreId() {
     return storeId;
   }
 
@@ -116,23 +130,32 @@ public class Order   {
     this.storeId = storeId;
   }
 
-  public Order itemList(ItemList itemList) {
+  public Order itemList(List<Item> itemList) {
     this.itemList = itemList;
+    return this;
+  }
+
+  public Order addItemListItem(Item itemListItem) {
+    if (this.itemList == null) {
+      this.itemList = new ArrayList<Item>();
+    }
+    this.itemList.add(itemListItem);
     return this;
   }
 
   /**
    * Get itemList
+   *
    * @return itemList
-  **/
+   **/
   @ApiModelProperty(value = "")
-  
-    @Valid
-    public ItemList getItemList() {
+
+  @Valid
+    public List<Item> getItemList() {
     return itemList;
   }
 
-  public void setItemList(ItemList itemList) {
+  public void setItemList(List<Item> itemList) {
     this.itemList = itemList;
   }
 
@@ -143,12 +166,13 @@ public class Order   {
 
   /**
    * Get tentativeAmount
+   *
    * @return tentativeAmount
-  **/
+   **/
   @ApiModelProperty(value = "")
-  
-    @Valid
-    public Price getTentativeAmount() {
+
+  @Valid
+  public Price getTentativeAmount() {
     return tentativeAmount;
   }
 
@@ -163,12 +187,13 @@ public class Order   {
 
   /**
    * Get calculatedAmount
+   *
    * @return calculatedAmount
-  **/
+   **/
   @ApiModelProperty(value = "")
-  
-    @Valid
-    public Price getCalculatedAmount() {
+
+  @Valid
+  public Price getCalculatedAmount() {
     return calculatedAmount;
   }
 
@@ -183,12 +208,13 @@ public class Order   {
 
   /**
    * Get discountAmount
+   *
    * @return discountAmount
-  **/
+   **/
   @ApiModelProperty(value = "")
-  
-    @Valid
-    public Price getDiscountAmount() {
+
+  @Valid
+  public Price getDiscountAmount() {
     return discountAmount;
   }
 
@@ -203,12 +229,13 @@ public class Order   {
 
   /**
    * Get payementInformation
+   *
    * @return payementInformation
-  **/
+   **/
   @ApiModelProperty(value = "")
-  
-    @Valid
-    public PaymentInformation getPayementInformation() {
+
+  @Valid
+  public PaymentInformation getPayementInformation() {
     return payementInformation;
   }
 
@@ -223,11 +250,12 @@ public class Order   {
 
   /**
    * Get status
+   *
    * @return status
-  **/
+   **/
   @ApiModelProperty(value = "")
-  
-    public StatusEnum getStatus() {
+
+  public StatusEnum getStatus() {
     return status;
   }
 
@@ -242,18 +270,18 @@ public class Order   {
 
   /**
    * Get specialId
+   *
    * @return specialId
-  **/
+   **/
   @ApiModelProperty(value = "")
-  
-    public String getSpecialId() {
+
+  public String getSpecialId() {
     return specialId;
   }
 
   public void setSpecialId(String specialId) {
     this.specialId = specialId;
   }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -265,14 +293,14 @@ public class Order   {
     }
     Order order = (Order) o;
     return Objects.equals(this.orderId, order.orderId) &&
-        Objects.equals(this.storeId, order.storeId) &&
-        Objects.equals(this.itemList, order.itemList) &&
-        Objects.equals(this.tentativeAmount, order.tentativeAmount) &&
-        Objects.equals(this.calculatedAmount, order.calculatedAmount) &&
-        Objects.equals(this.discountAmount, order.discountAmount) &&
-        Objects.equals(this.payementInformation, order.payementInformation) &&
-        Objects.equals(this.status, order.status) &&
-        Objects.equals(this.specialId, order.specialId);
+            Objects.equals(this.storeId, order.storeId) &&
+            Objects.equals(this.itemList, order.itemList) &&
+            Objects.equals(this.tentativeAmount, order.tentativeAmount) &&
+            Objects.equals(this.calculatedAmount, order.calculatedAmount) &&
+            Objects.equals(this.discountAmount, order.discountAmount) &&
+            Objects.equals(this.payementInformation, order.payementInformation) &&
+            Objects.equals(this.status, order.status) &&
+            Objects.equals(this.specialId, order.specialId);
   }
 
   @Override
@@ -284,7 +312,7 @@ public class Order   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Order {\n");
-    
+
     sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
     sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
     sb.append("    itemList: ").append(toIndentedString(itemList)).append("\n");
@@ -299,8 +327,8 @@ public class Order   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

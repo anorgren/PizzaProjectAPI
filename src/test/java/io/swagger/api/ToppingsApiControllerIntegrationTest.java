@@ -35,9 +35,6 @@ public class ToppingsApiControllerIntegrationTest {
   @Before
   public void setUp() {
     objectMapper = new ObjectMapper();
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    request.addHeader("Accept", "application/json");
-    api = new ToppingsApiController( request);
   }
 
   @Test
