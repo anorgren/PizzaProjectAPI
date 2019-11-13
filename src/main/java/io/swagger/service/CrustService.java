@@ -13,7 +13,7 @@ public class CrustService {
     CrustRepository crustRepository;
 
     public Crust getCrustByName(String crustName) {
-        return crustRepository.getCrustByCrustName(crustName);
+        return crustRepository.getCrustByCrustName(crustName.toLowerCase());
     }
 
     public List<Crust> getAllCrusts() {
