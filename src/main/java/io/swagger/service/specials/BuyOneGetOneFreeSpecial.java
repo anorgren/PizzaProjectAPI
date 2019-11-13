@@ -1,5 +1,6 @@
 package io.swagger.service.specials;
 
+import io.swagger.model.ItemList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +31,16 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
   @Override
   public boolean isApplicable(String orderId) {
     Order order = repository.findByOrderId(orderId);
-    if (order == null || order.getItemList().getOrderItems().size() < 2) {
+    if (order == null) {
       return false;
-    } else {
-      return true;
     }
+    ItemList itemList = order.getItemList();
+    if(itemList == null) {
+      return false;
+    }
+    List<Item> orderItems = itemList.getOrderItems();
+    return !(orderItems == null || orderItems.size() < 1);
   }
-
   /**
    * Applies the special by updating the specialID and discountAmount of the order. Overwrites
    * previous changes. The cost of the cheapest item will be set to the discount amount. Maximum
@@ -46,10 +50,10 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
    */
   @Override
   public void apply(String orderId) {
-    Order order = repository.findByOrderId(orderId);
-    if (order == null || order.getItemList().getOrderItems().size() < 2) {
+    if (!isApplicable(orderId)) {
       return;
     }
+    Order order = repository.findByOrderId(orderId);
     List<Item> items = order.getItemList().getOrderItems();
     Double discount = MAX_DISCOUNT;
     for (Item toCheck : items) {
@@ -57,8 +61,10 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
         discount = toCheck.getPrice();
       }
     }
+    System.out.println("made it");
     order.setDiscountAmount(new Price().priceInCents((int) (discount * DOLLARS_TO_CENTS)));
     order.setSpecialId(SPECIAL_ID);
+    repository.save(order);
   }
 
 }

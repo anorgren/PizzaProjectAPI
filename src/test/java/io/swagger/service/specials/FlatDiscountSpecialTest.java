@@ -1,5 +1,6 @@
 package io.swagger.service.specials;
 
+import io.swagger.model.Price;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import io.swagger.model.Order;
 import io.swagger.model.Soda;
 import io.swagger.repository.OrderRepository;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -48,7 +50,7 @@ public class FlatDiscountSpecialTest {
   }
 
   @Test
-  public void isApplicableFirstOrder() {
+  public void isApplicableInvalidOrder() {
     Order firstOrder = new Order();
     firstOrder.setOrderId(ORDER_ONE_ID);
     Soda cokeTwoLiter = new Soda();
@@ -65,14 +67,16 @@ public class FlatDiscountSpecialTest {
 
     ApplicableSpecial special = applicableSpecialFactory.getApplicableSpecial("FlatDiscount");
 
-    assertTrue(special.isApplicable(ORDER_ONE_ID));
+    assertFalse(special.isApplicable(ORDER_ONE_ID));
   }
 
   @Test
-  public void isApplicableSecondOrder() {
+  public void isApplicableValidOrder() {
     Order secondOrder = new Order();
     secondOrder.setOrderId(ORDER_TWO_ID);
     secondOrder.setItemList(new ItemList());
+    //must be more than 5000
+    secondOrder.setTentativeAmount(new Price().priceInCents(5500));
     orderRepository.insert(secondOrder);  
 
     ApplicableSpecial special = applicableSpecialFactory.getApplicableSpecial("FlatDiscount");

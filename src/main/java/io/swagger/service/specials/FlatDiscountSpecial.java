@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class FlatDiscountSpecial implements ApplicableSpecial {
 
   private static final Integer DISCOUNT_AMOUNT = 2000;
+  private static final Integer DISCOUNT_MINIMUM = 5000;
   private static final String SPECIAL_ID = "FlatDiscount";
 
   @Autowired
@@ -25,8 +26,10 @@ public class FlatDiscountSpecial implements ApplicableSpecial {
     Order order = repository.findByOrderId(orderId);
     if (order == null) {
       return false;
+    } else if ( order.getTentativeAmount() != null){
+      return order.getTentativeAmount().getPriceInCents() > DISCOUNT_MINIMUM;
     } else {
-      return true;
+      return false;
     }
   }
 
