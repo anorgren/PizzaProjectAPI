@@ -246,7 +246,7 @@ public class DataConfiguration {
 
         Topping pepperoni = new Topping();
         pepperoni.toppingName("pepperoni").price(MEAT_PRICE)
-                .dietaryProperties(veganVegetarianGlutenFree);
+                .dietaryProperties(notVegetarianIsGlutenFree);
         defaultToppings.add(pepperoni);
 
         Topping italianSausage = new Topping();
