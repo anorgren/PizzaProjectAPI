@@ -85,7 +85,7 @@ public class PricesApiController implements PricesApi {
 
 
   /**
-   * Calculates the price of a pizza with a given size and toppings.
+   * Calculates the price of a pizza with a given size, toppings, sauce and crust.
    *
    * @param size     The size of the pizza (small, medium, large)
    * @param toppings A list of the names of all the toppings
