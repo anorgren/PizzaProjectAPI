@@ -50,7 +50,7 @@ public class DessertApiControllerIntegrationTest {
 
     private ObjectMapper objectMapper;
 
-    private BigDecimal price;
+    private Double price;
     private Dessert cookies;
     private Dessert brownies;
     private List<Dessert> desserts;
@@ -61,7 +61,7 @@ public class DessertApiControllerIntegrationTest {
     public void setUp() {
         objectMapper = new ObjectMapper();
 
-        price = new BigDecimal(4.99);
+        price = 4.99d;
 
         vegetarian = new HashMap<>();
         vegetarian.put(DietaryProperty.VEGAN, false);

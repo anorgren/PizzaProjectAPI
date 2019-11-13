@@ -29,7 +29,7 @@ public class CrustRepositoryTest {
     @Autowired
     private CrustRepository crustRepository;
 
-    private BigDecimal price;
+    private Double price;
     private Crust crustOriginal;
     private Crust crustGlutenFree;
 
@@ -39,7 +39,7 @@ public class CrustRepositoryTest {
     public void setUp() throws Exception {
         crustRepository.deleteAll();
 
-        price = new BigDecimal(100);
+        price = 100d;
 
         vegetarianGlutenFree = new HashMap<>();
         vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);

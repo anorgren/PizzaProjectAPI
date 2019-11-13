@@ -49,7 +49,7 @@ public class CrustApiControllerIntegrationTest {
 
     private ObjectMapper objectMapper;
 
-    private BigDecimal price;
+    private Double price;
     private Crust crustOriginal;
     private Crust crustGlutenFree;
     private List<Crust> crusts;
@@ -59,7 +59,7 @@ public class CrustApiControllerIntegrationTest {
     public void setUp() {
         objectMapper = new ObjectMapper();
 
-        price = new BigDecimal(100);
+        price = 100d;
 
         vegetarianGlutenFree = new HashMap<>();
         vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);

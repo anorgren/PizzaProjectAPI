@@ -32,14 +32,14 @@ public class ToppingRepositoryTest {
     private Topping cheese;
     private HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
     private HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-    private BigDecimal price;
+    private Double price;
     private List<Topping> toppings;
 
     @Before
     public void setUp() throws Exception {
         toppingRepository.deleteAll();
 
-        price = new BigDecimal(5);
+        price = 5d;
         pepperoni = new Topping();
         ham = new Topping();
         cheese = new Topping();

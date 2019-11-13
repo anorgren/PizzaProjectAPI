@@ -51,7 +51,7 @@ public class ToppingsApiControllerIntegrationTest {
 
     private HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
     private HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
-    private BigDecimal price;
+    private Double price;
     private Topping pepperoni;
     private Topping ham;
     private Topping cheese;
@@ -61,7 +61,7 @@ public class ToppingsApiControllerIntegrationTest {
     public void setUp() {
         objectMapper = new ObjectMapper();
 
-        price = new BigDecimal(5);
+        price = 5d;
         pepperoni = new Topping();
         ham = new Topping();
         cheese = new Topping();
