@@ -91,7 +91,7 @@ public class DessertApiControllerIntegrationTest {
     }
 
     @Test
-    public void getCrustsEmptyList() throws Exception {
+    public void getDessertsEmptyList() throws Exception {
         when(repository.findAll()).thenReturn(null);
         this.mockMvc.perform(get("/desserts")
                 .header("Accept", "application/json"))
@@ -102,7 +102,7 @@ public class DessertApiControllerIntegrationTest {
 
 
     @Test
-    public void getCrustsOneInRepository() throws Exception {
+    public void getDessertsOneInRepository() throws Exception {
         List<Dessert> singleObject = Arrays.asList(brownies);
         String stringSingleObject = objectMapper.writeValueAsString(singleObject);
         when(repository.findAll()).thenReturn(singleObject);
@@ -114,7 +114,7 @@ public class DessertApiControllerIntegrationTest {
     }
 
     @Test
-    public void getCrustsMultipleReturned() throws Exception {
+    public void getDessertsMultipleReturned() throws Exception {
         String stringMultipleObjects = objectMapper.writeValueAsString(desserts);
         when(repository.findAll()).thenReturn(desserts);
         this.mockMvc.perform(get("/desserts")
@@ -125,7 +125,7 @@ public class DessertApiControllerIntegrationTest {
     }
 
     @Test
-    public void getCrustsByNameValidName() throws Exception {
+    public void getDessertsByNameValidName() throws Exception {
         String objectToGet = objectMapper.writeValueAsString(brownies);
         when(repository.findDessertByDessertName(any()))
                 .thenAnswer(invocationOnMock -> {
@@ -145,7 +145,7 @@ public class DessertApiControllerIntegrationTest {
     }
 
     @Test
-    public void getCrustsByNameValidNameMixedCase() throws Exception {
+    public void getDessertsByNameValidNameMixedCase() throws Exception {
         String objectToGet = objectMapper.writeValueAsString(brownies);
         when(repository.findDessertByDessertName(any()))
                 .thenAnswer(invocationOnMock -> {
@@ -165,7 +165,7 @@ public class DessertApiControllerIntegrationTest {
     }
 
     @Test
-    public void getCrustsByNameInvalidName() throws Exception {
+    public void getDessertsByNameInvalidName() throws Exception {
         when(repository.findDessertByDessertName(any()))
                 .thenAnswer(invocationOnMock -> {
                     for (Dessert dessert : desserts) {
@@ -183,14 +183,14 @@ public class DessertApiControllerIntegrationTest {
     }
 
     @Test
-    public void getCrustByNameTestInvalidHeader() throws Exception {
+    public void getDessertByNameTestInvalidHeader() throws Exception {
         this.mockMvc.perform(get("/desserts/brownies")
                 .header("null", "null"))
                 .andExpect(status().isNotImplemented());
     }
 
     @Test
-    public void getCrustTestInvalidHeader() throws Exception {
+    public void getDessertTestInvalidHeader() throws Exception {
         this.mockMvc.perform(get("/desserts")
                 .header("null", "null"))
                 .andExpect(status().isNotImplemented());
