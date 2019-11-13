@@ -17,6 +17,7 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
   private static final String SPECIAL_ID = "BOGO";
   private static final Double MAX_DISCOUNT = new Double(20.00);
   private static final Double DOLLARS_TO_CENTS = new Double(100);
+  private static final Integer REQUIRED_NUM_ITEMS = 2;
 
   @Autowired
   private OrderRepository repository;
@@ -39,7 +40,7 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
       return false;
     }
     List<Item> orderItems = itemList.getOrderItems();
-    return !(orderItems == null || orderItems.size() < 1);
+    return !(orderItems == null || orderItems.size() < REQUIRED_NUM_ITEMS);
   }
   /**
    * Applies the special by updating the specialID and discountAmount of the order. Overwrites
