@@ -1,17 +1,20 @@
 package io.swagger.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import org.springframework.validation.annotation.Validated;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.validation.annotation.Validated;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Pizza
@@ -40,7 +43,7 @@ public class Pizza extends Item  {
   private List<Topping> toppings = new ArrayList<Topping>();
 
   @JsonProperty("price")
-  private BigDecimal price = null;
+  private Double price = null;
 
   public Pizza pizzaName(String pizzaName) {
     this.pizzaName = pizzaName;
@@ -162,7 +165,7 @@ public class Pizza extends Item  {
     this.toppings = toppings;
   }
 
-  public Pizza price(BigDecimal price) {
+  public Pizza price(Double price) {
     this.price = price;
     return this;
   }
@@ -174,11 +177,11 @@ public class Pizza extends Item  {
   @ApiModelProperty(example = "12.99", value = "")
     @Override
     @Valid
-  public BigDecimal getPrice() {
+  public Double getPrice() {
     return price;
   }
 
-  public void setPrice(BigDecimal price) {
+  public void setPrice(Double price) {
     this.price = price;
   }
 

@@ -1,19 +1,35 @@
 package io.swagger.configuration;
 
 
-import io.swagger.model.*;
-import io.swagger.repository.*;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.swagger.model.Breadstick;
+import io.swagger.model.Crust;
+import io.swagger.model.Dessert;
+import io.swagger.model.DietaryProperty;
+import io.swagger.model.PizzaSize;
+import io.swagger.model.Sauce;
+import io.swagger.model.Soda;
+import io.swagger.model.Special;
+import io.swagger.model.Store;
+import io.swagger.model.Topping;
+import io.swagger.repository.BreadstickRepository;
+import io.swagger.repository.CrustRepository;
+import io.swagger.repository.DessertRepository;
+import io.swagger.repository.PizzaSizeRepository;
+import io.swagger.repository.SauceRepository;
+import io.swagger.repository.SodaRepository;
+import io.swagger.repository.SpecialsRepository;
+import io.swagger.repository.StoreRepository;
+import io.swagger.repository.ToppingRepository;
+
 public class DataConfiguration {
 
-  private static final BigDecimal NON_MEAT_PRICE = new BigDecimal(2.00);
-  private static final BigDecimal MEAT_PRICE = new BigDecimal(3.00);
+  private static final Double NON_MEAT_PRICE = new Double(2.00);
+  private static final Double MEAT_PRICE = new Double(3.00);
 
   private static final String SMALL_DESCRIPTION = "small";
   private static final String MEDIUM_DESCRIPTION = "medium";
@@ -82,11 +98,11 @@ public class DataConfiguration {
     private static final String CHOCOLATE_CHIP_COOKIE_NAME = "chocolate chip cookies";
     private static final String CHOCOLATE_CHIP_COOKIE_DESCRIPTION =
             "six large chocolate chip cookies baked fresh in our ovens.";
-    private static final BigDecimal CHOCOLATE_CHIP_COOKIE_PRICE = new BigDecimal(3.99);
+    private static final Double CHOCOLATE_CHIP_COOKIE_PRICE = new Double(3.99);
 
     private static final String BROWNIE_NAME = "double chocolate chunk brownies";
     private static final String BROWNIE_DESCRIPTION = "Four large gooey double chocolate brownies.";
-    private static final BigDecimal BROWNIE_PRICE = new BigDecimal(4.99);
+    private static final Double BROWNIE_PRICE = new Double(4.99);
 
     private static final String COCA_COLA_PRODUCT_NAME = "coca cola";
     private static final String SPRITE_PRODUCT_NAME = "sprite";
@@ -97,9 +113,9 @@ public class DataConfiguration {
     private static final String CRUST_ORIGINAL_NAME = "original crust";
     private static final String CRUST_THIN_NAME = "thin crust";
     private static final String CRUST_GLUTEN_FREE_NAME = "gluten free crust";
-    private static final BigDecimal CRUST_ORIGINAL_PRICE = new BigDecimal(0);
-    private static final BigDecimal CRUST_THIN_PRICE = new BigDecimal(0);
-    private static final BigDecimal CRUST_GLUTEN_FREE_PRICE = new BigDecimal(1.5);
+    private static final Double CRUST_ORIGINAL_PRICE = new Double(0);
+    private static final Double CRUST_THIN_PRICE = new Double(0);
+    private static final Double CRUST_GLUTEN_FREE_PRICE = new Double(1.5);
     private static List<PizzaSize> ALL_SIZES = new ArrayList<>();
     private static List<PizzaSize> SMALL_LARGE_SIZE = new ArrayList<>();
 

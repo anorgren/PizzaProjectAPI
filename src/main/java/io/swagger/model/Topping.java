@@ -1,17 +1,20 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.configuration.DataConfiguration;
-import io.swagger.repository.ToppingRepository;
-import java.math.BigDecimal;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
+
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.ToppingRepository;
 
 @Document(collection = "Toppings")
 @Validated
@@ -33,7 +36,7 @@ public class Topping {
   private Map<DietaryProperty, Boolean> dietaryProperties = null;
 
   @JsonProperty("price")
-  private BigDecimal price = null;
+  private Double price = null;
 
   public Topping toppingName(String toppingName) {
     this.toppingName = toppingName;
@@ -78,7 +81,7 @@ public class Topping {
     this.dietaryProperties = dietaryProperties;
   }
 
-  public Topping price(BigDecimal price) {
+  public Topping price(Double price) {
     this.price = price;
     return this;
   }
@@ -91,11 +94,11 @@ public class Topping {
   @ApiModelProperty(example = "1", value = "")
 
   @Valid
-  public BigDecimal getPrice() {
+  public Double getPrice() {
     return price;
   }
 
-  public void setPrice(BigDecimal price) {
+  public void setPrice(Double price) {
     this.price = price;
   }
 
