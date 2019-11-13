@@ -29,8 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(ToppingsApiController.class)
@@ -165,7 +164,7 @@ public class ToppingsApiControllerIntegrationTest {
         this.mockMvc.perform(get("/toppings/invalidName")
                 .header("Accept", "application/json"))
                 .andExpect(status().isNotFound())
-                .andExpect(content().json(stringEmptyTopping));
+                .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test

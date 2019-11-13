@@ -102,7 +102,7 @@ public class StoresApiControllerIntegrationTest {
 
     @Test
     public void getStoresEmptyStoreList() throws Exception {
-        ResultActions result = this.mockMvc.perform(get("/stores")
+        this.mockMvc.perform(get("/stores")
                 .header("Accept", "application/json"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -144,8 +144,6 @@ public class StoresApiControllerIntegrationTest {
 
     @Test
     public void getStoresByIdValueDoesNotExist() throws Exception {
-
-        String stringStoreTwo = objectMapper.writeValueAsString(storeTwo);
         when(storeRepository.findStoreByBranchId(any()))
                 .thenAnswer(invocationOnMock -> {
                     for (Store store : this.stores) {

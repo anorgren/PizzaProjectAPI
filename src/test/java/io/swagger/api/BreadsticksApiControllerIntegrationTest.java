@@ -1,7 +1,10 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.Breadstick;
+import io.swagger.model.DietaryProperty;
 import io.swagger.model.PizzaSize;
+import io.swagger.repository.BreadstickRepository;
 import io.swagger.repository.PizzaSizeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,11 +33,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebMvcTest(SizesApiController.class)
+@WebMvcTest(BreadsticksApiController.class)
 @WebAppConfiguration
 @ContextConfiguration(classes =
-        {SizesApiController.class, TestContext.class, WebApplicationContext.class})
-public class SizesApiControllerIntegrationTest {
+        {BreadsticksApiController.class, TestContext.class, WebApplicationContext.class})
+public class BreadsticksApiControllerIntegrationTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -42,23 +46,33 @@ public class SizesApiControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private PizzaSizeRepository repository;
+    private BreadstickRepository repository;
 
     private ObjectMapper objectMapper;
-    private PizzaSize expectedOne;
-    private PizzaSize expectedTwo;
-    private PizzaSize expectedThree;
-    private List<PizzaSize> allSizes;
+    private Breadstick breadstick;
+    private Breadstick breadstickTwo;
+    private Breadstick breadstickThree;
+    private List<Breadstick> breadsticks;
+    private HashMap<DietaryProperty, Boolean> vegetarian;
 
 
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
 
-        expectedOne = new PizzaSize("small", 12);
-        expectedTwo = new PizzaSize("large", 16);
-        expectedThree = new PizzaSize("medium", 14);
-        allSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
+        breadstick = new Breadstick();
+        breadstickTwo = new Breadstick();
+        breadstickThree = new Breadstick();
+        breadsticks = Arrays.asList(breadstick, breadstickTwo, breadstickThree);
+
+        vegetarian = new HashMap<>();
+        vegetarian.put(DietaryProperty.VEGAN, false);
+        vegetarian.put(DietaryProperty.VEGETARIAN, true);
+        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+
+        breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+        breadstickTwo.withCheese(true).size(Breadstick.SizeEnum.SMALL).dietaryProperties(vegetarian);
+        breadstickThree.withCheese(false).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
 
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -71,9 +85,9 @@ public class SizesApiControllerIntegrationTest {
     }
 
     @Test
-    public void getSizesEmptyToppingList() throws Exception {
+    public void getBreadsticksEmptyList() throws Exception {
         when(repository.findAll()).thenReturn(null);
-        this.mockMvc.perform(get("/sizes")
+        this.mockMvc.perform(get("/breadsticks")
                 .header("Accept", "application/json"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -82,31 +96,31 @@ public class SizesApiControllerIntegrationTest {
 
 
     @Test
-    public void getSizesOneSizeInRepo() throws Exception {
-        List<PizzaSize> singleSize = Arrays.asList(expectedOne);
-        String stringSizesList = objectMapper.writeValueAsString(singleSize);
-        when(repository.findAll()).thenReturn(singleSize);
-        this.mockMvc.perform(get("/sizes")
+    public void getBreadstickOneInRepo() throws Exception {
+        List<Breadstick> singleBread = Arrays.asList(breadstick);
+        String stringBreadstickList = objectMapper.writeValueAsString(singleBread);
+        when(repository.findAll()).thenReturn(singleBread);
+        this.mockMvc.perform(get("/breadsticks")
                 .header("Accept", "application/json"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringSizesList));
+                .andExpect(content().json(stringBreadstickList));
     }
 
     @Test
-    public void getSizesMultipleSizesReturned() throws Exception {
-        String stringSizesList = objectMapper.writeValueAsString(allSizes);
-        when(repository.findAll()).thenReturn(allSizes);
-        this.mockMvc.perform(get("/sizes")
+    public void getBreadsticksMultipleReturned() throws Exception {
+        String stringBreadsticksList = objectMapper.writeValueAsString(breadsticks);
+        when(repository.findAll()).thenReturn(breadsticks);
+        this.mockMvc.perform(get("/breadsticks")
                 .header("Accept", "application/json"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringSizesList));
+                .andExpect(content().json(stringBreadsticksList));
     }
 
     @Test
-    public void getSizesInvalidHeader() throws Exception {
-        this.mockMvc.perform(get("/sizes")
+    public void getBreadsticksInvalidHeader() throws Exception {
+        this.mockMvc.perform(get("/breadsticks")
                 .header("null", "null"))
                 .andExpect(status().isNotImplemented());
     }
