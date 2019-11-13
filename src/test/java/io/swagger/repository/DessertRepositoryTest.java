@@ -27,8 +27,6 @@ public class DessertRepositoryTest {
 
     @Autowired
     private DessertRepository dessertRepository;
-    @Autowired
-    private DessertService dessertService;
 
     private BigDecimal price;
     private Dessert cookies;
@@ -74,25 +72,19 @@ public class DessertRepositoryTest {
 
     @Test
     public void getDessertByNonExistentName() {
-        Dessert actual = dessertService.getDessert("not a real name");
+        Dessert actual = dessertRepository.findDessertByDessertName("not a real name");
         assertNull(actual);
     }
 
     @Test
     public void getDessertByCorrectName() {
-        Dessert actual = dessertService.getDessert("brownies");
+        Dessert actual = dessertRepository.findDessertByDessertName("brownies");
         assertThat(actual).isEqualToComparingFieldByField(brownies);
     }
 
     @Test
-    public void getDessertByCorrectNameWrongCase() {
-        Dessert actual = dessertService.getDessert("cOOkiES");
-        assertThat(actual).isEqualToComparingFieldByField(cookies);
-    }
-
-    @Test
     public void getAllDessertsContainsAllDesserts() {
-        List<Dessert> actual = dessertService.getAllDesserts();
+        List<Dessert> actual = dessertRepository.findAll();
         List<Dessert> expected = Arrays.asList(cookies, brownies);
         assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
                 && actual.containsAll(expected));
