@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.repository.PizzaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +52,9 @@ public class PizzasApiController implements PizzasApi {
 
   @Autowired
   ToppingService toppingService;
+
+  @Autowired
+  PizzaRepository pizzaRepository;
 
   private static final int MAX_ALLOWED_TOPPINGS = 5;
 
@@ -110,7 +115,11 @@ public class PizzasApiController implements PizzasApi {
   public ResponseEntity<Pizza> getPizzaByName(@ApiParam(value = "pizzaName", required = true) @PathVariable("pizzaName") String pizzaName) {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
-
+      Pizza responsePizza = pizzaRepository.getPizzaByPizzaName(pizzaName);
+      if (responsePizza.equals(null)) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<>(responsePizza, HttpStatus.OK);
     }
 
     return new ResponseEntity<Pizza>(HttpStatus.NOT_IMPLEMENTED);
@@ -119,7 +128,11 @@ public class PizzasApiController implements PizzasApi {
   public ResponseEntity<List<Pizza>> getPizzas() {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
-
+      List<Pizza> responsePizzas = pizzaRepository.findAll();
+      if (responsePizzas.equals(null)) {
+        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<List<Pizza>>(responsePizzas, HttpStatus.OK);
     }
 
     return new ResponseEntity<List<Pizza>>(HttpStatus.NOT_IMPLEMENTED);

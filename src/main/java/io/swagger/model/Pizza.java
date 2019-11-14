@@ -3,6 +3,7 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import io.swagger.repository.PizzaRepository;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
@@ -27,6 +28,13 @@ public class Pizza extends Item {
   private final Double MEDIUM_BASE_PRICE = 10.00;
   private final Double LARGE_BASE_PRICE = 12.00;
   private static final String ITEM_TYPE = "Pizza";
+
+  public static void initialize(PizzaRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
+    DataConfiguration.backfillPizzaRepository(repository);
+  }
 
   @JsonProperty("pizzaName")
   private String pizzaName = null;
