@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,31 +54,21 @@ public class ToppingsApiControllerIntegrationTest {
 
     private ObjectMapper objectMapper;
 
-    private HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-    private HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
-    private Double price;
-    private Topping pepperoni;
-    private Topping ham;
-    private Topping cheese;
-    private List<Topping> toppings;
-    private List<Topping> toppingsNamesOnly;
-    private Topping pepperoniName;
-    private Topping hamName;
-    private Topping cheeseName;
-
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
 
-        price = 5d;
-        pepperoni = new Topping();
-        ham = new Topping();
-        cheese = new Topping();
-        vegetarianGlutenFree = new HashMap<>();
-        notVegetarianIsGlutenFree = new HashMap<>();
+        Double price = 5d;
+        Topping pepperoni = new Topping();
+        Topping ham = new Topping();
+        Topping cheese = new Topping();
+
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree = new HashMap<>();
         vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
         vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
         vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree = new HashMap<>();
         notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
         notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
         notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
@@ -89,15 +80,15 @@ public class ToppingsApiControllerIntegrationTest {
         cheese.toppingName("cheese").price(price)
                 .dietaryProperties(vegetarianGlutenFree);
 
-        pepperoniName = new Topping();
+        Topping pepperoniName = new Topping();
         pepperoniName.toppingName("pepperoni");
-        hamName = new Topping();
+        Topping hamName = new Topping();
         hamName.toppingName("ham");
-        cheeseName = new Topping();
+        Topping cheeseName = new Topping();
         cheeseName.toppingName("cheese");
 
-        toppings = Arrays.asList(pepperoni, ham, cheese);
-        toppingsNamesOnly = Arrays.asList(pepperoniName, hamName, cheeseName);
+        List<Topping> toppings = Arrays.asList(pepperoni, ham, cheese);
+        List<Topping> toppingsNamesOnly = Arrays.asList(pepperoniName, hamName, cheeseName);
 
 
         MockitoAnnotations.initMocks(this);
@@ -124,20 +115,49 @@ public class ToppingsApiControllerIntegrationTest {
     @Test
     //TODO: Fix issue with projection casting
     public void getToppingsOneTopping() throws Exception {
-//        List<Topping> singleTopping = Arrays.asList(pepperoniName);
-//        String stringToppingsList = objectMapper.writeValueAsString(singleTopping);
-//        when(repository.findAll()).thenReturn(singleTopping);
-//        this.mockMvc.perform(get("/toppings")
-//                .header("Accept", "application/json"))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(content().json(stringToppingsList));
+        Topping pepperoniName = new Topping();
+        pepperoniName.toppingName("pepperoni");
+
+        List<ToppingRepository.ToppingName> singleTopping = Collections.singletonList(pepperoniName);
+        String stringToppingsList = objectMapper.writeValueAsString(singleTopping);
+        when(repository.findToppingByToppingNameExists(true)).thenReturn(singleTopping);
+        this.mockMvc.perform(get("/toppings")
+                .header("Accept", "application/json"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().json(stringToppingsList));
     }
 
     @Test
     public void getToppingsMultipleToppingsReturned() throws Exception {
+        Double price = 5d;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree = new HashMap<>();
+        HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+        notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
+        notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
+        notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        Topping pepperoni = new Topping();
+        pepperoni.toppingName("pepperoni").price(price)
+                .dietaryProperties(notVegetarianIsGlutenFree);
+
+        Topping ham = new Topping();
+        ham.toppingName("ham").price(price)
+                .dietaryProperties(notVegetarianIsGlutenFree);
+
+        Topping cheese = new Topping();
+        cheese.toppingName("cheese").price(price)
+                .dietaryProperties(vegetarianGlutenFree);
+
+        List<ToppingRepository.ToppingName> toppings;
+        toppings = Arrays.asList(pepperoni, ham, cheese);
+
         String stringToppingsList = objectMapper.writeValueAsString(toppings);
-        when(repository.findAll()).thenReturn(toppings);
+
+        when(repository.findToppingByToppingNameExists(true)).thenReturn(toppings);
         this.mockMvc.perform(get("/toppings")
                 .header("Accept", "application/json"))
                 .andExpect(status().isOk())
@@ -147,6 +167,30 @@ public class ToppingsApiControllerIntegrationTest {
 
     @Test
     public void getToppingsByNameValidName() throws Exception {
+        Double price = 5d;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree = new HashMap<>();
+        HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+        notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
+        notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
+        notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        Topping pepperoni = new Topping();
+        pepperoni.toppingName("pepperoni").price(price)
+                .dietaryProperties(notVegetarianIsGlutenFree);
+
+        Topping ham = new Topping();
+        ham.toppingName("ham").price(price)
+                .dietaryProperties(notVegetarianIsGlutenFree);
+
+        Topping cheese = new Topping();
+        cheese.toppingName("cheese").price(price)
+                .dietaryProperties(vegetarianGlutenFree);
+
+        List<Topping> toppings = Arrays.asList(ham, cheese, pepperoni);
+
         String stringHam = objectMapper.writeValueAsString(ham);
         when(repository.findToppingByToppingName(any()))
                 .thenAnswer(invocationOnMock -> {
@@ -167,8 +211,30 @@ public class ToppingsApiControllerIntegrationTest {
 
     @Test
     public void getToppingsByNameInvalidName() throws Exception {
-        Topping emptyTopping = new Topping();
-        String stringEmptyTopping = objectMapper.writeValueAsString(emptyTopping);
+        Double price = 5d;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree = new HashMap<>();
+        HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+        notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
+        notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
+        notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        Topping pepperoni = new Topping();
+        pepperoni.toppingName("pepperoni").price(price)
+                .dietaryProperties(notVegetarianIsGlutenFree);
+
+        Topping ham = new Topping();
+        ham.toppingName("ham").price(price)
+                .dietaryProperties(notVegetarianIsGlutenFree);
+
+        Topping cheese = new Topping();
+        cheese.toppingName("cheese").price(price)
+                .dietaryProperties(vegetarianGlutenFree);
+
+        List<Topping> toppings = Arrays.asList(ham, cheese, pepperoni);
+
         when(repository.findToppingByToppingName(any()))
                 .thenAnswer(invocationOnMock -> {
                     for (Topping topping : toppings) {

@@ -24,7 +24,7 @@ import javax.validation.constraints.*;
 @Document(collection = "Stores")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T01:15:42.292Z[GMT]")
-public class Store {
+public class Store implements StoreRepository.BasicStoreInfo {
 
   @JsonProperty("branchId")
   private String branchId = null;

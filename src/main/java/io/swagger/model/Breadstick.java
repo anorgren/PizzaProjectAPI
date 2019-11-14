@@ -31,7 +31,7 @@ public class Breadstick extends Item  {
   private static final Double LARGE_PRICE = new Double(4.99);
   private static final Double WITH_CHEESE_PRICE = new Double(2.00);
 
-  private static final String BREADSTICK = "Breadstick";
+  private final String ITEM_TYPE = "Breadstick";
 
   public static void initialize(BreadstickRepository repository) {
     if (repository.count() > 0) {
@@ -175,7 +175,7 @@ public class Breadstick extends Item  {
 
   @Override
   public String getItemType() {
-    return BREADSTICK;
+    return ITEM_TYPE;
   }
 
   @Override
