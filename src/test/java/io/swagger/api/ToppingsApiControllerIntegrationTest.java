@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.repository.StoreRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,6 +60,10 @@ public class ToppingsApiControllerIntegrationTest {
     private Topping ham;
     private Topping cheese;
     private List<Topping> toppings;
+    private List<Topping> toppingsNamesOnly;
+    private Topping pepperoniName;
+    private Topping hamName;
+    private Topping cheeseName;
 
     @Before
     public void setUp() {
@@ -84,7 +89,16 @@ public class ToppingsApiControllerIntegrationTest {
         cheese.toppingName("cheese").price(price)
                 .dietaryProperties(vegetarianGlutenFree);
 
+        pepperoniName = new Topping();
+        pepperoniName.toppingName("pepperoni");
+        hamName = new Topping();
+        hamName.toppingName("ham");
+        cheeseName = new Topping();
+        cheeseName.toppingName("cheese");
+
         toppings = Arrays.asList(pepperoni, ham, cheese);
+        toppingsNamesOnly = Arrays.asList(pepperoniName, hamName, cheeseName);
+
 
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -98,7 +112,7 @@ public class ToppingsApiControllerIntegrationTest {
 
     @Test
     public void getToppingsEmptyToppingList() throws Exception {
-        when(repository.findAll()).thenReturn(null);
+        when(repository.findToppingByToppingNameExists(true)).thenReturn(null);
         this.mockMvc.perform(get("/toppings")
                 .header("Accept", "application/json"))
                 .andExpect(status().isNotFound())
@@ -108,10 +122,11 @@ public class ToppingsApiControllerIntegrationTest {
 
 
     @Test
+    //TODO: Fix issue with projection casting
     public void getToppingsOneTopping() throws Exception {
-        List<Topping> singleTopping = Arrays.asList(pepperoni);
+        List<ToppingRepository.ToppingName> singleTopping = Arrays.asList((ToppingRepository.ToppingName)pepperoniName);
         String stringToppingsList = objectMapper.writeValueAsString(singleTopping);
-        when(repository.findAll()).thenReturn(singleTopping);
+        when(repository.findToppingByToppingNameExists(true)).thenReturn(singleTopping);
         this.mockMvc.perform(get("/toppings")
                 .header("Accept", "application/json"))
                 .andExpect(status().isOk())

@@ -111,7 +111,8 @@ public class StoresApiControllerIntegrationTest {
 
 
     @Test
-    public void getStores() throws Exception {
+    //TODO: Fix projection issue
+    public void getStoresOneStore() throws Exception {
         List<Store> storeList = Arrays.asList(this.storeBasic);
         String basicStoreString = objectMapper.writeValueAsString(storeList);
         when(storeRepository.findAll()).thenReturn(storeList);
@@ -123,7 +124,6 @@ public class StoresApiControllerIntegrationTest {
 
     @Test
     public void getStoresByIdValueExists() throws Exception {
-
         String stringStoreTwo = objectMapper.writeValueAsString(storeTwo);
         when(storeRepository.findStoreByBranchId(any()))
                 .thenAnswer(invocationOnMock -> {
