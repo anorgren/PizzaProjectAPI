@@ -42,7 +42,7 @@ public class ToppingsApiController implements ToppingsApi {
   public ResponseEntity<List<Topping>> getToppings() {
     String accept = request.getHeader("Accept");
 
-    final List<Topping> toppingList = toppingRepository.findAll();
+    final List<Topping> toppingList = toppingService.getAllToppings();
     if (toppingList == null) {
       return new ResponseEntity<>(toppingList, HttpStatus.NOT_FOUND);
     }
