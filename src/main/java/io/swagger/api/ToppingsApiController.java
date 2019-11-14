@@ -33,16 +33,16 @@ public class ToppingsApiController implements ToppingsApi {
     this.request = request;
   }
 
-  public ResponseEntity<List<Topping>> getToppings() {
+  public ResponseEntity<List<ToppingRepository.ToppingName>> getToppings() {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
-      final List<Topping> toppingList = toppingRepository.findAll();
+      final List<ToppingRepository.ToppingName> toppingList = toppingRepository.findToppingByToppingNameExists(true);
       if (toppingList == null) {
         return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
       }
-      return new ResponseEntity<List<Topping>>(toppingList, HttpStatus.OK);
+      return new ResponseEntity<List<ToppingRepository.ToppingName>>(toppingList, HttpStatus.OK);
     }
-    return new ResponseEntity<List<Topping>>(HttpStatus.NOT_IMPLEMENTED);
+    return new ResponseEntity<List<ToppingRepository.ToppingName>>(HttpStatus.NOT_IMPLEMENTED);
   }
 
   public ResponseEntity<Topping> getToppingsByName(

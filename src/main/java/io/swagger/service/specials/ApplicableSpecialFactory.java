@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ApplicableSpecialFactory {
+  private final String SPECIAL_TYPE_ONE = "FlatDiscount";
+  private final String SPECIAL_TYPE_TWO = "OneFree";
+  private final String SPECIAL_TYPE_THREE = "BOGO";
 
   @Autowired
   FlatDiscountSpecial flatDiscountSpecial;
@@ -22,13 +25,12 @@ public class ApplicableSpecialFactory {
    *         used to apply a special to an order.
    */
   public ApplicableSpecial getApplicableSpecial(String specialId) {
-    // TODO: These are magic strings. Why is this not an enumeration?
     switch (specialId) {
-    case "FlatDiscount":
+    case SPECIAL_TYPE_ONE:
       return flatDiscountSpecial;
-    case "OneFree":
+    case SPECIAL_TYPE_TWO:
       return oneFreeSpecial;
-    case "BOGO":
+    case SPECIAL_TYPE_THREE:
       return buyOneGetOneFreeSpecial;
     default:
       // TODO: This should be a custom exception.

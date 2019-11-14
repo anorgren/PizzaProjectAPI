@@ -6,6 +6,7 @@ package io.swagger.api;
 
 import io.swagger.annotations.*;
 import io.swagger.model.Topping;
+import io.swagger.repository.ToppingRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +18,15 @@ import java.util.List;
 @Api(value = "toppings", description = "the toppings API")
 public interface ToppingsApi {
 
-    @ApiOperation(value = "returns all toppings", nickname = "getToppings", notes = "Get list of all toppings ", response = Topping.class, responseContainer = "List", tags = {
+    @ApiOperation(value = "returns all topping names", nickname = "getToppings", notes = "Get list of all topping names", response = Topping.class, responseContainer = "List", tags = {
             "developers",})
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "list of all toppings", response = Topping.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "list of all topping names", response = Topping.class, responseContainer = "List"),
             @ApiResponse(code = 400, message = "bad input parameter")})
     @RequestMapping(value = "/toppings",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<List<Topping>> getToppings();
+    ResponseEntity<List<ToppingRepository.ToppingName>> getToppings();
 
 
     @ApiOperation(value = "returns topping information of the given topping", nickname = "getToppingsbyName", notes = "Get topping information of the given topping ", response = Topping.class, tags = {

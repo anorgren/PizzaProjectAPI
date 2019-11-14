@@ -25,6 +25,8 @@ import io.swagger.repository.DessertRepository;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
 @JsonTypeName("Dessert")
 public class Dessert extends Item  {
+  private static final String ITEM_TYPE = "Dessert";
+
   @JsonProperty("dessertName")
   private String dessertName = null;
 
@@ -150,7 +152,7 @@ public class Dessert extends Item  {
 
   @Override
   public String getItemType() {
-    return "Dessert";
+    return ITEM_TYPE;
   }
   @Override
   public int hashCode() {

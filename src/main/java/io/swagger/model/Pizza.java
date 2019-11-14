@@ -26,6 +26,7 @@ public class Pizza extends Item {
   private final Double SMALL_BASE_PRICE = 8.00;
   private final Double MEDIUM_BASE_PRICE = 10.00;
   private final Double LARGE_BASE_PRICE = 12.00;
+  private static final String ITEM_TYPE = "Pizza";
 
   @JsonProperty("pizzaName")
   private String pizzaName = null;
@@ -200,7 +201,7 @@ public class Pizza extends Item {
 
   @Override
   public String getItemType() {
-    return "Pizza";
+    return ITEM_TYPE;
   }
 
   @Override
