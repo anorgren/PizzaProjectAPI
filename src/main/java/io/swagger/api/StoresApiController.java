@@ -3,6 +3,7 @@ package io.swagger.api;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.Store;
 import io.swagger.repository.StoreRepository;
+import io.swagger.service.StoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class StoresApiController implements StoresApi {
     private final HttpServletRequest request;
 
     @Autowired
-    private StoreRepository storeRepository;
+    private StoreService storeService;
 
     @Autowired
     public StoresApiController(HttpServletRequest request) {
@@ -32,7 +33,7 @@ public class StoresApiController implements StoresApi {
     public ResponseEntity<List<StoreRepository.BasicStoreInfo>> getStores() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            final List<StoreRepository.BasicStoreInfo> storeList = storeRepository.getAllByBranchIdExists(Boolean.TRUE);
+            final List<StoreRepository.BasicStoreInfo> storeList = storeService.getAllBasicInfoStores();
             if (storeList == null) {
                 return new ResponseEntity<List<StoreRepository.BasicStoreInfo>>(HttpStatus.NOT_FOUND);
             }
@@ -42,10 +43,10 @@ public class StoresApiController implements StoresApi {
     }
 
     public ResponseEntity<Store> getStoresById(
-            @ApiParam(value = "BranchId", required = true) @PathVariable("id") String id) {
+            @ApiParam(value = "StoreId", required = true) @PathVariable("id") String id) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            Store store = storeRepository.findStoreByBranchId(id);
+            Store store = storeService.getStoreById(id);
             if (store == null) {
                 return new ResponseEntity<Store>(HttpStatus.NOT_FOUND);
             }

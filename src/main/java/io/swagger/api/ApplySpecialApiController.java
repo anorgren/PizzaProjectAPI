@@ -51,8 +51,7 @@ public class ApplySpecialApiController implements ApplySpecialApi {
     this.request = request;
   }
 
-    public ResponseEntity<Order> applySpecial(@NotNull @ApiParam(value = "specialId", required = true) @Valid @RequestParam(value = "specialId", required = true) String specialId,
-                                              @NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "orderId", required = true) String orderId) {
+    public ResponseEntity<Order> applySpecial(@NotNull @ApiParam(value = "specialId", required = true) @Valid @RequestParam(value = "specialId", required = true) String specialId, @NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "orderId", required = true) String orderId) {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
       try {

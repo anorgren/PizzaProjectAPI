@@ -30,7 +30,7 @@ public class OneFreeSpecial implements ApplicableSpecial {
   @Override
   public boolean isApplicable(String orderId) {
     Order order = repository.findByOrderId(orderId);
-    if (order == null || order.getItemList() == null || order.getItemList().size() == 0) {
+    if (order == null || order.getItemList().size() == 0) {
       return false;
     } else {
       return true;

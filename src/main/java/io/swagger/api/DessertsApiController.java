@@ -3,7 +3,6 @@ package io.swagger.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.Dessert;
-import io.swagger.repository.DessertRepository;
 import io.swagger.service.DessertService;
 import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.slf4j.Logger;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class DessertsApiController implements DessertsApi {
     private final HttpServletRequest request;
 
     @Autowired
-    private DessertRepository repository;
+    private DessertService dessertService;
 
     @Autowired
     public DessertsApiController(HttpServletRequest request) {
@@ -40,9 +38,9 @@ public class DessertsApiController implements DessertsApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             List<Dessert> desserts = new LinkedList<>();
-            desserts = repository.findAll();
+            desserts = dessertService.getAllDesserts();
             if (desserts == null) {
-                return new ResponseEntity<List<Dessert>>(Collections.emptyList(), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<Dessert>>(HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<List<Dessert>>(desserts, HttpStatus.OK);
         }
@@ -52,7 +50,7 @@ public class DessertsApiController implements DessertsApi {
     public ResponseEntity<Dessert> getDessertsByName(@ApiParam(value = "dessertName", required = true) @PathVariable("name") String name) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            Dessert dessert = repository.findDessertByDessertName(name.toLowerCase());
+            Dessert dessert = dessertService.getDessert(name.toLowerCase());
             if (dessert == null) {
                 return new ResponseEntity<Dessert>(HttpStatus.NOT_FOUND);
             }

@@ -3,7 +3,6 @@ package io.swagger.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.Soda;
-import io.swagger.repository.SodaRepository;
 import io.swagger.service.SodaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class SodasApiController implements SodasApi {
     private static final Logger log = LoggerFactory.getLogger(SodasApiController.class);
 
     @Autowired
-    private SodaRepository repository;
+    private SodaService sodaService;
 
     private final HttpServletRequest request;
 
@@ -39,9 +37,9 @@ public class SodasApiController implements SodasApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             List<Soda> sodas = new LinkedList<>();
-            sodas = repository.findAll();
+            sodas = sodaService.getAllSodas();
             if (sodas == null) {
-                return new ResponseEntity<List<Soda>>(Collections.emptyList(), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<Soda>>(HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<List<Soda>>(sodas, HttpStatus.OK);
         }
@@ -53,7 +51,7 @@ public class SodasApiController implements SodasApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             List<Soda> sodas = new LinkedList<>();
-            sodas = repository.getSodasBySodaName(name.toLowerCase());
+            sodas = sodaService.getSodasByBrandName(name.toLowerCase());
             if (sodas == null) {
                 return new ResponseEntity<List<Soda>>(HttpStatus.NOT_FOUND);
             }

@@ -3,7 +3,6 @@ package io.swagger.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.Breadstick;
-import io.swagger.repository.BreadstickRepository;
 import io.swagger.service.BreadstickService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class BreadsticksApiController implements BreadsticksApi {
     private final HttpServletRequest request;
 
     @Autowired
-    private BreadstickRepository repository;
+    private BreadstickService breadstickService;
 
     @Autowired
     public BreadsticksApiController(HttpServletRequest request) {
@@ -39,9 +37,9 @@ public class BreadsticksApiController implements BreadsticksApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             List<Breadstick> breadsticks = new LinkedList<>();
-            breadsticks = repository.findAll();
+            breadsticks = breadstickService.getAllBreadsticks();
             if (breadsticks == null) {
-                return new ResponseEntity<List<Breadstick>>(Collections.emptyList(), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<Breadstick>>(HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<List<Breadstick>>(breadsticks, HttpStatus.OK);
         }
