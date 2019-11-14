@@ -1,11 +1,12 @@
 package io.swagger.service;
 
-import io.swagger.model.Crust;
-import io.swagger.repository.CrustRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import io.swagger.model.Crust;
+import io.swagger.repository.CrustRepository;
 
 @Service
 public class CrustService {
@@ -13,7 +14,7 @@ public class CrustService {
     CrustRepository crustRepository;
 
     public Crust getCrustByName(String crustName) {
-        return crustRepository.getCrustByCrustName(crustName);
+        return crustRepository.getCrustByCrustName(crustName.toLowerCase());
     }
 
     public List<Crust> getAllCrusts() {

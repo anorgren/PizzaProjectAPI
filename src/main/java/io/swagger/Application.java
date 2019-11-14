@@ -1,19 +1,35 @@
 package io.swagger;
 
-import io.swagger.model.*;
-import io.swagger.repository.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+
+import io.swagger.model.Breadstick;
+import io.swagger.model.Crust;
+import io.swagger.model.Dessert;
+import io.swagger.model.PizzaSize;
+import io.swagger.model.Sauce;
+import io.swagger.model.Soda;
+import io.swagger.model.Special;
+import io.swagger.model.Store;
+import io.swagger.model.Topping;
+import io.swagger.repository.BreadstickRepository;
+import io.swagger.repository.CrustRepository;
+import io.swagger.repository.DessertRepository;
+import io.swagger.repository.PizzaSizeRepository;
+import io.swagger.repository.SauceRepository;
+import io.swagger.repository.SodaRepository;
+import io.swagger.repository.SpecialsRepository;
+import io.swagger.repository.StoreRepository;
+import io.swagger.repository.ToppingRepository;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackages = {"io.swagger", "io.swagger.api", "io.swagger.configuration"})
+@ComponentScan(basePackages = {"io.swagger", "io.swagger.api", "io.swagger.configuration", "io.swagger.repository"})
 public class Application implements CommandLineRunner {
 
   @Autowired
@@ -48,6 +64,7 @@ public class Application implements CommandLineRunner {
     if (arg0.length > 0 && arg0[0].equals("exitcode")) {
       throw new ExitException();
     }
+    //TODO: Remove the delete all statements before submission.
     toppingRepository.deleteAll();
     Topping.initialize(toppingRepository);
     pizzaSizeRepository.deleteAll();

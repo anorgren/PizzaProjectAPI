@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Objects;
+
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -48,5 +50,40 @@ public class PizzaSize {
   @NotNull
   public Integer getSizeInInches() {
     return sizeInInches;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    PizzaSize pizzaSize = (PizzaSize) o;
+    return sizeDescription.equals(pizzaSize.sizeDescription) &&
+            sizeInInches.equals(pizzaSize.sizeInInches);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(sizeDescription, sizeInInches);
+  }
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class PizzaSize {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    size name: ").append(toIndentedString(sizeDescription)).append("\n");
+    sb.append("    size in inches: ").append(toIndentedString(sizeDescription)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
   }
 }

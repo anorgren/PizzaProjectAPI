@@ -41,7 +41,7 @@ public class SpecialsApiController implements SpecialsApi {
         if (accept != null && accept.contains("application/json")) {
           List<Special> specials = repository.findAll();
           if (specials == null) {
-            return new ResponseEntity<List<Special>>(specials, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<List<Special>>(HttpStatus.INTERNAL_SERVER_ERROR);
           }
           return new ResponseEntity<List<Special>>(specials, HttpStatus.OK);
         }
