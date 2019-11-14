@@ -3,12 +3,15 @@ package io.swagger.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotNull;
+
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.PizzaSizeRepository;
-import javax.validation.constraints.NotNull;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Objects;
 
@@ -29,6 +32,8 @@ public class PizzaSize {
     }
     DataConfiguration.backfillPizzaSizesRepository(repository);
   }
+
+  public PizzaSize() {}
 
   public PizzaSize(String sizeDescription, Integer sizeInInches) {
     this.sizeDescription = sizeDescription.toLowerCase();

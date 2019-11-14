@@ -1,13 +1,5 @@
 package io.swagger.service.specials;
 
-import static org.junit.Assert.*;
-
-import io.swagger.model.Dessert;
-import io.swagger.model.ItemList;
-import io.swagger.model.Order;
-import io.swagger.model.Price;
-import io.swagger.model.Soda;
-import io.swagger.repository.OrderRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.swagger.model.Dessert;
+import io.swagger.model.Item;
+import io.swagger.model.Order;
+import io.swagger.model.Price;
+import io.swagger.model.Soda;
+import io.swagger.repository.OrderRepository;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")
@@ -60,9 +67,9 @@ public class BuyOneGetOneFreeSpecialTest {
     Dessert brownies = new Dessert();
     brownies.dessertName(BROWNIE_NAME).description(BROWNIE_DESCRIPTION)
         .price(BROWNIE_PRICE);
-    ItemList firstOrderItems = new ItemList();
-    firstOrderItems.addOrderItemsItem(cokeTwoLiter);
-    firstOrderItems.addOrderItemsItem(brownies);
+    List<Item> firstOrderItems = new ArrayList<>();
+    firstOrderItems.add(cokeTwoLiter);
+    firstOrderItems.add(brownies);
     firstOrder.setItemList(firstOrderItems);
     orderRepository.insert(firstOrder);
 
@@ -79,8 +86,8 @@ public class BuyOneGetOneFreeSpecialTest {
     cokeTwoLiter = cokeTwoLiter.sodaName(COCA_COLA_PRODUCT_NAME)
         .size(Soda.SizeEnum.TWO_LITER);
     orderRepository.insert(secondOrder);
-    ItemList firstOrderItems = new ItemList();
-    firstOrderItems.addOrderItemsItem(cokeTwoLiter);
+    List<Item> firstOrderItems = new ArrayList<>();
+    firstOrderItems.add(cokeTwoLiter);
 
     ApplicableSpecial special = applicableSpecialFactory.getApplicableSpecial(SPECIAL_ID);
 
@@ -105,9 +112,9 @@ public class BuyOneGetOneFreeSpecialTest {
     Dessert brownies = new Dessert();
     brownies.dessertName(BROWNIE_NAME).description(BROWNIE_DESCRIPTION)
         .price(BROWNIE_PRICE);
-    ItemList firstOrderItems = new ItemList();
-    firstOrderItems.addOrderItemsItem(cokeTwoLiter);
-    firstOrderItems.addOrderItemsItem(brownies);
+    List<Item> firstOrderItems = new ArrayList<>();
+    firstOrderItems.add(cokeTwoLiter);
+    firstOrderItems.add(brownies);
     firstOrder.setItemList(firstOrderItems);
     orderRepository.insert(firstOrder);
 
@@ -125,7 +132,7 @@ public class BuyOneGetOneFreeSpecialTest {
   public void applyInvalidOrder() {
     Order secondOrder = new Order();
     secondOrder.setOrderId(ORDER_TWO_ID);
-    secondOrder.setItemList(new ItemList());
+    secondOrder.setItemList(new ArrayList<>());
     orderRepository.insert(secondOrder);
 
     ApplicableSpecial special = applicableSpecialFactory.getApplicableSpecial(SPECIAL_ID);

@@ -172,6 +172,11 @@ public class Breadstick extends Item  {
   }
 
   @Override
+  public String getItemType() {
+    return "Breadstick";
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(size, withCheese, dietaryProperties, price, super.hashCode());
   }

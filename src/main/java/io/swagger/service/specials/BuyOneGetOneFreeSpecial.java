@@ -1,6 +1,5 @@
 package io.swagger.service.specials;
 
-import io.swagger.model.ItemList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,11 +34,7 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
     if (order == null) {
       return false;
     }
-    ItemList itemList = order.getItemList();
-    if(itemList == null) {
-      return false;
-    }
-    List<Item> orderItems = itemList.getOrderItems();
+    List<Item> orderItems = order.getItemList();;
     return !(orderItems == null || orderItems.size() < REQUIRED_NUM_ITEMS);
   }
   /**
@@ -54,7 +49,7 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
       return;
     }
     Order order = repository.findByOrderId(orderId);
-    List<Item> items = order.getItemList().getOrderItems();
+    List<Item> items = order.getItemList();
     Double discount = MAX_DISCOUNT;
     for (Item toCheck : items) {
       if (discount.compareTo(toCheck.getPrice()) > 0) {

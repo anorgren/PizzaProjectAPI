@@ -149,6 +149,10 @@ public class Dessert extends Item  {
   }
 
   @Override
+  public String getItemType() {
+    return "Dessert";
+  }
+  @Override
   public int hashCode() {
     return Objects.hash(dessertName, description, dietaryProperties, price, super.hashCode());
   }
