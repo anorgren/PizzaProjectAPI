@@ -31,5 +31,4 @@ public interface ApplySpecialApi {
           produces = {"application/json"},
           method = RequestMethod.PUT)
     ResponseEntity<Order> applySpecial(@NotNull @ApiParam(value = "specialId", required = true) @Valid @RequestParam(value = "specialId", required = true) String specialId, @NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "orderId", required = true) String orderId);
-
 }

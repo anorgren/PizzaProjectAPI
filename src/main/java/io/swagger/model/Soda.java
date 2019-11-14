@@ -4,20 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.SodaRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Soda
@@ -27,6 +24,7 @@ import io.swagger.repository.SodaRepository;
 @JsonTypeName("Soda")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 public class Soda extends Item {
+
   private static final Double TWO_LITER_PRICE = new Double(2.59);
   private static final Double TWENTY_OUNCE_PRICE = new Double(1.75);
   private static final Double SIX_PACK_PRICE = new Double(3.49);
@@ -101,18 +99,21 @@ public class Soda extends Item {
     return sodaName;
   }
 
-  public Soda size(SizeEnum size) {
-    this.size = size;
-    switch (this.size) {
-      case TWO_LITER:
-        this.price = TWO_LITER_PRICE;
-        break;
-      case TWENTY_OUNCE_BOTTLE:
-        this.price = TWENTY_OUNCE_PRICE;
-        break;
-      case SIX_PACK:
-        this.price = SIX_PACK_PRICE;
-        break;
+
+    public Soda size(SizeEnum size) {
+        this.size = size;
+        switch (this.size) {
+            case TWO_LITER:
+                this.price = TWO_LITER_PRICE;
+                break;
+            case TWENTY_OUNCE_BOTTLE:
+                this.price = TWENTY_OUNCE_PRICE;
+                break;
+            case SIX_PACK:
+                this.price = SIX_PACK_PRICE;
+                break;
+        }
+        return this;
     }
     return this;
   }
@@ -200,16 +201,16 @@ public class Soda extends Item {
     return o.toString().replace("\n", "\n    ");
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Soda {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    sodaName: ").append(toIndentedString(sodaName)).append("\n");
-    sb.append("    size: ").append(toIndentedString(size)).append("\n");
-    sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
-    sb.append("    price: ").append(toIndentedString(price)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Soda {\n");
+        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+        sb.append("    sodaName: ").append(toIndentedString(sodaName)).append("\n");
+        sb.append("    size: ").append(toIndentedString(size)).append("\n");
+        sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
+        sb.append("    price: ").append(toIndentedString(price)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
 }
