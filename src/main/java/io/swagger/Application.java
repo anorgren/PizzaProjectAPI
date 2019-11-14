@@ -44,6 +44,9 @@ public class Application implements CommandLineRunner {
   @Autowired
   private CrustRepository crustRepository;
 
+  @Autowired
+  private PizzaRepository pizzaRepository;
+
   @Override
   public void run(String... arg0) throws Exception {
     if (arg0.length > 0 && arg0[0].equals("exitcode")) {
@@ -68,6 +71,8 @@ public class Application implements CommandLineRunner {
     Crust.initialize(crustRepository);
     specialsRepository.deleteAll();
     Special.initialize(specialsRepository);
+    pizzaRepository.deleteAll();
+    Pizza.initialize(pizzaRepository);
 
   }
 

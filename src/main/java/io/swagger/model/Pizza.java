@@ -3,6 +3,7 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.PizzaRepository;
 import org.springframework.validation.annotation.Validated;
 

@@ -3,25 +3,8 @@ package io.swagger.configuration;
 
 import java.util.*;
 
-import io.swagger.model.Breadstick;
-import io.swagger.model.Crust;
-import io.swagger.model.Dessert;
-import io.swagger.model.DietaryProperty;
-import io.swagger.model.PizzaSize;
-import io.swagger.model.Sauce;
-import io.swagger.model.Soda;
-import io.swagger.model.Special;
-import io.swagger.model.Store;
-import io.swagger.model.Topping;
-import io.swagger.repository.BreadstickRepository;
-import io.swagger.repository.CrustRepository;
-import io.swagger.repository.DessertRepository;
-import io.swagger.repository.PizzaSizeRepository;
-import io.swagger.repository.SauceRepository;
-import io.swagger.repository.SodaRepository;
-import io.swagger.repository.SpecialsRepository;
-import io.swagger.repository.StoreRepository;
-import io.swagger.repository.ToppingRepository;
+import io.swagger.model.*;
+import io.swagger.repository.*;
 
 public class DataConfiguration {
 
