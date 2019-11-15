@@ -2,8 +2,6 @@ package io.swagger.repository;
 
 import io.swagger.model.Dessert;
 import io.swagger.model.DietaryProperty;
-import io.swagger.repository.DessertRepository;
-import io.swagger.service.DessertService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")

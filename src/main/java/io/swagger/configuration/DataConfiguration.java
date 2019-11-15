@@ -1,10 +1,10 @@
 package io.swagger.configuration;
 
 
-import java.util.*;
-
 import io.swagger.model.*;
 import io.swagger.repository.*;
+
+import java.util.*;
 
 public class DataConfiguration {
 

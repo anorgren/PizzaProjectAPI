@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,20 +46,10 @@ public class SizesApiControllerIntegrationTest {
     private PizzaSizeRepository repository;
 
     private ObjectMapper objectMapper;
-    private PizzaSize expectedOne;
-    private PizzaSize expectedTwo;
-    private PizzaSize expectedThree;
-    private List<PizzaSize> allSizes;
-
 
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
-
-        expectedOne = new PizzaSize("small", 12);
-        expectedTwo = new PizzaSize("large", 16);
-        expectedThree = new PizzaSize("medium", 14);
-        allSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
 
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -71,7 +62,7 @@ public class SizesApiControllerIntegrationTest {
     }
 
     @Test
-    public void getSizesEmptyToppingList() throws Exception {
+    public void getSizesEmptySizesRepo() throws Exception {
         when(repository.findAll()).thenReturn(null);
         this.mockMvc.perform(get("/sizes")
                 .header("Accept", "application/json"))
@@ -83,8 +74,13 @@ public class SizesApiControllerIntegrationTest {
 
     @Test
     public void getSizesOneSizeInRepo() throws Exception {
-        List<PizzaSize> singleSize = Arrays.asList(expectedOne);
+        PizzaSize expectedOne;
+
+        expectedOne = new PizzaSize("small", 12);
+
+        List<PizzaSize> singleSize = Collections.singletonList(expectedOne);
         String stringSizesList = objectMapper.writeValueAsString(singleSize);
+
         when(repository.findAll()).thenReturn(singleSize);
         this.mockMvc.perform(get("/sizes")
                 .header("Accept", "application/json"))
@@ -95,7 +91,17 @@ public class SizesApiControllerIntegrationTest {
 
     @Test
     public void getSizesMultipleSizesReturned() throws Exception {
+        PizzaSize expectedOne;
+        PizzaSize expectedTwo;
+        PizzaSize expectedThree;
+        List<PizzaSize> allSizes;
+
+        expectedOne = new PizzaSize("small", 12);
+        expectedTwo = new PizzaSize("large", 16);
+        expectedThree = new PizzaSize("medium", 14);
+        allSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
         String stringSizesList = objectMapper.writeValueAsString(allSizes);
+
         when(repository.findAll()).thenReturn(allSizes);
         this.mockMvc.perform(get("/sizes")
                 .header("Accept", "application/json"))

@@ -1,8 +1,9 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.swagger.repository.StoreRepository;
+import io.swagger.model.DietaryProperty;
+import io.swagger.model.Topping;
+import io.swagger.repository.ToppingRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,17 +25,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import io.swagger.model.DietaryProperty;
-import io.swagger.model.Topping;
-import io.swagger.repository.ToppingRepository;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(ToppingsApiController.class)
@@ -58,39 +53,6 @@ public class ToppingsApiControllerIntegrationTest {
     public void setUp() {
         objectMapper = new ObjectMapper();
 
-        Double price = 5d;
-        Topping pepperoni = new Topping();
-        Topping ham = new Topping();
-        Topping cheese = new Topping();
-
-        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
-
-        HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree = new HashMap<>();
-        notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
-        notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
-        notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
-
-        pepperoni.toppingName("pepperoni").price(price)
-                .dietaryProperties(notVegetarianIsGlutenFree);
-        ham.toppingName("ham").price(price)
-                .dietaryProperties(notVegetarianIsGlutenFree);
-        cheese.toppingName("cheese").price(price)
-                .dietaryProperties(vegetarianGlutenFree);
-
-        Topping pepperoniName = new Topping();
-        pepperoniName.toppingName("pepperoni");
-        Topping hamName = new Topping();
-        hamName.toppingName("ham");
-        Topping cheeseName = new Topping();
-        cheeseName.toppingName("cheese");
-
-        List<Topping> toppings = Arrays.asList(pepperoni, ham, cheese);
-        List<Topping> toppingsNamesOnly = Arrays.asList(pepperoniName, hamName, cheeseName);
-
-
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
@@ -113,13 +75,13 @@ public class ToppingsApiControllerIntegrationTest {
 
 
     @Test
-    //TODO: Fix issue with projection casting
     public void getToppingsOneTopping() throws Exception {
         Topping pepperoniName = new Topping();
         pepperoniName.toppingName("pepperoni");
 
         List<ToppingRepository.ToppingName> singleTopping = Collections.singletonList(pepperoniName);
         String stringToppingsList = objectMapper.writeValueAsString(singleTopping);
+
         when(repository.findToppingByToppingNameExists(true)).thenReturn(singleTopping);
         this.mockMvc.perform(get("/toppings")
                 .header("Accept", "application/json"))

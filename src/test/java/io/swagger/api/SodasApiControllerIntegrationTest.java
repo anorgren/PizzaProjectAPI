@@ -7,6 +7,7 @@ import io.swagger.repository.SodaRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,12 +17,10 @@ import org.springframework.test.context.TestContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,32 +47,12 @@ public class SodasApiControllerIntegrationTest {
 
     private ObjectMapper objectMapper;
 
-    private Soda sixPack;
-    private Soda twoLiter;
-    private Soda twentyOunce;
-    private HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
-    private List<Soda> sodas;
-
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
 
-        veganVegetarianGlutenFree = new HashMap<>();
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
-
-        sixPack = new Soda();
-        sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
-                .dietaryProperties(veganVegetarianGlutenFree);
-        twoLiter = new Soda();
-        twoLiter.size(Soda.SizeEnum.TWO_LITER).sodaName("sprite")
-                .dietaryProperties(veganVegetarianGlutenFree);
-        twentyOunce = new Soda();
-        twentyOunce.size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).sodaName("coke")
-                .dietaryProperties(veganVegetarianGlutenFree);
-        sodas = Arrays.asList(sixPack, twoLiter, twentyOunce);
-
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
@@ -94,8 +73,21 @@ public class SodasApiControllerIntegrationTest {
 
     @Test
     public void getSodasOneInRepository() throws Exception {
-        List<Soda> singleObject = Arrays.asList(sixPack);
+
+        Soda sixPack;
+        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
+
+        veganVegetarianGlutenFree = new HashMap<>();
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        sixPack = new Soda();
+        sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        List<Soda> singleObject = Collections.singletonList(sixPack);
         String stringSingleObject = objectMapper.writeValueAsString(singleObject);
+
         when(repository.findAll()).thenReturn(singleObject);
         this.mockMvc.perform(get("/sodas")
                 .header("Accept", "application/json"))
@@ -106,7 +98,30 @@ public class SodasApiControllerIntegrationTest {
 
     @Test
     public void getSodasMultipleReturned() throws Exception {
+        Soda sixPack;
+        Soda twoLiter;
+        Soda twentyOunce;
+        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
+        List<Soda> sodas;
+
+        veganVegetarianGlutenFree = new HashMap<>();
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        sixPack = new Soda();
+        sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        twoLiter = new Soda();
+        twoLiter.size(Soda.SizeEnum.TWO_LITER).sodaName("sprite")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        twentyOunce = new Soda();
+        twentyOunce.size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).sodaName("coke")
+                .dietaryProperties(veganVegetarianGlutenFree);
+
+        sodas = Arrays.asList(sixPack, twoLiter, twentyOunce);
         String stringMultipleObjects = objectMapper.writeValueAsString(sodas);
+
         when(repository.findAll()).thenReturn(sodas);
         this.mockMvc.perform(get("/sodas")
                 .header("Accept", "application/json"))
@@ -117,7 +132,30 @@ public class SodasApiControllerIntegrationTest {
 
     @Test
     public void getSodaByNameValidName() throws Exception {
+        Soda sixPack;
+        Soda twoLiter;
+        Soda twentyOunce;
+        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
+        List<Soda> sodas;
+
+        veganVegetarianGlutenFree = new HashMap<>();
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        sixPack = new Soda();
+        sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        twoLiter = new Soda();
+        twoLiter.size(Soda.SizeEnum.TWO_LITER).sodaName("sprite")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        twentyOunce = new Soda();
+        twentyOunce.size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).sodaName("coke")
+                .dietaryProperties(veganVegetarianGlutenFree);
+
+        sodas = Arrays.asList(sixPack, twoLiter, twentyOunce);
         String objectToGet = objectMapper.writeValueAsString(Arrays.asList(twentyOunce, sixPack));
+
         when(repository.getSodasBySodaName(any()))
                 .thenAnswer(invocationOnMock -> sodas.stream()
                         .filter(soda -> soda.getSodaName().equals(invocationOnMock.getArguments()[0]))
@@ -131,7 +169,29 @@ public class SodasApiControllerIntegrationTest {
 
     @Test
     public void getSodasByNameValidNameMixedCase() throws Exception {
+        Soda sixPack;
+        Soda twoLiter;
+        Soda twentyOunce;
+        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
+        List<Soda> sodas;
+
+        veganVegetarianGlutenFree = new HashMap<>();
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        sixPack = new Soda();
+        sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        twoLiter = new Soda();
+        twoLiter.size(Soda.SizeEnum.TWO_LITER).sodaName("sprite")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        twentyOunce = new Soda();
+        twentyOunce.size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).sodaName("coke")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        sodas = Arrays.asList(sixPack, twoLiter, twentyOunce);
         String objectToGet = objectMapper.writeValueAsString(Arrays.asList(twentyOunce, sixPack));
+
         when(repository.getSodasBySodaName(any()))
                 .thenAnswer(invocationOnMock -> sodas.stream()
                         .filter(soda -> soda.getSodaName().equals(invocationOnMock.getArguments()[0]))
@@ -145,6 +205,28 @@ public class SodasApiControllerIntegrationTest {
 
     @Test
     public void getSodasByNameInvalidName() throws Exception {
+        Soda sixPack;
+        Soda twoLiter;
+        Soda twentyOunce;
+        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
+        List<Soda> sodas;
+
+        veganVegetarianGlutenFree = new HashMap<>();
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        sixPack = new Soda();
+        sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        twoLiter = new Soda();
+        twoLiter.size(Soda.SizeEnum.TWO_LITER).sodaName("sprite")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        twentyOunce = new Soda();
+        twentyOunce.size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).sodaName("coke")
+                .dietaryProperties(veganVegetarianGlutenFree);
+        sodas = Arrays.asList(sixPack, twoLiter, twentyOunce);
+
         when(repository.getSodasBySodaName(any()))
                 .thenAnswer(invocationOnMock -> {
                     List<Soda> matching = new ArrayList<>();

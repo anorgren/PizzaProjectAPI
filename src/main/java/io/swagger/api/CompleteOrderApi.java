@@ -5,6 +5,9 @@
  */
 package io.swagger.api;
 
+import io.swagger.annotations.*;
+import io.swagger.model.Order;
+import io.swagger.model.PaymentInformation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.model.Order;
-import io.swagger.model.PaymentInformation;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
 @Api(value = "completeOrder", description = "the completeOrder API")
 public interface CompleteOrderApi {

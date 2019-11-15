@@ -1,5 +1,7 @@
 package io.swagger.service.specials;
 
+import io.swagger.model.*;
+import io.swagger.repository.OrderRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,17 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.swagger.model.Dessert;
-import io.swagger.model.Item;
-import io.swagger.model.Order;
-import io.swagger.model.Price;
-import io.swagger.model.Soda;
-import io.swagger.repository.OrderRepository;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")

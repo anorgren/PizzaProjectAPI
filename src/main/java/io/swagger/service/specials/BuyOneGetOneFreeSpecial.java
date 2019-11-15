@@ -1,14 +1,13 @@
 package io.swagger.service.specials;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
 import io.swagger.model.Item;
 import io.swagger.model.Order;
 import io.swagger.model.Price;
 import io.swagger.repository.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {

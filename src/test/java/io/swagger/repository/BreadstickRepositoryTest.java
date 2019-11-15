@@ -2,8 +2,6 @@ package io.swagger.repository;
 
 import io.swagger.model.Breadstick;
 import io.swagger.model.DietaryProperty;
-import io.swagger.repository.BreadstickRepository;
-import io.swagger.service.BreadstickService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +16,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")

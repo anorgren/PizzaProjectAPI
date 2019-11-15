@@ -48,26 +48,9 @@ public class SaucesApiControllerIntegrationTest {
 
     private ObjectMapper objectMapper;
 
-    private Sauce original;
-    private Sauce robust;
-    private HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-    private List<Sauce> sauces;
-
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
-
-        vegetarianGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
-
-        original = new Sauce();
-        robust = new Sauce();
-        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
-        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
-
-        sauces = Arrays.asList(original, robust);
 
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -92,8 +75,20 @@ public class SaucesApiControllerIntegrationTest {
 
     @Test
     public void getSaucesOneInRepository() throws Exception {
+        Sauce original;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        original = new Sauce();
+        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+
         List<Sauce> singleObject = Arrays.asList(original);
         String stringSingleObject = objectMapper.writeValueAsString(singleObject);
+
         when(repository.findAll()).thenReturn(singleObject);
         this.mockMvc.perform(get("/sauces")
                 .header("Accept", "application/json"))
@@ -104,7 +99,24 @@ public class SaucesApiControllerIntegrationTest {
 
     @Test
     public void getSaucesMultipleReturned() throws Exception {
+        Sauce original;
+        Sauce robust;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        List<Sauce> sauces;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        original = new Sauce();
+        robust = new Sauce();
+        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
+
+        sauces = Arrays.asList(original, robust);
         String stringMultipleObjects = objectMapper.writeValueAsString(sauces);
+
         when(repository.findAll()).thenReturn(sauces);
         this.mockMvc.perform(get("/sauces")
                 .header("Accept", "application/json"))
@@ -115,7 +127,24 @@ public class SaucesApiControllerIntegrationTest {
 
     @Test
     public void getSauceByNameValidName() throws Exception {
+        Sauce original;
+        Sauce robust;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        List<Sauce> sauces;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        original = new Sauce();
+        robust = new Sauce();
+        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
+
+        sauces = Arrays.asList(original, robust);
         String objectToGet = objectMapper.writeValueAsString(original);
+
         when(repository.getSauceBySauceName(any()))
                 .thenAnswer(invocationOnMock -> {
                     for (Sauce sauce : sauces) {
@@ -135,7 +164,24 @@ public class SaucesApiControllerIntegrationTest {
 
     @Test
     public void getSaucesByNameValidNameMixedCase() throws Exception {
+        Sauce original;
+        Sauce robust;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        List<Sauce> sauces;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        original = new Sauce();
+        robust = new Sauce();
+        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
+
+        sauces = Arrays.asList(original, robust);
         String objectToGet = objectMapper.writeValueAsString(original);
+
         when(repository.getSauceBySauceName(any()))
                 .thenAnswer(invocationOnMock -> {
                     for (Sauce sauce : sauces) {
@@ -155,6 +201,23 @@ public class SaucesApiControllerIntegrationTest {
 
     @Test
     public void getSaucesByNameInvalidName() throws Exception {
+        Sauce original;
+        Sauce robust;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        List<Sauce> sauces;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        original = new Sauce();
+        robust = new Sauce();
+        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
+
+        sauces = Arrays.asList(original, robust);
+
         when(repository.getSauceBySauceName(any()))
                 .thenAnswer(invocationOnMock -> {
                     for (Sauce sauce : sauces) {

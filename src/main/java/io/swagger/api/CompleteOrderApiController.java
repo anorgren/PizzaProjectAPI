@@ -1,7 +1,11 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import io.swagger.annotations.ApiParam;
+import io.swagger.model.Order;
+import io.swagger.model.PaymentInformation;
+import io.swagger.repository.OrderRepository;
+import io.swagger.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Calendar;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.ApiParam;
-import io.swagger.model.Order;
-import io.swagger.model.PaymentInformation;
-import io.swagger.repository.OrderRepository;
-import io.swagger.service.OrderService;
+import java.util.Calendar;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
 @Controller
