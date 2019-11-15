@@ -13,6 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,18 +28,14 @@ public class StoreRepositoryTest {
     @Autowired
     private StoreRepository storeRepository;
 
-    private HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
     private Store storeOne;
     private Store storeTwo;
-    private List<Store> stores;
-    private List<PizzaSize> pizzaSizes;
-    private List<String> toppings;
 
     @Before
     public void setUp() throws Exception {
         storeRepository.deleteAll();
 
-        veganVegetarianGlutenFree = new HashMap<>();
+        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree = new HashMap<>();
         veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
         veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
         veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
@@ -46,9 +43,9 @@ public class StoreRepositoryTest {
         PizzaSize expectedOne = new PizzaSize("small", 12);
         PizzaSize expectedTwo = new PizzaSize("large", 16);
         PizzaSize expectedThree = new PizzaSize("medium", 14);
-        pizzaSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
+        List<PizzaSize> pizzaSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
 
-        toppings = Arrays.asList("pepperoni");
+        List<String> toppings = Collections.singletonList("pepperoni");
 
         storeOne = new Store();
         storeOne.id("1").branchName("store one").address("123 street")
@@ -60,7 +57,7 @@ public class StoreRepositoryTest {
                 .dietaryRestrictions(veganVegetarianGlutenFree)
                 .availableSizes(pizzaSizes).availableToppings(toppings);
 
-        stores = Arrays.asList(storeOne, storeTwo);
+        List<Store> stores = Arrays.asList(storeOne, storeTwo);
         storeRepository.insert(stores);
     }
 
@@ -71,16 +68,8 @@ public class StoreRepositoryTest {
 
     @Test
     public void getAllByBranchIdExistsTrue() {
-        Store basicStoreOne = new Store();
-        basicStoreOne.id("1").branchName("store one").address("123 street")
-                .dietaryRestrictions(null)
-                .availableSizes(null).availableToppings(null);
 
-        Store basicStoreTwo = new Store();
-        basicStoreTwo.id("2").branchName("store two").address("1234 street")
-                .dietaryRestrictions(null)
-                .availableSizes(null).availableToppings(null);
-        List<Store> expected = Arrays.asList(basicStoreOne, basicStoreTwo);
+        List<Store> expected = Arrays.asList(storeOne, storeTwo);
 
         List<StoreRepository.BasicStoreInfo> actual = storeRepository.getAllByBranchIdExists(Boolean.TRUE);
         assertThat(actual.get(0)).isEqualToComparingFieldByField(expected.get(0));
@@ -91,7 +80,7 @@ public class StoreRepositoryTest {
     @Test
     public void getAllByBranchIdExistsFalse() {
         List<StoreRepository.BasicStoreInfo> actual = storeRepository.getAllByBranchIdExists(Boolean.FALSE);
-        List<StoreRepository.BasicStoreInfo> expected = Arrays.asList();
+        List<StoreRepository.BasicStoreInfo> expected = Collections.emptyList();
         assertEquals(actual, expected);
 
     }
