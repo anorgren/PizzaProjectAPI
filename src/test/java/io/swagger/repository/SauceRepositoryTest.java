@@ -26,15 +26,22 @@ public class SauceRepositoryTest {
     @Autowired
     private SauceRepository repository;
 
-    private Sauce original;
-    private Sauce robust;
-    private HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-    private List<Sauce> sauces;
-
     @Before
     public void setUp() throws Exception {
         repository.deleteAll();
+    }
 
+    @After
+    public void tearDown() throws Exception {
+        repository.deleteAll();
+    }
+
+    @Test
+    public void getSauceBySauceNameValidName() {
+        Sauce original;
+        Sauce robust;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        List<Sauce> sauces;
         vegetarianGlutenFree = new HashMap<>();
         vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
         vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
@@ -46,16 +53,8 @@ public class SauceRepositoryTest {
         robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
 
         sauces = Arrays.asList(original, robust);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        repository.deleteAll();
-    }
-
-    @Test
-    public void getSauceBySauceNameValidName() {
         repository.insert(sauces);
+
         Sauce actual = repository.getSauceBySauceName("original");
         Sauce expected = original;
         assertThat(actual).isEqualToComparingFieldByField(expected);
@@ -73,6 +72,21 @@ public class SauceRepositoryTest {
 
     @Test
     public void getAllSaucesFilledRepo() {
+        Sauce original;
+        Sauce robust;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        List<Sauce> sauces;
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        original = new Sauce();
+        robust = new Sauce();
+        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
+
+        sauces = Arrays.asList(original, robust);
         repository.insert(sauces);
         List<Sauce> actual = repository.findAll();
         List<Sauce> expected = sauces;

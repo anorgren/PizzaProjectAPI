@@ -27,16 +27,22 @@ public class CrustRepositoryTest {
     @Autowired
     private CrustRepository crustRepository;
 
-    private Double price;
-    private Crust crustOriginal;
-    private Crust crustGlutenFree;
-
-    private static HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-
     @Before
     public void setUp() throws Exception {
         crustRepository.deleteAll();
+    }
 
+    @After
+    public void tearDown() throws Exception {
+        crustRepository.deleteAll();
+    }
+
+    @Test
+    public void getCrustByCorrectName() {
+        Double price;
+        Crust crustOriginal;
+        Crust crustGlutenFree;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
         price = 100d;
 
         vegetarianGlutenFree = new HashMap<>();
@@ -51,27 +57,57 @@ public class CrustRepositoryTest {
 
         crustRepository.insert(crustOriginal);
         crustRepository.insert(crustGlutenFree);
-    }
 
-    @After
-    public void tearDown() throws Exception {
-        crustRepository.deleteAll();
-    }
-
-    @Test
-    public void getCrustByCorrectName() {
         Crust actual = crustRepository.getCrustByCrustName("gluten free");
         assertThat(actual).isEqualToComparingFieldByField(crustGlutenFree);
     }
 
     @Test
     public void getCrustByNonExistentName() {
+        Double price;
+        Crust crustOriginal;
+        Crust crustGlutenFree;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        price = 100d;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        crustOriginal = new Crust();
+        crustGlutenFree = new Crust();
+        crustOriginal.crustName("original").price(price);
+        crustGlutenFree.crustName("gluten free").price(price).dietaryProperties(vegetarianGlutenFree);
+
+        crustRepository.insert(crustOriginal);
+        crustRepository.insert(crustGlutenFree);
+
         Crust actual = crustRepository.getCrustByCrustName("non existent crust");
         assertNull(actual);
     }
 
     @Test
     public void getAllCrusts() {
+        Double price;
+        Crust crustOriginal;
+        Crust crustGlutenFree;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        price = 100d;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        crustOriginal = new Crust();
+        crustGlutenFree = new Crust();
+        crustOriginal.crustName("original").price(price);
+        crustGlutenFree.crustName("gluten free").price(price).dietaryProperties(vegetarianGlutenFree);
+
+        crustRepository.insert(crustOriginal);
+        crustRepository.insert(crustGlutenFree);
+
         List<Crust> actual = crustRepository.findAll();
         List<Crust> expected = Arrays.asList(crustGlutenFree, crustOriginal);
         assertTrue(actual.size() == expected.size() && expected.containsAll(actual)

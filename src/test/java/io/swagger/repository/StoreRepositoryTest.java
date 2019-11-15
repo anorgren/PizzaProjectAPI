@@ -28,12 +28,21 @@ public class StoreRepositoryTest {
     @Autowired
     private StoreRepository storeRepository;
 
-    private Store storeOne;
-    private Store storeTwo;
-
     @Before
     public void setUp() throws Exception {
         storeRepository.deleteAll();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        storeRepository.deleteAll();
+    }
+
+    @Test
+    public void getAllByBranchIdExistsTrue() {
+
+        Store storeOne;
+        Store storeTwo;
 
         HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree = new HashMap<>();
         veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
@@ -59,15 +68,6 @@ public class StoreRepositoryTest {
 
         List<Store> stores = Arrays.asList(storeOne, storeTwo);
         storeRepository.insert(stores);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        storeRepository.deleteAll();
-    }
-
-    @Test
-    public void getAllByBranchIdExistsTrue() {
 
         List<Store> expected = Arrays.asList(storeOne, storeTwo);
 
@@ -87,6 +87,33 @@ public class StoreRepositoryTest {
 
     @Test
     public void findStoreByBranchId() {
+        Store storeOne;
+        Store storeTwo;
+
+        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree = new HashMap<>();
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        PizzaSize expectedOne = new PizzaSize("small", 12);
+        PizzaSize expectedTwo = new PizzaSize("large", 16);
+        PizzaSize expectedThree = new PizzaSize("medium", 14);
+        List<PizzaSize> pizzaSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
+
+        List<String> toppings = Collections.singletonList("pepperoni");
+
+        storeOne = new Store();
+        storeOne.id("1").branchName("store one").address("123 street")
+                .dietaryRestrictions(veganVegetarianGlutenFree)
+                .availableSizes(pizzaSizes).availableToppings(toppings);
+
+        storeTwo = new Store();
+        storeTwo.id("2").branchName("store two").address("1234 street")
+                .dietaryRestrictions(veganVegetarianGlutenFree)
+                .availableSizes(pizzaSizes).availableToppings(toppings);
+
+        List<Store> stores = Arrays.asList(storeOne, storeTwo);
+        storeRepository.insert(stores);
         Store actual = storeRepository.findStoreByBranchId("1");
         Store expected = storeOne;
         assertEquals(actual, expected);
