@@ -1,6 +1,5 @@
 package io.swagger.service.specials;
 
-import io.swagger.api.SpecialNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class ApplicableSpecialFactory {
    * @return An object implementing the ApplicableSpecial interface that can be
    *         used to apply a special to an order.
    */
-  public ApplicableSpecial getApplicableSpecial(String specialId) throws SpecialNotFoundException {
+  public ApplicableSpecial getApplicableSpecial(String specialId) {
     switch (specialId) {
     case SPECIAL_TYPE_ONE:
       return flatDiscountSpecial;
@@ -34,7 +33,8 @@ public class ApplicableSpecialFactory {
     case SPECIAL_TYPE_THREE:
       return buyOneGetOneFreeSpecial;
     default:
-      throw new SpecialNotFoundException(specialId);
+      // TODO: This should be a custom exception.
+      throw new RuntimeException("Special not implemented: " + specialId);
     }
   }
 }
