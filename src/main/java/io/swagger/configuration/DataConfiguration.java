@@ -465,8 +465,8 @@ public class DataConfiguration {
         Special buyOneGetOne = new Special().specialId("BOGO").description("Purchase two or more items"
             + " and receive the cheapest item free!");
         repository.insert(buyOneGetOne);
-        Special flatDiscount = new Special().specialId("FlatDiscount").description("Receive up to $20"
-            + " off your order of one or more items.");
+        Special flatDiscount = new Special().specialId("FlatDiscount").description("Receive $20"
+            + " off your order of $50 or more.");
         repository.insert(flatDiscount);
   }
 
