@@ -18,6 +18,9 @@ import java.util.List;
 @Controller
 public class BreadsticksApiController implements BreadsticksApi {
 
+    private final String HEADER_VALUE = "Accept";
+    private final String HEADER_CONTENTS = "application/json";
+
     private static final Logger log = LoggerFactory.getLogger(BreadsticksApiController.class);
 
     private final HttpServletRequest request;
@@ -31,8 +34,8 @@ public class BreadsticksApiController implements BreadsticksApi {
     }
 
     public ResponseEntity<List<Breadstick>> getBreadsticks() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             List<Breadstick> breadsticks = new LinkedList<>();
             breadsticks = repository.findAll();
             if (breadsticks == null) {

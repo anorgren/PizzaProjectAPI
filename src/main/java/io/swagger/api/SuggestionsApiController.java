@@ -20,6 +20,9 @@ public class SuggestionsApiController implements SuggestionsApi {
     private static final Logger log = LoggerFactory.getLogger(SuggestionsApiController.class);
     private final HttpServletRequest request;
 
+    private final String HEADER_VALUE = "Accept";
+    private final String HEADER_CONTENTS = "application/json";
+
     private static final int SLICES_PER_ADULT = 3;
     private static final int SLICES_PER_CHILD = 2;
     private static final int SLICES_PER_SMALL = 6;
@@ -47,8 +50,8 @@ public class SuggestionsApiController implements SuggestionsApi {
             return new ResponseEntity<PizzaSuggestion>(HttpStatus.BAD_REQUEST);
         }
 
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             try {
                 PizzaSuggestion suggestion;
                 if (preferredSize == null) {

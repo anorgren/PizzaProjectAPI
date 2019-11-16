@@ -19,6 +19,8 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 @Controller
 public class SodasApiController implements SodasApi {
+    private final String HEADER_VALUE = "Accept";
+    private final String HEADER_CONTENTS = "application/json";
 
     private static final Logger log = LoggerFactory.getLogger(SodasApiController.class);
 
@@ -33,8 +35,8 @@ public class SodasApiController implements SodasApi {
     }
 
     public ResponseEntity<List<Soda>> getSodas() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             List<Soda> sodas = new LinkedList<>();
             sodas = repository.findAll();
             if (sodas == null) {
@@ -47,8 +49,8 @@ public class SodasApiController implements SodasApi {
     }
 
     public ResponseEntity<List<Soda>> getSodasByName(@ApiParam(value = "sodaName", required = true) @PathVariable("name") String name) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             List<Soda> sodas = new LinkedList<>();
             sodas = repository.getSodasBySodaName(name.toLowerCase());
             if (sodas == null) {

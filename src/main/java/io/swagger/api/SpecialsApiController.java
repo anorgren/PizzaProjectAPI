@@ -16,6 +16,8 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-06T23:28:45.897Z[GMT]")
 @Controller
 public class SpecialsApiController implements SpecialsApi {
+    private final String HEADER_VALUE = "Accept";
+    private final String HEADER_CONTENTS = "application/json";
 
     private static final Logger log = LoggerFactory.getLogger(SpecialsApiController.class);
 
@@ -33,8 +35,8 @@ public class SpecialsApiController implements SpecialsApi {
     }
 
     public ResponseEntity<List<Special>> getSpecials() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_VALUE)) {
           List<Special> specials = repository.findAll();
           if (specials == null) {
             return new ResponseEntity<List<Special>>(HttpStatus.INTERNAL_SERVER_ERROR);

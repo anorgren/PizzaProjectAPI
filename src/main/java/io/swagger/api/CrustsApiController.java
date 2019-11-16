@@ -18,6 +18,9 @@ import java.util.List;
 @Controller
 public class CrustsApiController implements CrustsApi {
 
+    private final String HEADER_VALUE = "Accept";
+    private final String HEADER_CONTENTS = "application/json";
+
     private static final Logger log = LoggerFactory.getLogger(CrustsApiController.class);
 
     private final HttpServletRequest request;
@@ -31,8 +34,8 @@ public class CrustsApiController implements CrustsApi {
     }
 
     public ResponseEntity<Crust> getCrustByName(@ApiParam(value = "crustName",required=true) @PathVariable("crustName") String crustName) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             Crust crust = repository.getCrustByCrustName(crustName.toLowerCase());
             if (crust == null) {
                 return new ResponseEntity<Crust>(HttpStatus.NOT_FOUND);
@@ -44,8 +47,8 @@ public class CrustsApiController implements CrustsApi {
     }
 
     public ResponseEntity<List<Crust>> getCrusts() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             List<Crust> crusts = repository.findAll();
             if (crusts == null) {
                 return new ResponseEntity<List<Crust>>(Collections.emptyList(), HttpStatus.NOT_FOUND);

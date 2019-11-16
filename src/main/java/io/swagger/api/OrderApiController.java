@@ -25,6 +25,8 @@ import java.util.Random;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
 @Controller
 public class OrderApiController implements OrderApi {
+  private final String HEADER_VALUE = "Accept";
+  private final String HEADER_CONTENTS = "application/json";
 
   private static final Logger log = LoggerFactory.getLogger(OrderApiController.class);
 
@@ -51,8 +53,8 @@ public class OrderApiController implements OrderApi {
 
   public ResponseEntity<Order> createOrder(@ApiParam(value = "list of items with item types to be added order"  )  @Valid @RequestBody List<Item> body,
                                            @ApiParam(value = "Branch Id of the store where order is being placed") @Valid @RequestParam(value = "branchId", required = false) String branchId) {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
+    String accept = request.getHeader(HEADER_VALUE);
+    if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         if (storeRepository.findStoreByBranchId(branchId) == null) {
           return new ResponseEntity<Order>(HttpStatus.NOT_FOUND);
@@ -78,8 +80,8 @@ public class OrderApiController implements OrderApi {
   }
 
   public ResponseEntity<List<Order>> getOrders() {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
+    String accept = request.getHeader(HEADER_VALUE);
+    if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         List<Order> orders = repository.findAll();
         if (orders == null) {
@@ -95,8 +97,8 @@ public class OrderApiController implements OrderApi {
   }
 
   public ResponseEntity<Order> getOrdersById(@ApiParam(value = "orderId", required = true) @PathVariable("id") String id) {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
+    String accept = request.getHeader(HEADER_VALUE);
+    if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         Order order = repository.findByOrderId(id);
         if (order == null) {
@@ -114,8 +116,8 @@ public class OrderApiController implements OrderApi {
   }
 
     public ResponseEntity<Order> updateOrder(@ApiParam(value = "orderId",required=true) @PathVariable("id") String id,@ApiParam(value = ""  )  @Valid @RequestBody List<Item> body) {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
+    String accept = request.getHeader(HEADER_VALUE);
+    if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         Order order = repository.findByOrderId(id);
         if (order == null || body == null) {
@@ -141,7 +143,7 @@ public class OrderApiController implements OrderApi {
     Random rand = new Random();
     String orderId = "";
     while (notUnique) {
-      orderId = ORDER_ID_TEXT + String.format("%04d", rand.nextInt(10000));
+      orderId = ORDER_ID_TEXT + String.format("%04d", rand.nextInt(1000000));
       if (repository.findByOrderId(orderId) == null) {
         notUnique = false;
       }

@@ -19,6 +19,8 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 @Controller
 public class DessertsApiController implements DessertsApi {
+    private final String HEADER_VALUE = "Accept";
+    private final String HEADER_CONTENTS = "application/json";
 
     private static final Logger log = LoggerFactory.getLogger(DessertsApiController.class);
 
@@ -33,8 +35,8 @@ public class DessertsApiController implements DessertsApi {
     }
 
     public ResponseEntity<List<Dessert>> getDesserts() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             List<Dessert> desserts = new LinkedList<>();
             desserts = repository.findAll();
             if (desserts == null) {
@@ -46,8 +48,8 @@ public class DessertsApiController implements DessertsApi {
     }
 
     public ResponseEntity<Dessert> getDessertsByName(@ApiParam(value = "dessertName", required = true) @PathVariable("name") String name) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             Dessert dessert = repository.findDessertByDessertName(name.toLowerCase());
             if (dessert == null) {
                 return new ResponseEntity<Dessert>(HttpStatus.NOT_FOUND);

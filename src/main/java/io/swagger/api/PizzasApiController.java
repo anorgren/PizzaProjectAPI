@@ -3,11 +3,7 @@ package io.swagger.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.*;
-import io.swagger.repository.PizzaRepository;
-import io.swagger.service.CrustService;
-import io.swagger.service.PizzaSizeService;
-import io.swagger.service.SauceService;
-import io.swagger.service.ToppingService;
+import io.swagger.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,107 +23,110 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
 @Controller
 public class PizzasApiController implements PizzasApi {
+    private final String HEADER_VALUE = "Accept";
+    private final String HEADER_CONTENTS = "application/json";
+    private final String ERROR_MESSAGE_TOPPINGS = "Invalid topping: ";
 
-  private static final Logger log = LoggerFactory.getLogger(PizzasApiController.class);
+    private static final Logger log = LoggerFactory.getLogger(PizzasApiController.class);
 
-  private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-  private final HttpServletRequest request;
+    private final HttpServletRequest request;
 
-  @Autowired
-  PizzaSizeService pizzaSizeService;
+    @Autowired
+    PizzaSizeRepository pizzaSizeRepository;
 
-  @Autowired
-  CrustService crustService;
+    @Autowired
+    CrustRepository crustRepository;
 
-  @Autowired
-  SauceService sauceService;
+    @Autowired
+    SauceRepository sauceRepository;
 
-  @Autowired
-  ToppingService toppingService;
+    @Autowired
+    ToppingRepository toppingRepository;
 
-  @Autowired
-  PizzaRepository pizzaRepository;
+    @Autowired
+    PizzaRepository pizzaRepository;
 
-  private static final int MAX_ALLOWED_TOPPINGS = 5;
+    private static final int MAX_ALLOWED_TOPPINGS = 5;
 
-  @org.springframework.beans.factory.annotation.Autowired
-  public PizzasApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-    this.objectMapper = objectMapper;
-    this.request = request;
-  }
+    @org.springframework.beans.factory.annotation.Autowired
+    public PizzasApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+        this.objectMapper = objectMapper;
+        this.request = request;
+    }
 
-  public ResponseEntity<Pizza> createPizza(@NotNull @ApiParam(value = "size description", required = true) @Valid @RequestParam(value = "size", required = true) String size,
-                                           @NotNull @ApiParam(value = "crustName", required = true) @Valid @RequestParam(value = "crustName", required = true) String crustName,
-                                           @NotNull @ApiParam(value = "sauceName", required = true) @Valid @RequestParam(value = "sauceName", required = true) String sauceName,
-                                           @ApiParam(value = "pizza name") @Valid @RequestParam(value = "pizzaName", required = false) String pizzaName,
-                                           @ApiParam(value = "topping name list(max 5 toppings)") @Valid @RequestParam(value = "toppings name List", required = true) List<String> toppingNames) throws ApiException{
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
-      try {
-        if(toppingNames.size() > MAX_ALLOWED_TOPPINGS){
-          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        PizzaSize pizzaSize = pizzaSizeService.getPizzaSizeBySizeDescription(size.toLowerCase());
-        if(pizzaSize == null){
-          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Crust pizzaCrust = crustService.getCrustByName(crustName.toLowerCase());
-        if(pizzaCrust == null){
-          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Sauce pizzaSauce = sauceService.getSauceBySauceName(sauceName.toLowerCase());
-        if(pizzaSauce == null){
-          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        List<Topping> toppingList = new ArrayList<>();
-        try {
-          toppingNames.forEach(toppingName -> {
-            Topping topping = toppingService.getTopping(toppingName.toLowerCase());
-            if (topping == null) {
-              throw new IllegalArgumentException("Invalid topping: " + toppingName);
+    public ResponseEntity<Pizza> createPizza(@NotNull @ApiParam(value = "size description", required = true) @Valid @RequestParam(value = "size", required = true) String size,
+                                             @NotNull @ApiParam(value = "crustName", required = true) @Valid @RequestParam(value = "crustName", required = true) String crustName,
+                                             @NotNull @ApiParam(value = "sauceName", required = true) @Valid @RequestParam(value = "sauceName", required = true) String sauceName,
+                                             @ApiParam(value = "pizza name") @Valid @RequestParam(value = "pizzaName", required = false) String pizzaName,
+                                             @ApiParam(value = "topping name list(max 5 toppings)") @Valid @RequestParam(value = "toppings name List", required = true) List<String> toppingNames) throws ApiException {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
+            try {
+                if (toppingNames.size() > MAX_ALLOWED_TOPPINGS) {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+                PizzaSize pizzaSize = pizzaSizeRepository.findPizzaSizeBySizeDescription(size.toLowerCase());
+                if (pizzaSize == null) {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+                Crust pizzaCrust = crustRepository.getCrustByCrustName(crustName.toLowerCase());
+                if (pizzaCrust == null) {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+                Sauce pizzaSauce = sauceRepository.getSauceBySauceName(sauceName.toLowerCase());
+                if (pizzaSauce == null) {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+                List<Topping> toppingList = new ArrayList<>();
+                try {
+                    toppingNames.forEach(toppingName -> {
+                        Topping topping = toppingRepository.findToppingByToppingName(toppingName.toLowerCase());
+                        if (topping == null) {
+                            throw new IllegalArgumentException(ERROR_MESSAGE_TOPPINGS + toppingName);
+                        }
+                        toppingList.add(topping);
+                    });
+                } catch (IllegalArgumentException e) {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+                Pizza pizza = new Pizza().size(pizzaSize)
+                        .crust(pizzaCrust)
+                        .sauce(pizzaSauce)
+                        .toppings(toppingList)
+                        .pizzaName(pizzaName);
+                return new ResponseEntity<Pizza>(pizza, HttpStatus.OK);
+            } catch (IllegalArgumentException e) {
+                throw new ApiException(HttpStatus.BAD_REQUEST.value(), e.getMessage());
             }
-            toppingList.add(topping);
-          });
-        } catch (IllegalArgumentException e){
-          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Pizza pizza = new Pizza().size(pizzaSize)
-                .crust(pizzaCrust)
-                .sauce(pizzaSauce)
-                .toppings(toppingList)
-                .pizzaName(pizzaName);
-        return new ResponseEntity<Pizza>(pizza, HttpStatus.OK);
-      } catch (IllegalArgumentException e) {
-        throw new ApiException(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-      }
-    }
-    return new ResponseEntity<Pizza>(HttpStatus.NOT_IMPLEMENTED);
-  }
-
-  public ResponseEntity<Pizza> getPizzaByName(@ApiParam(value = "pizzaName", required = true) @PathVariable("pizzaName") String pizzaName) {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
-      Pizza responsePizza = pizzaRepository.getPizzaByPizzaName(pizzaName);
-      if (responsePizza.equals(null)) {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-      }
-      return new ResponseEntity<>(responsePizza, HttpStatus.OK);
+        return new ResponseEntity<Pizza>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    return new ResponseEntity<Pizza>(HttpStatus.NOT_IMPLEMENTED);
-  }
+    public ResponseEntity<Pizza> getPizzaByName(@ApiParam(value = "pizzaName", required = true) @PathVariable("pizzaName") String pizzaName) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
+            Pizza responsePizza = pizzaRepository.getPizzaByPizzaName(pizzaName);
+            if (responsePizza.equals(null)) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(responsePizza, HttpStatus.OK);
+        }
 
-  public ResponseEntity<List<Pizza>> getPizzas() {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
-      List<Pizza> responsePizzas = pizzaRepository.findAll();
-      if (responsePizzas.equals(null)) {
-        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
-      }
-      return new ResponseEntity<List<Pizza>>(responsePizzas, HttpStatus.OK);
+        return new ResponseEntity<Pizza>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    return new ResponseEntity<List<Pizza>>(HttpStatus.NOT_IMPLEMENTED);
-  }
+    public ResponseEntity<List<Pizza>> getPizzas() {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
+            List<Pizza> responsePizzas = pizzaRepository.findAll();
+            if (responsePizzas.equals(null)) {
+                return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<List<Pizza>>(responsePizzas, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<List<Pizza>>(HttpStatus.NOT_IMPLEMENTED);
+    }
 }

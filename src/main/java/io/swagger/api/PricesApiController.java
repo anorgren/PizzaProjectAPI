@@ -26,6 +26,10 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T18:44:25.092Z[GMT]")
 @Controller
 public class PricesApiController implements PricesApi {
+  private final String HEADER_VALUE = "Accept";
+  private final String HEADER_CONTENTS = "application/json";
+  private final String ERROR_MESSAGE_PRICE = "Error getting price ";
+  private final String ERROR_MESSAGE_ORDERS = "Error getting orders ";
 
   private static final Logger log = LoggerFactory.getLogger(PricesApiController.class);
 
@@ -57,8 +61,8 @@ public class PricesApiController implements PricesApi {
   }
 
   public ResponseEntity<Price> getOrderPrice(@ApiParam(value = "orderId", required = true) @PathVariable("orderId") String orderId) {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
+    String accept = request.getHeader(HEADER_VALUE);
+    if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         Order order = repository.findByOrderId(orderId);
         if (order == null) {
@@ -67,7 +71,7 @@ public class PricesApiController implements PricesApi {
         return new ResponseEntity<Price>(order.getTentativeAmount(), HttpStatus.OK);
 
       } catch (Exception e) {
-        log.error("Error getting price", e.getMessage());
+        log.error(ERROR_MESSAGE_PRICE, e.getMessage());
         return new ResponseEntity<Price>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
@@ -91,8 +95,8 @@ public class PricesApiController implements PricesApi {
           @Valid @RequestParam(value = "toppings", required = false) List<String> toppings,
           @NotNull @ApiParam(value = "crustName", required = true) @Valid @RequestParam(value = "crustName", required = true) String crustName,
           @NotNull @ApiParam(value = "sauceName", required = true) @Valid @RequestParam(value = "sauceName", required = true) String sauceName) {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
+    String accept = request.getHeader(HEADER_VALUE);
+    if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         if (toppings.size() > MAX_ALLOWED_TOPPINGS) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -123,7 +127,7 @@ public class PricesApiController implements PricesApi {
                 .toppings(toppingList);
         return new ResponseEntity<Price>(new Price().priceInCents((int) (pizza.getPrice() * 100)), HttpStatus.OK);
       } catch (Exception e) {
-        log.error("Error getting orders", e.getMessage());
+        log.error(ERROR_MESSAGE_ORDERS, e.getMessage());
         return new ResponseEntity<Price>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }

@@ -24,6 +24,10 @@ import java.util.Calendar;
 @Controller
 public class CompleteOrderApiController implements CompleteOrderApi {
 
+  private final String HEADER_VALUE = "Accept";
+  private final String HEADER_CONTENTS = "application/json";
+  private final String ERROR_MESSAGE = "Error Completing order";
+
   private static final Logger log = LoggerFactory.getLogger(CompleteOrderApiController.class);
 
   private final ObjectMapper objectMapper;
@@ -44,8 +48,8 @@ public class CompleteOrderApiController implements CompleteOrderApi {
 
   public ResponseEntity<Order> completeOrder(@NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "id", required = true) String id,
                                              @NotNull @ApiParam(value = "tentative amount of order in cents", required = true) @Valid @RequestParam(value = "tentativeAmount", required = true) int tentativeAmount, @ApiParam(value = "Payment Information") @Valid @RequestBody PaymentInformation body) {
-    String accept = request.getHeader("Accept");
-    if (accept != null && accept.contains("application/json")) {
+    String accept = request.getHeader(HEADER_VALUE);
+    if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         Order order = orderRepository.findByOrderId(id);
         if (order == null) {
@@ -64,7 +68,7 @@ public class CompleteOrderApiController implements CompleteOrderApi {
         orderRepository.save(order);
         return new ResponseEntity<>(order, HttpStatus.OK);
       } catch (Exception e) {
-        log.error("Error Completing order", e);
+        log.error(ERROR_MESSAGE, e);
         return new ResponseEntity<Order>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }

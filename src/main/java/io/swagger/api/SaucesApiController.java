@@ -17,6 +17,8 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T22:37:07.679Z[GMT]")
 @Controller
 public class SaucesApiController implements SaucesApi {
+    private final String HEADER_VALUE = "Accept";
+    private final String HEADER_CONTENTS = "application/json";
 
     private static final Logger log = LoggerFactory.getLogger(SaucesApiController.class);
 
@@ -31,8 +33,8 @@ public class SaucesApiController implements SaucesApi {
     }
 
     public ResponseEntity<Sauce> getSauceByName(@ApiParam(value = "sauceName",required=true) @PathVariable("sauceName") String sauceName) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             Sauce sauce = sauceRepository.getSauceBySauceName(sauceName.toLowerCase());
             if (sauce == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -44,8 +46,8 @@ public class SaucesApiController implements SaucesApi {
     }
 
     public ResponseEntity<List<Sauce>> getSauces() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        String accept = request.getHeader(HEADER_VALUE);
+        if (accept != null && accept.contains(HEADER_CONTENTS)) {
             List<Sauce> sauces = sauceRepository.findAll();
             if (sauces == null) {
                 return new ResponseEntity<List<Sauce>>(Collections.emptyList(), HttpStatus.NOT_FOUND);
