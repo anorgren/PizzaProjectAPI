@@ -95,7 +95,7 @@ public class PizzasApiController implements PizzasApi {
                         .crust(pizzaCrust)
                         .sauce(pizzaSauce)
                         .toppings(toppingList)
-                        .pizzaName(pizzaName);
+                        .pizzaName(pizzaName.toLowerCase());
                 return new ResponseEntity<Pizza>(pizza, HttpStatus.OK);
             } catch (IllegalArgumentException e) {
                 throw new ApiException(HttpStatus.BAD_REQUEST.value(), e.getMessage());
@@ -107,11 +107,11 @@ public class PizzasApiController implements PizzasApi {
     public ResponseEntity<Pizza> getPizzaByName(@ApiParam(value = "pizzaName", required = true) @PathVariable("pizzaName") String pizzaName) {
         String accept = request.getHeader(HEADER_VALUE);
         if (accept != null && accept.contains(HEADER_CONTENTS)) {
-            Pizza responsePizza = pizzaRepository.getPizzaByPizzaName(pizzaName);
-            if (responsePizza.equals(null)) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            Pizza responsePizza = pizzaRepository.getPizzaByPizzaName(pizzaName.toLowerCase());
+            if (responsePizza == null) {
+                return new ResponseEntity<Pizza>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(responsePizza, HttpStatus.OK);
+            return new ResponseEntity<Pizza>(responsePizza, HttpStatus.OK);
         }
 
         return new ResponseEntity<Pizza>(HttpStatus.NOT_IMPLEMENTED);
@@ -121,7 +121,7 @@ public class PizzasApiController implements PizzasApi {
         String accept = request.getHeader(HEADER_VALUE);
         if (accept != null && accept.contains(HEADER_CONTENTS)) {
             List<Pizza> responsePizzas = pizzaRepository.findAll();
-            if (responsePizzas.equals(null)) {
+            if (responsePizzas == null) {
                 return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<List<Pizza>>(responsePizzas, HttpStatus.OK);

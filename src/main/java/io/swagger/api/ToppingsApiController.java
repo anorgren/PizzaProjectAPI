@@ -51,8 +51,7 @@ public class ToppingsApiController implements ToppingsApi {
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       final Topping topping = toppingRepository.findToppingByToppingName(name.toLowerCase());
       if (topping == null) {
-        Topping emptyTopping = new Topping();
-        return new ResponseEntity<Topping>( HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Topping>(HttpStatus.NOT_FOUND);
       }
       return new ResponseEntity<Topping>(topping, HttpStatus.OK);
     }
