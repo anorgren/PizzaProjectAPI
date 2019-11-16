@@ -2,19 +2,15 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.CrustRepository;
+import io.swagger.repository.PizzaRepository;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.ApiModelProperty;
+import java.util.*;
 
 /**
  * Pizza
@@ -26,6 +22,14 @@ public class Pizza extends Item {
   private final Double SMALL_BASE_PRICE = 8.00;
   private final Double MEDIUM_BASE_PRICE = 10.00;
   private final Double LARGE_BASE_PRICE = 12.00;
+  private static final String ITEM_TYPE = "Pizza";
+
+  public static void initialize(PizzaRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
+    DataConfiguration.backfillPizzaRepository(repository);
+  }
 
   @JsonProperty("pizzaName")
   private String pizzaName = null;
@@ -200,7 +204,7 @@ public class Pizza extends Item {
 
   @Override
   public String getItemType() {
-    return "Pizza";
+    return ITEM_TYPE;
   }
 
   @Override

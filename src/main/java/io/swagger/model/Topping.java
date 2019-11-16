@@ -1,25 +1,22 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.configuration.DataConfiguration;
+import io.swagger.repository.ToppingRepository;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.configuration.DataConfiguration;
-import io.swagger.repository.ToppingRepository;
-
 @Document(collection = "Toppings")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
-public class Topping {
+public class Topping implements ToppingRepository.ToppingName{
 
   public static void initialize(ToppingRepository repository) {
     if (repository.count() > 0) {

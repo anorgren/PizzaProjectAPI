@@ -4,20 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.SodaRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Soda
@@ -31,6 +28,7 @@ public class Soda extends Item {
   private static final Double TWO_LITER_PRICE = new Double(2.59);
   private static final Double TWENTY_OUNCE_PRICE = new Double(1.75);
   private static final Double SIX_PACK_PRICE = new Double(3.49);
+  private static final String ITEM_TYPE = "Soda";
 
   public static void initialize(SodaRepository repository) {
     if (repository.count() > 0) {
@@ -169,7 +167,7 @@ public class Soda extends Item {
 
   @Override
   public String getItemType() {
-    return "Soda";
+    return ITEM_TYPE;
   }
 
   @Override

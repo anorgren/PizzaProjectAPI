@@ -3,9 +3,7 @@ package io.swagger.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.model.Breadstick;
 import io.swagger.model.DietaryProperty;
-import io.swagger.model.PizzaSize;
 import io.swagger.repository.BreadstickRepository;
-import io.swagger.repository.PizzaSizeRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,30 +47,11 @@ public class BreadsticksApiControllerIntegrationTest {
     private BreadstickRepository repository;
 
     private ObjectMapper objectMapper;
-    private Breadstick breadstick;
-    private Breadstick breadstickTwo;
-    private Breadstick breadstickThree;
-    private List<Breadstick> breadsticks;
-    private HashMap<DietaryProperty, Boolean> vegetarian;
 
 
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
-
-        breadstick = new Breadstick();
-        breadstickTwo = new Breadstick();
-        breadstickThree = new Breadstick();
-        breadsticks = Arrays.asList(breadstick, breadstickTwo, breadstickThree);
-
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
-
-        breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
-        breadstickTwo.withCheese(true).size(Breadstick.SizeEnum.SMALL).dietaryProperties(vegetarian);
-        breadstickThree.withCheese(false).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
 
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -97,7 +76,19 @@ public class BreadsticksApiControllerIntegrationTest {
 
     @Test
     public void getBreadstickOneInRepo() throws Exception {
+        Breadstick breadstick;
+        HashMap<DietaryProperty, Boolean> vegetarian;
+
+        breadstick = new Breadstick();
+
+        vegetarian = new HashMap<>();
+        vegetarian.put(DietaryProperty.VEGAN, false);
+        vegetarian.put(DietaryProperty.VEGETARIAN, true);
+        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+
+        breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
         List<Breadstick> singleBread = Arrays.asList(breadstick);
+
         String stringBreadstickList = objectMapper.writeValueAsString(singleBread);
         when(repository.findAll()).thenReturn(singleBread);
         this.mockMvc.perform(get("/breadsticks")
@@ -109,6 +100,26 @@ public class BreadsticksApiControllerIntegrationTest {
 
     @Test
     public void getBreadsticksMultipleReturned() throws Exception {
+        Breadstick breadstick;
+        Breadstick breadstickTwo;
+        Breadstick breadstickThree;
+        List<Breadstick> breadsticks;
+        HashMap<DietaryProperty, Boolean> vegetarian;
+
+        breadstick = new Breadstick();
+        breadstickTwo = new Breadstick();
+        breadstickThree = new Breadstick();
+        breadsticks = Arrays.asList(breadstick, breadstickTwo, breadstickThree);
+
+        vegetarian = new HashMap<>();
+        vegetarian.put(DietaryProperty.VEGAN, false);
+        vegetarian.put(DietaryProperty.VEGETARIAN, true);
+        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+
+        breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+        breadstickTwo.withCheese(true).size(Breadstick.SizeEnum.SMALL).dietaryProperties(vegetarian);
+        breadstickThree.withCheese(false).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+
         String stringBreadsticksList = objectMapper.writeValueAsString(breadsticks);
         when(repository.findAll()).thenReturn(breadsticks);
         this.mockMvc.perform(get("/breadsticks")

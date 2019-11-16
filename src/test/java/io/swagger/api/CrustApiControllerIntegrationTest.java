@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -49,28 +48,9 @@ public class CrustApiControllerIntegrationTest {
 
     private ObjectMapper objectMapper;
 
-    private Double price;
-    private Crust crustOriginal;
-    private Crust crustGlutenFree;
-    private List<Crust> crusts;
-    private static HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
-
-        price = 100d;
-
-        vegetarianGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
-
-        crustOriginal = new Crust();
-        crustGlutenFree = new Crust();
-        crustOriginal.crustName("original").price(price);
-        crustGlutenFree.crustName("glutenfree").price(price).dietaryProperties(vegetarianGlutenFree);
-        crusts = Arrays.asList(crustGlutenFree, crustOriginal);
 
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -95,6 +75,19 @@ public class CrustApiControllerIntegrationTest {
 
     @Test
     public void getCrustsOneInRepository() throws Exception {
+        Double price;
+        Crust crustOriginal;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        price = 100d;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        crustOriginal = new Crust();
+        crustOriginal.crustName("original").price(price);
+
         List<Crust> singleObject = Arrays.asList(crustOriginal);
         String stringSingleObject = objectMapper.writeValueAsString(singleObject);
         when(repository.findAll()).thenReturn(singleObject);
@@ -107,7 +100,25 @@ public class CrustApiControllerIntegrationTest {
 
     @Test
     public void getCrustsMultipleReturned() throws Exception {
+        Double price;
+        Crust crustOriginal;
+        Crust crustGlutenFree;
+        List<Crust> crusts;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        price = 100d;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        crustOriginal = new Crust();
+        crustGlutenFree = new Crust();
+        crustOriginal.crustName("original").price(price);
+        crustGlutenFree.crustName("glutenfree").price(price).dietaryProperties(vegetarianGlutenFree);
+        crusts = Arrays.asList(crustGlutenFree, crustOriginal);
         String stringMultipleObjects = objectMapper.writeValueAsString(crusts);
+
         when(repository.findAll()).thenReturn(crusts);
         this.mockMvc.perform(get("/crusts")
                 .header("Accept", "application/json"))
@@ -118,6 +129,24 @@ public class CrustApiControllerIntegrationTest {
 
     @Test
     public void getCrustsByNameValidName() throws Exception {
+        Double price;
+        Crust crustOriginal;
+        Crust crustGlutenFree;
+        List<Crust> crusts;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        price = 100d;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        crustOriginal = new Crust();
+        crustGlutenFree = new Crust();
+        crustOriginal.crustName("original").price(price);
+        crustGlutenFree.crustName("glutenfree").price(price).dietaryProperties(vegetarianGlutenFree);
+        crusts = Arrays.asList(crustGlutenFree, crustOriginal);
+
         String objectToGet = objectMapper.writeValueAsString(crustOriginal);
         when(repository.getCrustByCrustName(any()))
                 .thenAnswer(invocationOnMock -> {
@@ -138,6 +167,24 @@ public class CrustApiControllerIntegrationTest {
 
     @Test
     public void getCrustsByNameInvalidName() throws Exception {
+        Double price;
+        Crust crustOriginal;
+        Crust crustGlutenFree;
+        List<Crust> crusts;
+        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+        price = 100d;
+
+        vegetarianGlutenFree = new HashMap<>();
+        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+        crustOriginal = new Crust();
+        crustGlutenFree = new Crust();
+        crustOriginal.crustName("original").price(price);
+        crustGlutenFree.crustName("glutenfree").price(price).dietaryProperties(vegetarianGlutenFree);
+        crusts = Arrays.asList(crustGlutenFree, crustOriginal);
+
         when(repository.getCrustByCrustName(any()))
                 .thenAnswer(invocationOnMock -> {
                     for (Crust crust : crusts) {

@@ -2,20 +2,17 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.DessertRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Dessert
@@ -25,6 +22,8 @@ import io.swagger.repository.DessertRepository;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
 @JsonTypeName("Dessert")
 public class Dessert extends Item  {
+  private static final String ITEM_TYPE = "Dessert";
+
   @JsonProperty("dessertName")
   private String dessertName = null;
 
@@ -150,7 +149,7 @@ public class Dessert extends Item  {
 
   @Override
   public String getItemType() {
-    return "Dessert";
+    return ITEM_TYPE;
   }
   @Override
   public int hashCode() {

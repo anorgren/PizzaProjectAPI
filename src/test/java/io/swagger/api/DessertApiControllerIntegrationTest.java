@@ -20,8 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -50,35 +48,9 @@ public class DessertApiControllerIntegrationTest {
 
     private ObjectMapper objectMapper;
 
-    private Double price;
-    private Dessert cookies;
-    private Dessert brownies;
-    private List<Dessert> desserts;
-
-    private static HashMap<DietaryProperty, Boolean> vegetarian;
-
     @Before
     public void setUp() {
         objectMapper = new ObjectMapper();
-
-        price = 4.99d;
-
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
-
-        brownies = new Dessert();
-        cookies = new Dessert();
-        desserts = new ArrayList<>();
-
-        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
-                .dietaryProperties(vegetarian).price(price);
-
-        cookies.dessertName("cookies").description("chocolate cookies")
-                .dietaryProperties(vegetarian).price(price);
-
-        desserts = Arrays.asList(brownies, cookies);
 
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -103,6 +75,22 @@ public class DessertApiControllerIntegrationTest {
 
     @Test
     public void getDessertsOneInRepository() throws Exception {
+        Double price;
+        Dessert brownies;
+
+        HashMap<DietaryProperty, Boolean> vegetarian;
+        price = 4.99d;
+
+        vegetarian = new HashMap<>();
+        vegetarian.put(DietaryProperty.VEGAN, false);
+        vegetarian.put(DietaryProperty.VEGETARIAN, true);
+        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+
+        brownies = new Dessert();
+
+        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+                .dietaryProperties(vegetarian).price(price);
+
         List<Dessert> singleObject = Arrays.asList(brownies);
         String stringSingleObject = objectMapper.writeValueAsString(singleObject);
         when(repository.findAll()).thenReturn(singleObject);
@@ -115,6 +103,29 @@ public class DessertApiControllerIntegrationTest {
 
     @Test
     public void getDessertsMultipleReturned() throws Exception {
+        Double price;
+        Dessert cookies;
+        Dessert brownies;
+        List<Dessert> desserts;
+
+        HashMap<DietaryProperty, Boolean> vegetarian;
+        price = 4.99d;
+
+        vegetarian = new HashMap<>();
+        vegetarian.put(DietaryProperty.VEGAN, false);
+        vegetarian.put(DietaryProperty.VEGETARIAN, true);
+        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+
+        brownies = new Dessert();
+        cookies = new Dessert();
+
+        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+                .dietaryProperties(vegetarian).price(price);
+
+        cookies.dessertName("cookies").description("chocolate cookies")
+                .dietaryProperties(vegetarian).price(price);
+
+        desserts = Arrays.asList(brownies, cookies);
         String stringMultipleObjects = objectMapper.writeValueAsString(desserts);
         when(repository.findAll()).thenReturn(desserts);
         this.mockMvc.perform(get("/desserts")
@@ -126,7 +137,31 @@ public class DessertApiControllerIntegrationTest {
 
     @Test
     public void getDessertsByNameValidName() throws Exception {
+        Double price;
+        Dessert cookies;
+        Dessert brownies;
+        List<Dessert> desserts;
+
+        HashMap<DietaryProperty, Boolean> vegetarian;
+        price = 4.99d;
+
+        vegetarian = new HashMap<>();
+        vegetarian.put(DietaryProperty.VEGAN, false);
+        vegetarian.put(DietaryProperty.VEGETARIAN, true);
+        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+
+        brownies = new Dessert();
+        cookies = new Dessert();
+
+        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+                .dietaryProperties(vegetarian).price(price);
+
+        cookies.dessertName("cookies").description("chocolate cookies")
+                .dietaryProperties(vegetarian).price(price);
+
+        desserts = Arrays.asList(brownies, cookies);
         String objectToGet = objectMapper.writeValueAsString(brownies);
+
         when(repository.findDessertByDessertName(any()))
                 .thenAnswer(invocationOnMock -> {
                     for (Dessert dessert : desserts) {
@@ -146,6 +181,30 @@ public class DessertApiControllerIntegrationTest {
 
     @Test
     public void getDessertsByNameValidNameMixedCase() throws Exception {
+        Double price;
+        Dessert cookies;
+        Dessert brownies;
+        List<Dessert> desserts;
+
+        HashMap<DietaryProperty, Boolean> vegetarian;
+        price = 4.99d;
+
+        vegetarian = new HashMap<>();
+        vegetarian.put(DietaryProperty.VEGAN, false);
+        vegetarian.put(DietaryProperty.VEGETARIAN, true);
+        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+
+        brownies = new Dessert();
+        cookies = new Dessert();
+
+        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+                .dietaryProperties(vegetarian).price(price);
+
+        cookies.dessertName("cookies").description("chocolate cookies")
+                .dietaryProperties(vegetarian).price(price);
+
+        desserts = Arrays.asList(brownies, cookies);
+
         String objectToGet = objectMapper.writeValueAsString(brownies);
         when(repository.findDessertByDessertName(any()))
                 .thenAnswer(invocationOnMock -> {
@@ -166,6 +225,30 @@ public class DessertApiControllerIntegrationTest {
 
     @Test
     public void getDessertsByNameInvalidName() throws Exception {
+        Double price;
+        Dessert cookies;
+        Dessert brownies;
+        List<Dessert> desserts;
+
+        HashMap<DietaryProperty, Boolean> vegetarian;
+        price = 4.99d;
+
+        vegetarian = new HashMap<>();
+        vegetarian.put(DietaryProperty.VEGAN, false);
+        vegetarian.put(DietaryProperty.VEGETARIAN, true);
+        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+
+        brownies = new Dessert();
+        cookies = new Dessert();
+
+        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+                .dietaryProperties(vegetarian).price(price);
+
+        cookies.dessertName("cookies").description("chocolate cookies")
+                .dietaryProperties(vegetarian).price(price);
+
+        desserts = Arrays.asList(brownies, cookies);
+
         when(repository.findDessertByDessertName(any()))
                 .thenAnswer(invocationOnMock -> {
                     for (Dessert dessert : desserts) {

@@ -1,22 +1,15 @@
 package io.swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
-import io.swagger.model.PizzaSize;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import io.swagger.repository.StoreRepository;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 /**
  * Store
@@ -24,7 +17,7 @@ import javax.validation.constraints.*;
 @Document(collection = "Stores")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T01:15:42.292Z[GMT]")
-public class Store {
+public class Store implements StoreRepository.BasicStoreInfo {
 
   @JsonProperty("branchId")
   private String branchId = null;

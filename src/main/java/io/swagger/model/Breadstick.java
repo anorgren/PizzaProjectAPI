@@ -4,20 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.BreadstickRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Breadstick
@@ -30,6 +27,8 @@ public class Breadstick extends Item  {
   private static final Double SMALL_PRICE = new Double(2.99);
   private static final Double LARGE_PRICE = new Double(4.99);
   private static final Double WITH_CHEESE_PRICE = new Double(2.00);
+
+  private final String ITEM_TYPE = "Breadstick";
 
   public static void initialize(BreadstickRepository repository) {
     if (repository.count() > 0) {
@@ -173,7 +172,7 @@ public class Breadstick extends Item  {
 
   @Override
   public String getItemType() {
-    return "Breadstick";
+    return ITEM_TYPE;
   }
 
   @Override

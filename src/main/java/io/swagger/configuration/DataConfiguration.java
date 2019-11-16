@@ -1,30 +1,10 @@
 package io.swagger.configuration;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import io.swagger.model.*;
+import io.swagger.repository.*;
 
-import io.swagger.model.Breadstick;
-import io.swagger.model.Crust;
-import io.swagger.model.Dessert;
-import io.swagger.model.DietaryProperty;
-import io.swagger.model.PizzaSize;
-import io.swagger.model.Sauce;
-import io.swagger.model.Soda;
-import io.swagger.model.Special;
-import io.swagger.model.Store;
-import io.swagger.model.Topping;
-import io.swagger.repository.BreadstickRepository;
-import io.swagger.repository.CrustRepository;
-import io.swagger.repository.DessertRepository;
-import io.swagger.repository.PizzaSizeRepository;
-import io.swagger.repository.SauceRepository;
-import io.swagger.repository.SodaRepository;
-import io.swagger.repository.SpecialsRepository;
-import io.swagger.repository.StoreRepository;
-import io.swagger.repository.ToppingRepository;
+import java.util.*;
 
 public class DataConfiguration {
 
@@ -489,4 +469,61 @@ public class DataConfiguration {
             + " off your order of one or more items.");
         repository.insert(flatDiscount);
   }
+
+    private static List<Pizza> createAllPizzas() {
+        initializeDietaryProperties();
+        initializeAvailableSizes();
+
+        Topping pepperoniTopping = new Topping();
+        pepperoniTopping.toppingName("pepperoni").price(MEAT_PRICE)
+                .dietaryProperties(notVegetarianIsGlutenFree);
+        Topping shreddedProvoloneCheese = new Topping();
+        shreddedProvoloneCheese.toppingName("shredded provolone cheese").price(NON_MEAT_PRICE)
+                .dietaryProperties(vegetarianGlutenFree);
+        Topping shreddedParmesan = new Topping();
+        shreddedParmesan.toppingName("shredded parmesan asiago").price(NON_MEAT_PRICE)
+                .dietaryProperties(vegetarianGlutenFree);
+        Topping jalapenoPeppers = new Topping();
+        jalapenoPeppers.toppingName("jalapeno peppers").price(NON_MEAT_PRICE)
+                .dietaryProperties(veganVegetarianGlutenFree);
+        Topping onions = new Topping();
+        onions.toppingName("onions").price(NON_MEAT_PRICE)
+                .dietaryProperties(veganVegetarianGlutenFree);
+        Topping bananaPeppers = new Topping();
+        bananaPeppers.toppingName("banana peppers").price(NON_MEAT_PRICE)
+                .dietaryProperties(veganVegetarianGlutenFree);
+
+        Crust crustOriginal = new Crust();
+        crustOriginal.crustName(CRUST_ORIGINAL_NAME).availableSizes(ALL_SIZES)
+                .price(CRUST_ORIGINAL_PRICE).dietaryProperties(vegetarian);
+        Crust crustGlutenFree = new Crust();
+        crustGlutenFree.crustName(CRUST_GLUTEN_FREE_NAME).availableSizes(SMALL_LARGE_SIZE)
+                .price(CRUST_GLUTEN_FREE_PRICE).dietaryProperties(veganVegetarianGlutenFree);
+
+        Sauce sauceOriginal = new Sauce();
+        sauceOriginal.sauceName(SAUCE_ORIGINAL_NAME)
+                .dietaryProperties(veganVegetarianGlutenFree);
+
+        PizzaSize pizzaSizeLarge = new PizzaSize(LARGE_DESCRIPTION, LARGE_SIZE_INCHES);
+
+        Pizza pepperoni = new Pizza();
+        Pizza cheese = new Pizza();
+        Pizza vegetarian = new Pizza();
+
+        pepperoni.pizzaName("pepperoni").crust(crustOriginal).sauce(sauceOriginal)
+                .toppings(Arrays.asList(pepperoniTopping, shreddedProvoloneCheese))
+                .size(pizzaSizeLarge);
+        cheese.pizzaName("cheese").crust(crustOriginal).sauce(sauceOriginal)
+                .toppings(Arrays.asList(shreddedProvoloneCheese, shreddedParmesan))
+                .size(pizzaSizeLarge);
+        vegetarian.pizzaName("vegetarian").crust(crustGlutenFree).sauce(sauceOriginal)
+                .toppings(Arrays.asList(shreddedParmesan, bananaPeppers, onions, jalapenoPeppers))
+                .size(pizzaSizeLarge);
+
+        return Arrays.asList(pepperoni, cheese, vegetarian);
+    }
+
+    public static void backfillPizzaRepository(PizzaRepository repository) {
+        repository.insert(createAllPizzas());
+    }
 }

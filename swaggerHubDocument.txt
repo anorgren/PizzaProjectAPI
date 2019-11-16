@@ -76,13 +76,13 @@ paths:
     get:
       tags:
         - developers
-      summary: returns all toppings
+      summary: returns all topping names
       operationId: getToppings
       description: |
-        Get list of all toppings
+        Get list of all topping names
       responses:
         '200':
-          description: list of all toppings
+          description: list of all topping names
           content:
             application/json:
               schema:
