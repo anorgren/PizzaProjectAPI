@@ -5,9 +5,6 @@
  */
 package io.swagger.api;
 
-import io.swagger.annotations.*;
-import io.swagger.model.Order;
-import io.swagger.model.PaymentInformation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,18 +13,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.model.PaymentInformation;
+import io.swagger.model.Receipt;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
 @Api(value = "completeOrder", description = "the completeOrder API")
 public interface CompleteOrderApi {
 
-    @ApiOperation(value = "Completes the given order", nickname = "completeOrder", notes = "Finalizes the order with payement information and marking order complete. Once completed the order can not be modified. ", response = Order.class, tags={ "developers", })
+    @ApiOperation(value = "Completes the given order", nickname = "completeOrder", notes = "Finalizes the order with payement information and marking order complete. Once completed the order can not be modified. ", response = Receipt.class, tags={ "developers", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Completed Order Record", response = Order.class),
+        @ApiResponse(code = 200, message = "Receipt for completed order.", response = Receipt.class),
         @ApiResponse(code = 400, message = "bad input parameter") })
     @RequestMapping(value = "/completeOrder",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Order> completeOrder(@NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "id", required = true) String id,@NotNull @ApiParam(value = "tentative amount of order in cents", required = true) @Valid @RequestParam(value = "tentativeAmount", required = true) int tentativeAmount,@ApiParam(value = "Payment Information"  )  @Valid @RequestBody PaymentInformation body);
+    ResponseEntity<Receipt> completeOrder(@NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "id", required = true) String id,
+                                          @NotNull @ApiParam(value = "tentative amount of order in cents", required = true) @Valid @RequestParam(value = "tentativeAmount", required = true) int tentativeAmount,
+                                          @ApiParam(value = "Payment Information"  )  @Valid @RequestBody PaymentInformation body);
 
 }

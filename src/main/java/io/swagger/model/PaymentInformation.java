@@ -1,12 +1,15 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+
 import org.springframework.validation.annotation.Validated;
+
+import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * PaymentInformation
@@ -55,7 +58,7 @@ public class PaymentInformation   {
    * Get cardExpiry
    * @return cardExpiry
   **/
-  @ApiModelProperty(example = "01/20", required = true, value = "")
+  @ApiModelProperty(example = "01/2020", required = true, value = "")
       @NotNull
 
     public String getCardExpiry() {

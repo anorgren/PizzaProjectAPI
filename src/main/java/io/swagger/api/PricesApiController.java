@@ -1,13 +1,7 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.ApiParam;
-import io.swagger.model.*;
-import io.swagger.repository.OrderRepository;
-import io.swagger.service.CrustService;
-import io.swagger.service.PizzaSizeService;
-import io.swagger.service.SauceService;
-import io.swagger.service.ToppingService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +11,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+
+import io.swagger.annotations.ApiParam;
+import io.swagger.model.Crust;
+import io.swagger.model.Order;
+import io.swagger.model.Pizza;
+import io.swagger.model.PizzaSize;
+import io.swagger.model.Price;
+import io.swagger.model.Sauce;
+import io.swagger.model.Topping;
+import io.swagger.repository.CrustRepository;
+import io.swagger.repository.OrderRepository;
+import io.swagger.repository.PizzaSizeRepository;
+import io.swagger.repository.SauceRepository;
+import io.swagger.repository.ToppingRepository;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T18:44:25.092Z[GMT]")
 @Controller
@@ -30,6 +39,7 @@ public class PricesApiController implements PricesApi {
   private final String HEADER_CONTENTS = "application/json";
   private final String ERROR_MESSAGE_PRICE = "Error getting price ";
   private final String ERROR_MESSAGE_ORDERS = "Error getting orders ";
+  private final String ERROR_MESSAGE_TOPPINGS = "Invalid topping: ";
 
   private static final Logger log = LoggerFactory.getLogger(PricesApiController.class);
 
@@ -41,16 +51,16 @@ public class PricesApiController implements PricesApi {
   private OrderRepository repository;
 
   @Autowired
-  PizzaSizeService pizzaSizeService;
+  PizzaSizeRepository pizzaSizeRepository;
 
   @Autowired
-  CrustService crustService;
+  CrustRepository crustRepository;
 
   @Autowired
-  SauceService sauceService;
+  SauceRepository sauceRepository;
 
   @Autowired
-  ToppingService toppingService;
+  ToppingRepository toppingRepository;
 
   private static final int MAX_ALLOWED_TOPPINGS = 5;
 
@@ -99,28 +109,32 @@ public class PricesApiController implements PricesApi {
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         if (toppings.size() > MAX_ALLOWED_TOPPINGS) {
-          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        PizzaSize pizzaSize = pizzaSizeService.getPizzaSizeBySizeDescription(size.toLowerCase());
+        PizzaSize pizzaSize = pizzaSizeRepository.findPizzaSizeBySizeDescription(size.toLowerCase());
         if (pizzaSize == null) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Crust pizzaCrust = crustService.getCrustByName(crustName.toLowerCase());
+        Crust pizzaCrust = crustRepository.getCrustByCrustName(crustName.toLowerCase());
         if (pizzaCrust == null) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Sauce pizzaSauce = sauceService.getSauceBySauceName(sauceName.toLowerCase());
+        Sauce pizzaSauce = sauceRepository.getSauceBySauceName(sauceName.toLowerCase());
         if (pizzaSauce == null) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<Topping> toppingList = new ArrayList<>();
-        toppings.forEach(toppingName -> {
-          Topping topping = toppingService.getTopping(toppingName.toLowerCase());
-          if (topping == null) {
-            throw new IllegalArgumentException("Invalid topping: " + toppingName);
-          }
-          toppingList.add(topping);
-        });
+        try {
+          toppings.forEach(toppingName -> {
+            Topping topping = toppingRepository.findToppingByToppingName(toppingName.toLowerCase());
+            if (topping == null) {
+              throw new IllegalArgumentException(ERROR_MESSAGE_TOPPINGS + toppingName);
+            }
+            toppingList.add(topping);
+          });
+        } catch (IllegalArgumentException e) {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         Pizza pizza = new Pizza().size(pizzaSize)
                 .crust(pizzaCrust)
                 .sauce(pizzaSauce)

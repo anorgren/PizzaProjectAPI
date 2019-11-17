@@ -1,14 +1,7 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.ApiParam;
-import io.swagger.model.Order;
-import io.swagger.model.Special;
-import io.swagger.repository.OrderRepository;
-import io.swagger.repository.SpecialsRepository;
-import io.swagger.service.OrderService;
-import io.swagger.service.specials.ApplicableSpecial;
-import io.swagger.service.specials.ApplicableSpecialFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiParam;
+import io.swagger.model.Order;
+import io.swagger.model.Special;
+import io.swagger.repository.OrderRepository;
+import io.swagger.repository.SpecialsRepository;
+import io.swagger.service.OrderService;
+import io.swagger.service.specials.ApplicableSpecial;
+import io.swagger.service.specials.ApplicableSpecialFactory;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T05:40:35.019Z[GMT]")
 @Controller
@@ -49,7 +51,8 @@ public class ApplySpecialApiController implements ApplySpecialApi {
     this.request = request;
   }
 
-    public ResponseEntity<Order> applySpecial(@NotNull @ApiParam(value = "specialId", required = true) @Valid @RequestParam(value = "specialId", required = true) String specialId, @NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "orderId", required = true) String orderId) {
+    public ResponseEntity<Order> applySpecial(@NotNull @ApiParam(value = "specialId", required = true) @Valid @RequestParam(value = "specialId", required = true) String specialId,
+                                              @NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "orderId", required = true) String orderId) {
     String accept = request.getHeader("Accept");
     if (accept != null && accept.contains("application/json")) {
       try {
