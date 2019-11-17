@@ -1,7 +1,16 @@
 package io.swagger.repository;
 
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import io.swagger.model.DietaryProperty;
 import io.swagger.model.Sauce;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,14 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
-import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest

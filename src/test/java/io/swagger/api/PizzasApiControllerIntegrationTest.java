@@ -1,7 +1,31 @@
 package io.swagger.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.Crust;
+import io.swagger.model.DietaryProperty;
+import io.swagger.model.Pizza;
+import io.swagger.model.PizzaSize;
+import io.swagger.model.Sauce;
+import io.swagger.model.Topping;
+import io.swagger.repository.CrustRepository;
+import io.swagger.repository.PizzaRepository;
+import io.swagger.repository.PizzaSizeRepository;
+import io.swagger.repository.SauceRepository;
+import io.swagger.repository.ToppingRepository;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,33 +43,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
-import io.swagger.model.Crust;
-import io.swagger.model.DietaryProperty;
-import io.swagger.model.Pizza;
-import io.swagger.model.PizzaSize;
-import io.swagger.model.Sauce;
-import io.swagger.model.Topping;
-import io.swagger.repository.CrustRepository;
-import io.swagger.repository.PizzaRepository;
-import io.swagger.repository.PizzaSizeRepository;
-import io.swagger.repository.SauceRepository;
-import io.swagger.repository.ToppingRepository;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(PizzasApiController.class)

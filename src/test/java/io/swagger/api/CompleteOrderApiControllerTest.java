@@ -1,7 +1,18 @@
 package io.swagger.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.Order;
+import io.swagger.model.PaymentInformation;
+import io.swagger.model.Price;
+import io.swagger.repository.OrderRepository;
+import io.swagger.repository.ReceiptRepository;
+import io.swagger.service.OrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,19 +31,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import io.swagger.model.Order;
-import io.swagger.model.PaymentInformation;
-import io.swagger.model.Price;
-import io.swagger.repository.OrderRepository;
-import io.swagger.repository.ReceiptRepository;
-import io.swagger.service.OrderService;
-
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(CompleteOrderApiController.class)

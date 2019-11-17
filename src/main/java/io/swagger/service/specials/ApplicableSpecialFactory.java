@@ -1,7 +1,6 @@
 package io.swagger.service.specials;
 
 import io.swagger.api.SpecialNotFoundException;
-import io.swagger.model.Special;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

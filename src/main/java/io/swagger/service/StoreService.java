@@ -3,10 +3,9 @@ package io.swagger.service;
 import io.swagger.model.Store;
 import io.swagger.repository.StoreRepository;
 import io.swagger.repository.StoreRepository.BasicStoreInfo;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class StoreService {

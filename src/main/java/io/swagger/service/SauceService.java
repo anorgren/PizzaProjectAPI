@@ -2,10 +2,9 @@ package io.swagger.service;
 
 import io.swagger.model.Sauce;
 import io.swagger.repository.SauceRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class SauceService {

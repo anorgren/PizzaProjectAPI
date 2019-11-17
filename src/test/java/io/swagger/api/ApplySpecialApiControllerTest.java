@@ -1,7 +1,22 @@
 package io.swagger.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.Dessert;
+import io.swagger.model.Order;
+import io.swagger.model.Price;
+import io.swagger.model.Special;
+import io.swagger.repository.OrderRepository;
+import io.swagger.repository.SpecialsRepository;
+import io.swagger.service.OrderService;
+import io.swagger.service.specials.ApplicableSpecial;
+import io.swagger.service.specials.ApplicableSpecialFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,23 +32,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import io.swagger.model.Dessert;
-import io.swagger.model.Order;
-import io.swagger.model.Price;
-import io.swagger.model.Special;
-import io.swagger.repository.OrderRepository;
-import io.swagger.repository.SpecialsRepository;
-import io.swagger.service.OrderService;
-import io.swagger.service.specials.ApplicableSpecial;
-import io.swagger.service.specials.ApplicableSpecialFactory;
-
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(ApplySpecialApiController.class)

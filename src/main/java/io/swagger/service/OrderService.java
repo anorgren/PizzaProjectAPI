@@ -3,9 +3,8 @@ package io.swagger.service;
 import io.swagger.model.Item;
 import io.swagger.model.Order;
 import io.swagger.model.Price;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 
 @Service

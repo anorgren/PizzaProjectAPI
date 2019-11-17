@@ -2,10 +2,9 @@ package io.swagger.service;
 
 import io.swagger.model.Soda;
 import io.swagger.repository.SodaRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class SodaService {

@@ -1,5 +1,7 @@
 package io.swagger.api;
 
+import static org.junit.Assert.assertEquals;
+
 import io.swagger.model.PizzaSuggestion;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

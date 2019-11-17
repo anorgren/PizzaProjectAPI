@@ -1,10 +1,25 @@
 package io.swagger.api;
 
-import com.google.common.collect.ImmutableList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.google.common.collect.ImmutableList;
+import io.swagger.model.Dessert;
+import io.swagger.model.Item;
+import io.swagger.model.Order;
+import io.swagger.model.Price;
+import io.swagger.model.Soda;
+import io.swagger.model.Store;
+import io.swagger.repository.OrderRepository;
+import io.swagger.repository.StoreRepository;
+import io.swagger.service.OrderService;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,25 +39,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.List;
-
-import io.swagger.model.Dessert;
-import io.swagger.model.Item;
-import io.swagger.model.Order;
-import io.swagger.model.Price;
-import io.swagger.model.Soda;
-import io.swagger.model.Store;
-import io.swagger.repository.OrderRepository;
-import io.swagger.repository.StoreRepository;
-import io.swagger.service.OrderService;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(OrderApiController.class)
