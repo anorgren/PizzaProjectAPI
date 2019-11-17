@@ -21,91 +21,92 @@ import org.springframework.test.context.junit4.SpringRunner;
 @TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest
 public class SodaRepositoryTest {
-    @Autowired
-    private SodaRepository sodaRepository;
 
-    @Before
-    public void setUp() throws Exception {
-        sodaRepository.deleteAll();
-    }
+  @Autowired
+  private SodaRepository sodaRepository;
 
-    @After
-    public void tearDown() throws Exception {
-        sodaRepository.deleteAll();
-    }
+  @Before
+  public void setUp() throws Exception {
+    sodaRepository.deleteAll();
+  }
 
-    @Test
-    public void getSodasBySizeCorrectSize() {
-        Soda sixPack;
-        Soda twoLiter;
-        Soda twentyOunce;
-        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
-        List<Soda> sodas;
-        veganVegetarianGlutenFree = new HashMap<>();
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+  @After
+  public void tearDown() throws Exception {
+    sodaRepository.deleteAll();
+  }
 
-        sixPack = new Soda();
-        sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
-                .dietaryProperties(veganVegetarianGlutenFree);
-        twoLiter = new Soda();
-        twoLiter.size(Soda.SizeEnum.TWO_LITER).sodaName("sprite")
-                .dietaryProperties(veganVegetarianGlutenFree);
-        twentyOunce = new Soda();
-        twentyOunce.size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).sodaName("coke")
-                .dietaryProperties(veganVegetarianGlutenFree);
-        sodas = Arrays.asList(sixPack, twoLiter, twentyOunce);
-        sodaRepository.insert(sodas);
-        List<Soda> expected = Collections.singletonList(sixPack);
-        List<Soda> actual = sodaRepository.getSodasBySize("SIX_PACK");
-        assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
-                && actual.containsAll(expected));
-    }
+  @Test
+  public void getSodasBySizeCorrectSize() {
+    Soda sixPack;
+    Soda twoLiter;
+    Soda twentyOunce;
+    HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
+    List<Soda> sodas;
+    veganVegetarianGlutenFree = new HashMap<>();
+    veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+    veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-    @Test
-    public void getSodasBySizeDoesNotExist() {
-        List<Soda> expected = Collections.emptyList();
-        List<Soda> actual = sodaRepository.getSodasBySize("does not exist");
-        assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
-                && actual.containsAll(expected));
-    }
+    sixPack = new Soda();
+    sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
+        .dietaryProperties(veganVegetarianGlutenFree);
+    twoLiter = new Soda();
+    twoLiter.size(Soda.SizeEnum.TWO_LITER).sodaName("sprite")
+        .dietaryProperties(veganVegetarianGlutenFree);
+    twentyOunce = new Soda();
+    twentyOunce.size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).sodaName("coke")
+        .dietaryProperties(veganVegetarianGlutenFree);
+    sodas = Arrays.asList(sixPack, twoLiter, twentyOunce);
+    sodaRepository.insert(sodas);
+    List<Soda> expected = Collections.singletonList(sixPack);
+    List<Soda> actual = sodaRepository.getSodasBySize("SIX_PACK");
+    assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
+        && actual.containsAll(expected));
+  }
 
-    @Test
-    public void getSodasBySodaName() {
-        Soda sixPack;
-        Soda twoLiter;
-        Soda twentyOunce;
-        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
-        List<Soda> sodas;
-        veganVegetarianGlutenFree = new HashMap<>();
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+  @Test
+  public void getSodasBySizeDoesNotExist() {
+    List<Soda> expected = Collections.emptyList();
+    List<Soda> actual = sodaRepository.getSodasBySize("does not exist");
+    assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
+        && actual.containsAll(expected));
+  }
 
-        sixPack = new Soda();
-        sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
-                .dietaryProperties(veganVegetarianGlutenFree);
-        twoLiter = new Soda();
-        twoLiter.size(Soda.SizeEnum.TWO_LITER).sodaName("sprite")
-                .dietaryProperties(veganVegetarianGlutenFree);
-        twentyOunce = new Soda();
-        twentyOunce.size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).sodaName("coke")
-                .dietaryProperties(veganVegetarianGlutenFree);
-        sodas = Arrays.asList(sixPack, twoLiter, twentyOunce);
-        sodaRepository.insert(sodas);
+  @Test
+  public void getSodasBySodaName() {
+    Soda sixPack;
+    Soda twoLiter;
+    Soda twentyOunce;
+    HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree;
+    List<Soda> sodas;
+    veganVegetarianGlutenFree = new HashMap<>();
+    veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+    veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-        List<Soda> expected = Arrays.asList(sixPack, twentyOunce);
-        List<Soda> actual = sodaRepository.getSodasBySodaName("coke");
-        assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
-                && actual.containsAll(expected));
-    }
+    sixPack = new Soda();
+    sixPack.size(Soda.SizeEnum.SIX_PACK).sodaName("coke")
+        .dietaryProperties(veganVegetarianGlutenFree);
+    twoLiter = new Soda();
+    twoLiter.size(Soda.SizeEnum.TWO_LITER).sodaName("sprite")
+        .dietaryProperties(veganVegetarianGlutenFree);
+    twentyOunce = new Soda();
+    twentyOunce.size(Soda.SizeEnum.TWENTY_OUNCE_BOTTLE).sodaName("coke")
+        .dietaryProperties(veganVegetarianGlutenFree);
+    sodas = Arrays.asList(sixPack, twoLiter, twentyOunce);
+    sodaRepository.insert(sodas);
 
-    @Test
-    public void getSodasBySodaNameDoesNotExist() {
-        List<Soda> expected = Collections.emptyList();
-        List<Soda> actual = sodaRepository.getSodasBySodaName("does not exist");
-        assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
-                && actual.containsAll(expected));
-    }
+    List<Soda> expected = Arrays.asList(sixPack, twentyOunce);
+    List<Soda> actual = sodaRepository.getSodasBySodaName("coke");
+    assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
+        && actual.containsAll(expected));
+  }
+
+  @Test
+  public void getSodasBySodaNameDoesNotExist() {
+    List<Soda> expected = Collections.emptyList();
+    List<Soda> actual = sodaRepository.getSodasBySodaName("does not exist");
+    assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
+        && actual.containsAll(expected));
+  }
 }

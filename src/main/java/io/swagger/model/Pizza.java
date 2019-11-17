@@ -21,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 @JsonTypeName("Pizza")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T21:13:59.483Z[GMT]")
 public class Pizza extends Item {
+
   private final Double SMALL_BASE_PRICE = 8.00;
   private final Double MEDIUM_BASE_PRICE = 10.00;
   private final Double LARGE_BASE_PRICE = 12.00;
@@ -219,12 +220,12 @@ public class Pizza extends Item {
     }
     Pizza pizza = (Pizza) o;
     return Objects.equals(this.pizzaName, pizza.pizzaName) &&
-            Objects.equals(this.size, pizza.size) &&
-            Objects.equals(this.sauce, pizza.sauce) &&
-            Objects.equals(this.crust, pizza.crust) &&
-            Objects.equals(this.toppings, pizza.toppings) &&
-            Objects.equals(this.price, pizza.price) &&
-            super.equals(o);
+        Objects.equals(this.size, pizza.size) &&
+        Objects.equals(this.sauce, pizza.sauce) &&
+        Objects.equals(this.crust, pizza.crust) &&
+        Objects.equals(this.toppings, pizza.toppings) &&
+        Objects.equals(this.price, pizza.price) &&
+        super.equals(o);
   }
 
   @Override

@@ -18,7 +18,8 @@ import org.springframework.validation.annotation.Validated;
 @Document(collection = "Sauces")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T22:37:07.679Z[GMT]")
-public class Sauce   {
+public class Sauce {
+
   @JsonProperty("sauceName")
   private String sauceName = null;
 
@@ -40,12 +41,13 @@ public class Sauce   {
 
   /**
    * Get sauceName
+   *
    * @return sauceName
-  **/
+   **/
   @ApiModelProperty(example = "original", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getSauceName() {
+  public String getSauceName() {
     return sauceName;
   }
 
@@ -61,12 +63,13 @@ public class Sauce   {
 
   /**
    * Get dietaryProperties
+   *
    * @return dietaryProperties
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public Map<DietaryProperty, Boolean> getDietaryProperties() {
+  public Map<DietaryProperty, Boolean> getDietaryProperties() {
     return dietaryProperties;
   }
 
@@ -92,7 +95,7 @@ public class Sauce   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Sauce {\n");
-    
+
     sb.append("    sauceName: ").append(toIndentedString(sauceName)).append("\n");
     sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
     sb.append("}");
@@ -100,8 +103,8 @@ public class Sauce   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

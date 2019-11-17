@@ -18,12 +18,13 @@ import org.springframework.validation.annotation.Validated;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
 @JsonTypeInfo(use = NAME, include = PROPERTY, property = "itemType")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Pizza.class, name = "Pizza"),
-        @JsonSubTypes.Type(value = Dessert.class, name = "Dessert"),
-        @JsonSubTypes.Type(value = Soda.class, name = "Soda"),
-        @JsonSubTypes.Type(value = Breadstick.class, name = "Breadstick")
+    @JsonSubTypes.Type(value = Pizza.class, name = "Pizza"),
+    @JsonSubTypes.Type(value = Dessert.class, name = "Dessert"),
+    @JsonSubTypes.Type(value = Soda.class, name = "Soda"),
+    @JsonSubTypes.Type(value = Breadstick.class, name = "Breadstick")
 })
 public class Item {
+
   @JsonProperty("itemType")
   private String itemType = null;
 

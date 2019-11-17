@@ -36,7 +36,7 @@ import org.springframework.web.context.WebApplicationContext;
 @WebMvcTest(CompleteOrderApiController.class)
 @WebAppConfiguration
 @ContextConfiguration(classes =
-        {CompleteOrderApiController.class, TestContext.class, WebApplicationContext.class})
+    {CompleteOrderApiController.class, TestContext.class, WebApplicationContext.class})
 public class CompleteOrderApiControllerTest {
 
   @MockBean
@@ -88,11 +88,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     Mockito.verify(orderRepository).save(captor.capture());
 
     assertEquals(200, response.getStatus());
@@ -103,7 +103,8 @@ public class CompleteOrderApiControllerTest {
     assertEquals(paymentInformation, savedOrder.getPayementInformation());
     String receiptResponse = response.getContentAsString();
     assertTrue(receiptResponse.contains("\"orderId\":\"" + TEST_ORDER_ID + "\""));
-    assertTrue(receiptResponse.contains("\"orderAmount\":{\"priceInCents\":" + TENTATIVE_AMOUNT + "}"));
+    assertTrue(
+        receiptResponse.contains("\"orderAmount\":{\"priceInCents\":" + TENTATIVE_AMOUNT + "}"));
     assertTrue(receiptResponse.contains("\"receiptId\":\"Receipt_"));
   }
 
@@ -124,11 +125,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -150,11 +151,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -176,11 +177,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -202,11 +203,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -228,11 +229,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -254,11 +255,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -280,11 +281,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -306,11 +307,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -332,11 +333,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -358,11 +359,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(400, response.getStatus());
   }
@@ -379,11 +380,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(404, response.getStatus());
   }
@@ -400,11 +401,11 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
 
     assertEquals(500, response.getStatus());
   }
@@ -419,10 +420,10 @@ public class CompleteOrderApiControllerTest {
     String paymentInformationJson = objectMapper.writeValueAsString(paymentInformation);
 
     MockHttpServletResponse response = this.mockMvc.perform(put("/completeOrder")
-            .param("id", TEST_ORDER_ID)
-            .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
-            .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8))
-            .andReturn().getResponse();
+        .param("id", TEST_ORDER_ID)
+        .param("tentativeAmount", Integer.toString(TENTATIVE_AMOUNT))
+        .content(paymentInformationJson).contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andReturn().getResponse();
 
     assertEquals(501, response.getStatus());
   }

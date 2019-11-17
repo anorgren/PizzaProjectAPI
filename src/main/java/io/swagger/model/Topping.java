@@ -15,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
 @Document(collection = "Toppings")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-30T04:43:18.635Z[GMT]")
-public class Topping implements ToppingRepository.ToppingName{
+public class Topping implements ToppingRepository.ToppingName {
 
   public static void initialize(ToppingRepository repository) {
     if (repository.count() > 0) {

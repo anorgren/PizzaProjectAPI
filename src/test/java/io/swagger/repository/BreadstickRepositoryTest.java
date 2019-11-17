@@ -24,72 +24,71 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class BreadstickRepositoryTest {
 
-    @Autowired
-    private BreadstickRepository breadstickRepository;
+  @Autowired
+  private BreadstickRepository breadstickRepository;
 
-    @Before
-    public void setUp() throws Exception {
-        breadstickRepository.deleteAll();
-    }
+  @Before
+  public void setUp() throws Exception {
+    breadstickRepository.deleteAll();
+  }
 
-    @After
-    public void tearDown() throws Exception {
-        breadstickRepository.deleteAll();
-    }
+  @After
+  public void tearDown() throws Exception {
+    breadstickRepository.deleteAll();
+  }
 
-    @Test
-    public void returnOneBreadstickFromFindAll() {
-        Breadstick breadstick;
+  @Test
+  public void returnOneBreadstickFromFindAll() {
+    Breadstick breadstick;
 
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        breadstick = new Breadstick();
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    breadstick = new Breadstick();
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+    breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
 
-        breadstickRepository.insert(breadstick);
-        List<Breadstick> expected = Collections.singletonList(breadstick);
-        List<Breadstick> actual = breadstickRepository.findAll();
-        assertTrue(actual.size() == expected.size() && expected.get(0).equals(actual.get(0)));
-    }
+    breadstickRepository.insert(breadstick);
+    List<Breadstick> expected = Collections.singletonList(breadstick);
+    List<Breadstick> actual = breadstickRepository.findAll();
+    assertTrue(actual.size() == expected.size() && expected.get(0).equals(actual.get(0)));
+  }
 
-    @Test
-    public void returnManyBreadsticksFromFindAll() {
-        Breadstick breadstick;
-        Breadstick breadstickTwo;
-        Breadstick breadstickThree;
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        breadstick = new Breadstick();
-        breadstickTwo = new Breadstick();
-        breadstickThree = new Breadstick();
+  @Test
+  public void returnManyBreadsticksFromFindAll() {
+    Breadstick breadstick;
+    Breadstick breadstickTwo;
+    Breadstick breadstickThree;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    breadstick = new Breadstick();
+    breadstickTwo = new Breadstick();
+    breadstickThree = new Breadstick();
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
-        breadstickTwo.withCheese(true).size(Breadstick.SizeEnum.SMALL).dietaryProperties(vegetarian);
-        breadstickThree.withCheese(false).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+    breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+    breadstickTwo.withCheese(true).size(Breadstick.SizeEnum.SMALL).dietaryProperties(vegetarian);
+    breadstickThree.withCheese(false).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
 
-        List<Breadstick> expected = Arrays.asList(breadstick, breadstickTwo, breadstickThree);
-        breadstickRepository.insert(expected);
-        List<Breadstick> actual = breadstickRepository.findAll();
+    List<Breadstick> expected = Arrays.asList(breadstick, breadstickTwo, breadstickThree);
+    breadstickRepository.insert(expected);
+    List<Breadstick> actual = breadstickRepository.findAll();
 
+    assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
+        && actual.containsAll(expected));
 
-        assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
-                && actual.containsAll(expected));
+  }
 
-    }
-
-    @Test
-    public void returnFromEmptyRepository() {
-        List<Breadstick> expected = new ArrayList<>();
-        List<Breadstick> actual = breadstickRepository.findAll();
-        assertEquals(expected, actual);
-    }
+  @Test
+  public void returnFromEmptyRepository() {
+    List<Breadstick> expected = new ArrayList<>();
+    List<Breadstick> actual = breadstickRepository.findAll();
+    assertEquals(expected, actual);
+  }
 }

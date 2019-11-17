@@ -32,13 +32,16 @@ public class BuyOneGetOneFreeSpecial implements ApplicableSpecial {
     if (order == null) {
       return false;
     }
-    List<Item> orderItems = order.getItemList();;
+    List<Item> orderItems = order.getItemList();
+    ;
     return !(orderItems == null || orderItems.size() < REQUIRED_NUM_ITEMS);
   }
+
   /**
    * Applies the special by updating the specialID and discountAmount of the order. Overwrites
    * previous changes. The cost of the cheapest item will be set to the discount amount. Maximum
    * discount of 20.00. Must be at least 2 items in the order.
+   *
    * @param orderId the id of an existing order, no change if order doesn't exist.
    */
   @Override

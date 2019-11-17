@@ -24,103 +24,106 @@ import org.springframework.test.context.junit4.SpringRunner;
 @TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest
 public class StoreRepositoryTest {
-    @Autowired
-    private StoreRepository storeRepository;
 
-    @Before
-    public void setUp() throws Exception {
-        storeRepository.deleteAll();
-    }
+  @Autowired
+  private StoreRepository storeRepository;
 
-    @After
-    public void tearDown() throws Exception {
-        storeRepository.deleteAll();
-    }
+  @Before
+  public void setUp() throws Exception {
+    storeRepository.deleteAll();
+  }
 
-    @Test
-    public void getAllByBranchIdExistsTrue() {
+  @After
+  public void tearDown() throws Exception {
+    storeRepository.deleteAll();
+  }
 
-        Store storeOne;
-        Store storeTwo;
+  @Test
+  public void getAllByBranchIdExistsTrue() {
 
-        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree = new HashMap<>();
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+    Store storeOne;
+    Store storeTwo;
 
-        PizzaSize expectedOne = new PizzaSize("small", 12);
-        PizzaSize expectedTwo = new PizzaSize("large", 16);
-        PizzaSize expectedThree = new PizzaSize("medium", 14);
-        List<PizzaSize> pizzaSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
+    HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree = new HashMap<>();
+    veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+    veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-        List<String> toppings = Collections.singletonList("pepperoni");
+    PizzaSize expectedOne = new PizzaSize("small", 12);
+    PizzaSize expectedTwo = new PizzaSize("large", 16);
+    PizzaSize expectedThree = new PizzaSize("medium", 14);
+    List<PizzaSize> pizzaSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
 
-        storeOne = new Store();
-        storeOne.id("1").branchName("store one").address("123 street")
-                .dietaryRestrictions(veganVegetarianGlutenFree)
-                .availableSizes(pizzaSizes).availableToppings(toppings);
+    List<String> toppings = Collections.singletonList("pepperoni");
 
-        storeTwo = new Store();
-        storeTwo.id("2").branchName("store two").address("1234 street")
-                .dietaryRestrictions(veganVegetarianGlutenFree)
-                .availableSizes(pizzaSizes).availableToppings(toppings);
+    storeOne = new Store();
+    storeOne.id("1").branchName("store one").address("123 street")
+        .dietaryRestrictions(veganVegetarianGlutenFree)
+        .availableSizes(pizzaSizes).availableToppings(toppings);
 
-        List<Store> stores = Arrays.asList(storeOne, storeTwo);
-        storeRepository.insert(stores);
+    storeTwo = new Store();
+    storeTwo.id("2").branchName("store two").address("1234 street")
+        .dietaryRestrictions(veganVegetarianGlutenFree)
+        .availableSizes(pizzaSizes).availableToppings(toppings);
 
-        List<Store> expected = Arrays.asList(storeOne, storeTwo);
+    List<Store> stores = Arrays.asList(storeOne, storeTwo);
+    storeRepository.insert(stores);
 
-        List<StoreRepository.BasicStoreInfo> actual = storeRepository.getAllByBranchIdExists(Boolean.TRUE);
-        assertThat(actual.get(0)).isEqualToComparingFieldByField(expected.get(0));
-        assertThat(actual.get(1)).isEqualToComparingFieldByField(expected.get(1));
-        assertThat(actual.size() == expected.size());
-    }
+    List<Store> expected = Arrays.asList(storeOne, storeTwo);
 
-    @Test
-    public void getAllByBranchIdExistsFalse() {
-        List<StoreRepository.BasicStoreInfo> actual = storeRepository.getAllByBranchIdExists(Boolean.FALSE);
-        List<StoreRepository.BasicStoreInfo> expected = Collections.emptyList();
-        assertEquals(actual, expected);
+    List<StoreRepository.BasicStoreInfo> actual = storeRepository
+        .getAllByBranchIdExists(Boolean.TRUE);
+    assertThat(actual.get(0)).isEqualToComparingFieldByField(expected.get(0));
+    assertThat(actual.get(1)).isEqualToComparingFieldByField(expected.get(1));
+    assertThat(actual.size() == expected.size());
+  }
 
-    }
+  @Test
+  public void getAllByBranchIdExistsFalse() {
+    List<StoreRepository.BasicStoreInfo> actual = storeRepository
+        .getAllByBranchIdExists(Boolean.FALSE);
+    List<StoreRepository.BasicStoreInfo> expected = Collections.emptyList();
+    assertEquals(actual, expected);
 
-    @Test
-    public void findStoreByBranchId() {
-        Store storeOne;
-        Store storeTwo;
+  }
 
-        HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree = new HashMap<>();
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+  @Test
+  public void findStoreByBranchId() {
+    Store storeOne;
+    Store storeTwo;
 
-        PizzaSize expectedOne = new PizzaSize("small", 12);
-        PizzaSize expectedTwo = new PizzaSize("large", 16);
-        PizzaSize expectedThree = new PizzaSize("medium", 14);
-        List<PizzaSize> pizzaSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
+    HashMap<DietaryProperty, Boolean> veganVegetarianGlutenFree = new HashMap<>();
+    veganVegetarianGlutenFree.put(DietaryProperty.VEGAN, true);
+    veganVegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    veganVegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-        List<String> toppings = Collections.singletonList("pepperoni");
+    PizzaSize expectedOne = new PizzaSize("small", 12);
+    PizzaSize expectedTwo = new PizzaSize("large", 16);
+    PizzaSize expectedThree = new PizzaSize("medium", 14);
+    List<PizzaSize> pizzaSizes = Arrays.asList(expectedOne, expectedTwo, expectedThree);
 
-        storeOne = new Store();
-        storeOne.id("1").branchName("store one").address("123 street")
-                .dietaryRestrictions(veganVegetarianGlutenFree)
-                .availableSizes(pizzaSizes).availableToppings(toppings);
+    List<String> toppings = Collections.singletonList("pepperoni");
 
-        storeTwo = new Store();
-        storeTwo.id("2").branchName("store two").address("1234 street")
-                .dietaryRestrictions(veganVegetarianGlutenFree)
-                .availableSizes(pizzaSizes).availableToppings(toppings);
+    storeOne = new Store();
+    storeOne.id("1").branchName("store one").address("123 street")
+        .dietaryRestrictions(veganVegetarianGlutenFree)
+        .availableSizes(pizzaSizes).availableToppings(toppings);
 
-        List<Store> stores = Arrays.asList(storeOne, storeTwo);
-        storeRepository.insert(stores);
-        Store actual = storeRepository.findStoreByBranchId("1");
-        Store expected = storeOne;
-        assertEquals(actual, expected);
-    }
+    storeTwo = new Store();
+    storeTwo.id("2").branchName("store two").address("1234 street")
+        .dietaryRestrictions(veganVegetarianGlutenFree)
+        .availableSizes(pizzaSizes).availableToppings(toppings);
 
-    @Test
-    public void findStoreByBranchIdDoesNotExist() {
-        Store actual = storeRepository.findStoreByBranchId("Does not exist");
-        assertNull(actual);
-    }
+    List<Store> stores = Arrays.asList(storeOne, storeTwo);
+    storeRepository.insert(stores);
+    Store actual = storeRepository.findStoreByBranchId("1");
+    Store expected = storeOne;
+    assertEquals(actual, expected);
+  }
+
+  @Test
+  public void findStoreByBranchIdDoesNotExist() {
+    Store actual = storeRepository.findStoreByBranchId("Does not exist");
+    assertNull(actual);
+  }
 }

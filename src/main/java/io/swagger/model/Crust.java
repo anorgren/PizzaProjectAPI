@@ -18,7 +18,8 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T22:37:07.679Z[GMT]")
-public class Crust   {
+public class Crust {
+
   @JsonProperty("crustName")
   private String crustName = null;
 
@@ -47,11 +48,12 @@ public class Crust   {
 
   /**
    * Get crustName
+   *
    * @return crustName
-  **/
+   **/
   @ApiModelProperty(example = "thin crust", value = "")
-  
-    public String getCrustName() {
+
+  public String getCrustName() {
     return crustName;
   }
 
@@ -71,12 +73,13 @@ public class Crust   {
 
   /**
    * Get dietaryProperties
+   *
    * @return dietaryProperties
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public Map<DietaryProperty, Boolean> getDietaryProperties() {
+  public Map<DietaryProperty, Boolean> getDietaryProperties() {
     return dietaryProperties;
   }
 
@@ -91,13 +94,14 @@ public class Crust   {
 
   /**
    * Get price
+   *
    * @return price
-  **/
+   **/
   @ApiModelProperty(example = "1", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    @Valid
-    public Double getPrice() {
+  @Valid
+  public Double getPrice() {
     return price;
   }
 
@@ -117,12 +121,13 @@ public class Crust   {
 
   /**
    * Get availableSizes
+   *
    * @return availableSizes
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
-    @Valid
-    public List<PizzaSize> getAvailableSizes() {
+  @NotNull
+  @Valid
+  public List<PizzaSize> getAvailableSizes() {
     return availableSizes;
   }
 
@@ -155,7 +160,7 @@ public class Crust   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Crust {\n");
-    
+
     sb.append("    crustName: ").append(toIndentedString(crustName)).append("\n");
     sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
@@ -165,8 +170,8 @@ public class Crust   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

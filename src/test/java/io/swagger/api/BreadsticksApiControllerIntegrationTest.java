@@ -33,105 +33,105 @@ import org.springframework.web.context.WebApplicationContext;
 @WebMvcTest(BreadsticksApiController.class)
 @WebAppConfiguration
 @ContextConfiguration(classes =
-        {BreadsticksApiController.class, TestContext.class, WebApplicationContext.class})
+    {BreadsticksApiController.class, TestContext.class, WebApplicationContext.class})
 public class BreadsticksApiControllerIntegrationTest {
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @MockBean
-    private BreadstickRepository repository;
+  @MockBean
+  private BreadstickRepository repository;
 
-    private ObjectMapper objectMapper;
-
-
-    @Before
-    public void setUp() {
-        objectMapper = new ObjectMapper();
-
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-
-    }
-
-    @Test
-    public void contextLoads() {
-        assertThat(repository).isNotNull();
-    }
-
-    @Test
-    public void getBreadsticksEmptyList() throws Exception {
-        when(repository.findAll()).thenReturn(null);
-        this.mockMvc.perform(get("/breadsticks")
-                .header("Accept", "application/json"))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json("[]"));
-    }
+  private ObjectMapper objectMapper;
 
 
-    @Test
-    public void getBreadstickOneInRepo() throws Exception {
-        Breadstick breadstick;
-        HashMap<DietaryProperty, Boolean> vegetarian;
+  @Before
+  public void setUp() {
+    objectMapper = new ObjectMapper();
 
-        breadstick = new Breadstick();
+    MockitoAnnotations.initMocks(this);
+    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+  }
 
-        breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
-        List<Breadstick> singleBread = Arrays.asList(breadstick);
+  @Test
+  public void contextLoads() {
+    assertThat(repository).isNotNull();
+  }
 
-        String stringBreadstickList = objectMapper.writeValueAsString(singleBread);
-        when(repository.findAll()).thenReturn(singleBread);
-        this.mockMvc.perform(get("/breadsticks")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringBreadstickList));
-    }
+  @Test
+  public void getBreadsticksEmptyList() throws Exception {
+    when(repository.findAll()).thenReturn(null);
+    this.mockMvc.perform(get("/breadsticks")
+        .header("Accept", "application/json"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json("[]"));
+  }
 
-    @Test
-    public void getBreadsticksMultipleReturned() throws Exception {
-        Breadstick breadstick;
-        Breadstick breadstickTwo;
-        Breadstick breadstickThree;
-        List<Breadstick> breadsticks;
-        HashMap<DietaryProperty, Boolean> vegetarian;
 
-        breadstick = new Breadstick();
-        breadstickTwo = new Breadstick();
-        breadstickThree = new Breadstick();
-        breadsticks = Arrays.asList(breadstick, breadstickTwo, breadstickThree);
+  @Test
+  public void getBreadstickOneInRepo() throws Exception {
+    Breadstick breadstick;
+    HashMap<DietaryProperty, Boolean> vegetarian;
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    breadstick = new Breadstick();
 
-        breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
-        breadstickTwo.withCheese(true).size(Breadstick.SizeEnum.SMALL).dietaryProperties(vegetarian);
-        breadstickThree.withCheese(false).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        String stringBreadsticksList = objectMapper.writeValueAsString(breadsticks);
-        when(repository.findAll()).thenReturn(breadsticks);
-        this.mockMvc.perform(get("/breadsticks")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringBreadsticksList));
-    }
+    breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+    List<Breadstick> singleBread = Arrays.asList(breadstick);
 
-    @Test
-    public void getBreadsticksInvalidHeader() throws Exception {
-        this.mockMvc.perform(get("/breadsticks")
-                .header("null", "null"))
-                .andExpect(status().isNotImplemented());
-    }
+    String stringBreadstickList = objectMapper.writeValueAsString(singleBread);
+    when(repository.findAll()).thenReturn(singleBread);
+    this.mockMvc.perform(get("/breadsticks")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(stringBreadstickList));
+  }
+
+  @Test
+  public void getBreadsticksMultipleReturned() throws Exception {
+    Breadstick breadstick;
+    Breadstick breadstickTwo;
+    Breadstick breadstickThree;
+    List<Breadstick> breadsticks;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+
+    breadstick = new Breadstick();
+    breadstickTwo = new Breadstick();
+    breadstickThree = new Breadstick();
+    breadsticks = Arrays.asList(breadstick, breadstickTwo, breadstickThree);
+
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+
+    breadstick.withCheese(true).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+    breadstickTwo.withCheese(true).size(Breadstick.SizeEnum.SMALL).dietaryProperties(vegetarian);
+    breadstickThree.withCheese(false).size(Breadstick.SizeEnum.LARGE).dietaryProperties(vegetarian);
+
+    String stringBreadsticksList = objectMapper.writeValueAsString(breadsticks);
+    when(repository.findAll()).thenReturn(breadsticks);
+    this.mockMvc.perform(get("/breadsticks")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(stringBreadsticksList));
+  }
+
+  @Test
+  public void getBreadsticksInvalidHeader() throws Exception {
+    this.mockMvc.perform(get("/breadsticks")
+        .header("null", "null"))
+        .andExpect(status().isNotImplemented());
+  }
 }

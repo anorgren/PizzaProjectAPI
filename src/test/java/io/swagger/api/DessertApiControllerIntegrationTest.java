@@ -35,248 +35,248 @@ import org.springframework.web.context.WebApplicationContext;
 @WebMvcTest(DessertsApiController.class)
 @WebAppConfiguration
 @ContextConfiguration(classes =
-        {DessertsApiController.class, TestContext.class, WebApplicationContext.class})
+    {DessertsApiController.class, TestContext.class, WebApplicationContext.class})
 public class DessertApiControllerIntegrationTest {
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @MockBean
-    private DessertRepository repository;
+  @MockBean
+  private DessertRepository repository;
 
-    private ObjectMapper objectMapper;
+  private ObjectMapper objectMapper;
 
-    @Before
-    public void setUp() {
-        objectMapper = new ObjectMapper();
+  @Before
+  public void setUp() {
+    objectMapper = new ObjectMapper();
 
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    MockitoAnnotations.initMocks(this);
+    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-    }
+  }
 
-    @Test
-    public void contextLoads() {
-        assertThat(repository).isNotNull();
-    }
+  @Test
+  public void contextLoads() {
+    assertThat(repository).isNotNull();
+  }
 
-    @Test
-    public void getDessertsEmptyList() throws Exception {
-        when(repository.findAll()).thenReturn(null);
-        this.mockMvc.perform(get("/desserts")
-                .header("Accept", "application/json"))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json("[]"));
-    }
+  @Test
+  public void getDessertsEmptyList() throws Exception {
+    when(repository.findAll()).thenReturn(null);
+    this.mockMvc.perform(get("/desserts")
+        .header("Accept", "application/json"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json("[]"));
+  }
 
 
-    @Test
-    public void getDessertsOneInRepository() throws Exception {
-        Double price;
-        Dessert brownies;
+  @Test
+  public void getDessertsOneInRepository() throws Exception {
+    Double price;
+    Dessert brownies;
 
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        price = 4.99d;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    price = 4.99d;
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        brownies = new Dessert();
+    brownies = new Dessert();
 
-        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
-                .dietaryProperties(vegetarian).price(price);
+    brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+        .dietaryProperties(vegetarian).price(price);
 
-        List<Dessert> singleObject = Arrays.asList(brownies);
-        String stringSingleObject = objectMapper.writeValueAsString(singleObject);
-        when(repository.findAll()).thenReturn(singleObject);
-        this.mockMvc.perform(get("/desserts")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringSingleObject));
-    }
+    List<Dessert> singleObject = Arrays.asList(brownies);
+    String stringSingleObject = objectMapper.writeValueAsString(singleObject);
+    when(repository.findAll()).thenReturn(singleObject);
+    this.mockMvc.perform(get("/desserts")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(stringSingleObject));
+  }
 
-    @Test
-    public void getDessertsMultipleReturned() throws Exception {
-        Double price;
-        Dessert cookies;
-        Dessert brownies;
-        List<Dessert> desserts;
+  @Test
+  public void getDessertsMultipleReturned() throws Exception {
+    Double price;
+    Dessert cookies;
+    Dessert brownies;
+    List<Dessert> desserts;
 
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        price = 4.99d;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    price = 4.99d;
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        brownies = new Dessert();
-        cookies = new Dessert();
+    brownies = new Dessert();
+    cookies = new Dessert();
 
-        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
-                .dietaryProperties(vegetarian).price(price);
+    brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+        .dietaryProperties(vegetarian).price(price);
 
-        cookies.dessertName("cookies").description("chocolate cookies")
-                .dietaryProperties(vegetarian).price(price);
+    cookies.dessertName("cookies").description("chocolate cookies")
+        .dietaryProperties(vegetarian).price(price);
 
-        desserts = Arrays.asList(brownies, cookies);
-        String stringMultipleObjects = objectMapper.writeValueAsString(desserts);
-        when(repository.findAll()).thenReturn(desserts);
-        this.mockMvc.perform(get("/desserts")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringMultipleObjects));
-    }
+    desserts = Arrays.asList(brownies, cookies);
+    String stringMultipleObjects = objectMapper.writeValueAsString(desserts);
+    when(repository.findAll()).thenReturn(desserts);
+    this.mockMvc.perform(get("/desserts")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(stringMultipleObjects));
+  }
 
-    @Test
-    public void getDessertsByNameValidName() throws Exception {
-        Double price;
-        Dessert cookies;
-        Dessert brownies;
-        List<Dessert> desserts;
+  @Test
+  public void getDessertsByNameValidName() throws Exception {
+    Double price;
+    Dessert cookies;
+    Dessert brownies;
+    List<Dessert> desserts;
 
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        price = 4.99d;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    price = 4.99d;
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        brownies = new Dessert();
-        cookies = new Dessert();
+    brownies = new Dessert();
+    cookies = new Dessert();
 
-        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
-                .dietaryProperties(vegetarian).price(price);
+    brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+        .dietaryProperties(vegetarian).price(price);
 
-        cookies.dessertName("cookies").description("chocolate cookies")
-                .dietaryProperties(vegetarian).price(price);
+    cookies.dessertName("cookies").description("chocolate cookies")
+        .dietaryProperties(vegetarian).price(price);
 
-        desserts = Arrays.asList(brownies, cookies);
-        String objectToGet = objectMapper.writeValueAsString(brownies);
+    desserts = Arrays.asList(brownies, cookies);
+    String objectToGet = objectMapper.writeValueAsString(brownies);
 
-        when(repository.findDessertByDessertName(any()))
-                .thenAnswer(invocationOnMock -> {
-                    for (Dessert dessert : desserts) {
-                        if (dessert.getDessertName()
-                                .equals(invocationOnMock.getArguments()[0])) {
-                            return dessert;
-                        }
-                    }
-                    return null;
-                });
-        this.mockMvc.perform(get("/desserts/brownies")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(objectToGet));
-    }
+    when(repository.findDessertByDessertName(any()))
+        .thenAnswer(invocationOnMock -> {
+          for (Dessert dessert : desserts) {
+            if (dessert.getDessertName()
+                .equals(invocationOnMock.getArguments()[0])) {
+              return dessert;
+            }
+          }
+          return null;
+        });
+    this.mockMvc.perform(get("/desserts/brownies")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(objectToGet));
+  }
 
-    @Test
-    public void getDessertsByNameValidNameMixedCase() throws Exception {
-        Double price;
-        Dessert cookies;
-        Dessert brownies;
-        List<Dessert> desserts;
+  @Test
+  public void getDessertsByNameValidNameMixedCase() throws Exception {
+    Double price;
+    Dessert cookies;
+    Dessert brownies;
+    List<Dessert> desserts;
 
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        price = 4.99d;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    price = 4.99d;
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        brownies = new Dessert();
-        cookies = new Dessert();
+    brownies = new Dessert();
+    cookies = new Dessert();
 
-        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
-                .dietaryProperties(vegetarian).price(price);
+    brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+        .dietaryProperties(vegetarian).price(price);
 
-        cookies.dessertName("cookies").description("chocolate cookies")
-                .dietaryProperties(vegetarian).price(price);
+    cookies.dessertName("cookies").description("chocolate cookies")
+        .dietaryProperties(vegetarian).price(price);
 
-        desserts = Arrays.asList(brownies, cookies);
+    desserts = Arrays.asList(brownies, cookies);
 
-        String objectToGet = objectMapper.writeValueAsString(brownies);
-        when(repository.findDessertByDessertName(any()))
-                .thenAnswer(invocationOnMock -> {
-                    for (Dessert dessert : desserts) {
-                        if (dessert.getDessertName()
-                                .equals(invocationOnMock.getArguments()[0])) {
-                            return dessert;
-                        }
-                    }
-                    return null;
-                });
-        this.mockMvc.perform(get("/desserts/Brownies")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(objectToGet));
-    }
+    String objectToGet = objectMapper.writeValueAsString(brownies);
+    when(repository.findDessertByDessertName(any()))
+        .thenAnswer(invocationOnMock -> {
+          for (Dessert dessert : desserts) {
+            if (dessert.getDessertName()
+                .equals(invocationOnMock.getArguments()[0])) {
+              return dessert;
+            }
+          }
+          return null;
+        });
+    this.mockMvc.perform(get("/desserts/Brownies")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(objectToGet));
+  }
 
-    @Test
-    public void getDessertsByNameInvalidName() throws Exception {
-        Double price;
-        Dessert cookies;
-        Dessert brownies;
-        List<Dessert> desserts;
+  @Test
+  public void getDessertsByNameInvalidName() throws Exception {
+    Double price;
+    Dessert cookies;
+    Dessert brownies;
+    List<Dessert> desserts;
 
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        price = 4.99d;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    price = 4.99d;
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        brownies = new Dessert();
-        cookies = new Dessert();
+    brownies = new Dessert();
+    cookies = new Dessert();
 
-        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
-                .dietaryProperties(vegetarian).price(price);
+    brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+        .dietaryProperties(vegetarian).price(price);
 
-        cookies.dessertName("cookies").description("chocolate cookies")
-                .dietaryProperties(vegetarian).price(price);
+    cookies.dessertName("cookies").description("chocolate cookies")
+        .dietaryProperties(vegetarian).price(price);
 
-        desserts = Arrays.asList(brownies, cookies);
+    desserts = Arrays.asList(brownies, cookies);
 
-        when(repository.findDessertByDessertName(any()))
-                .thenAnswer(invocationOnMock -> {
-                    for (Dessert dessert : desserts) {
-                        if (dessert.getDessertName()
-                                .equals(invocationOnMock.getArguments()[0])) {
-                            return dessert;
-                        }
-                    }
-                    return null;
-                });
-        this.mockMvc.perform(get("/desserts/invalidName")
-                .header("Accept", "application/json"))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").doesNotExist());
-    }
+    when(repository.findDessertByDessertName(any()))
+        .thenAnswer(invocationOnMock -> {
+          for (Dessert dessert : desserts) {
+            if (dessert.getDessertName()
+                .equals(invocationOnMock.getArguments()[0])) {
+              return dessert;
+            }
+          }
+          return null;
+        });
+    this.mockMvc.perform(get("/desserts/invalidName")
+        .header("Accept", "application/json"))
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$").doesNotExist());
+  }
 
-    @Test
-    public void getDessertByNameTestInvalidHeader() throws Exception {
-        this.mockMvc.perform(get("/desserts/brownies")
-                .header("null", "null"))
-                .andExpect(status().isNotImplemented());
-    }
+  @Test
+  public void getDessertByNameTestInvalidHeader() throws Exception {
+    this.mockMvc.perform(get("/desserts/brownies")
+        .header("null", "null"))
+        .andExpect(status().isNotImplemented());
+  }
 
-    @Test
-    public void getDessertTestInvalidHeader() throws Exception {
-        this.mockMvc.perform(get("/desserts")
-                .header("null", "null"))
-                .andExpect(status().isNotImplemented());
-    }
+  @Test
+  public void getDessertTestInvalidHeader() throws Exception {
+    this.mockMvc.perform(get("/desserts")
+        .header("null", "null"))
+        .andExpect(status().isNotImplemented());
+  }
 }

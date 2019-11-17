@@ -36,19 +36,19 @@ import org.springframework.web.context.WebApplicationContext;
     {SpecialsApiController.class, TestContext.class, WebApplicationContext.class})
 public class SpecialsApiControllerIntegrationTest {
 
-   @Autowired
-    private WebApplicationContext webApplicationContext;
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @Autowired
-    private SpecialsApi api;
+  @Autowired
+  private SpecialsApi api;
 
-    @MockBean
-    private SpecialsRepository repository;
+  @MockBean
+  private SpecialsRepository repository;
 
-    private ObjectMapper objectMapper;
+  private ObjectMapper objectMapper;
 
   @Before
   public void setUp() {
@@ -60,6 +60,7 @@ public class SpecialsApiControllerIntegrationTest {
     repository.deleteAll();
 
   }
+
   @Test
   public void contextLoads() {
     assertThat(repository).isNotNull();
@@ -86,6 +87,7 @@ public class SpecialsApiControllerIntegrationTest {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
         .andExpect(content().json(specialJson));
   }
+
   @Test
   public void getMultipleSpecials() throws Exception {
     Special special = new Special().specialId("testId").description("test desc");
@@ -99,6 +101,7 @@ public class SpecialsApiControllerIntegrationTest {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
         .andExpect(content().json(specialJson));
   }
+
   @Test
   public void getNoHeader() throws Exception {
     this.mockMvc.perform(get("/specials")

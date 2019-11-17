@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-24T18:44:25.092Z[GMT]")
 @Controller
 public class PricesApiController implements PricesApi {
+
   private final String HEADER_VALUE = "Accept";
   private final String HEADER_CONTENTS = "application/json";
   private final String ERROR_MESSAGE_PRICE = "Error getting price ";
@@ -66,7 +67,8 @@ public class PricesApiController implements PricesApi {
     this.request = request;
   }
 
-  public ResponseEntity<Price> getOrderPrice(@ApiParam(value = "orderId", required = true) @PathVariable("orderId") String orderId) {
+  public ResponseEntity<Price> getOrderPrice(
+      @ApiParam(value = "orderId", required = true) @PathVariable("orderId") String orderId) {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
@@ -88,26 +90,27 @@ public class PricesApiController implements PricesApi {
   /**
    * Calculates the price of a pizza with a given size, toppings, sauce and crust.
    *
-   * @param size     The size of the pizza (small, medium, large)
+   * @param size The size of the pizza (small, medium, large)
    * @param toppings A list of the names of all the toppings
-   * @param crust    Crust selected for pizza
-   * @param sauce    Sauce selected for pizza
+   * @param crust Crust selected for pizza
+   * @param sauce Sauce selected for pizza
    * @return The price of a pizza
    */
   public ResponseEntity<Price> getPizzaPrice(
-          @NotNull @ApiParam(value = "Size of pizza", required = true)
-          @Valid @RequestParam(value = "size", required = true) String size,
-          @ApiParam(value = "Topping to include on pizza")
-          @Valid @RequestParam(value = "toppings", required = false) List<String> toppings,
-          @NotNull @ApiParam(value = "crustName", required = true) @Valid @RequestParam(value = "crustName", required = true) String crustName,
-          @NotNull @ApiParam(value = "sauceName", required = true) @Valid @RequestParam(value = "sauceName", required = true) String sauceName) {
+      @NotNull @ApiParam(value = "Size of pizza", required = true)
+      @Valid @RequestParam(value = "size", required = true) String size,
+      @ApiParam(value = "Topping to include on pizza")
+      @Valid @RequestParam(value = "toppings", required = false) List<String> toppings,
+      @NotNull @ApiParam(value = "crustName", required = true) @Valid @RequestParam(value = "crustName", required = true) String crustName,
+      @NotNull @ApiParam(value = "sauceName", required = true) @Valid @RequestParam(value = "sauceName", required = true) String sauceName) {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         if (toppings.size() > MAX_ALLOWED_TOPPINGS) {
           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        PizzaSize pizzaSize = pizzaSizeRepository.findPizzaSizeBySizeDescription(size.toLowerCase());
+        PizzaSize pizzaSize = pizzaSizeRepository
+            .findPizzaSizeBySizeDescription(size.toLowerCase());
         if (pizzaSize == null) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -132,10 +135,11 @@ public class PricesApiController implements PricesApi {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Pizza pizza = new Pizza().size(pizzaSize)
-                .crust(pizzaCrust)
-                .sauce(pizzaSauce)
-                .toppings(toppingList);
-        return new ResponseEntity<Price>(new Price().priceInCents((int) (pizza.getPrice() * 100)), HttpStatus.OK);
+            .crust(pizzaCrust)
+            .sauce(pizzaSauce)
+            .toppings(toppingList);
+        return new ResponseEntity<Price>(new Price().priceInCents((int) (pizza.getPrice() * 100)),
+            HttpStatus.OK);
       } catch (Exception e) {
         log.error(ERROR_MESSAGE_ORDERS, e.getMessage());
         return new ResponseEntity<Price>(HttpStatus.INTERNAL_SERVER_ERROR);

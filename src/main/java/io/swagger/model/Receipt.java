@@ -17,7 +17,8 @@ import org.threeten.bp.OffsetDateTime;
 @Document(collection = "Receipts")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-16T17:51:54.198Z[GMT]")
-public class Receipt   {
+public class Receipt {
+
   @JsonProperty("receiptId")
   private String receiptId = null;
 
@@ -44,12 +45,13 @@ public class Receipt   {
 
   /**
    * Get receiptId
+   *
    * @return receiptId
-  **/
+   **/
   @ApiModelProperty(example = "1", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getReceiptId() {
+  public String getReceiptId() {
     return receiptId;
   }
 
@@ -64,12 +66,13 @@ public class Receipt   {
 
   /**
    * Get orderId
+   *
    * @return orderId
-  **/
+   **/
   @ApiModelProperty(example = "1", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getOrderId() {
+  public String getOrderId() {
     return orderId;
   }
 
@@ -84,12 +87,13 @@ public class Receipt   {
 
   /**
    * Get storeId
+   *
    * @return storeId
-  **/
+   **/
   @ApiModelProperty(example = "1", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getStoreId() {
+  public String getStoreId() {
     return storeId;
   }
 
@@ -104,13 +108,14 @@ public class Receipt   {
 
   /**
    * Get orderDateTime
+   *
    * @return orderDateTime
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    @Valid
-    public OffsetDateTime getOrderDateTime() {
+  @Valid
+  public OffsetDateTime getOrderDateTime() {
     return orderDateTime;
   }
 
@@ -125,13 +130,14 @@ public class Receipt   {
 
   /**
    * Get orderAmount
+   *
    * @return orderAmount
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    @Valid
-    public Price getOrderAmount() {
+  @Valid
+  public Price getOrderAmount() {
     return orderAmount;
   }
 
@@ -154,11 +160,12 @@ public class Receipt   {
 
   /**
    * Get itemList
+   *
    * @return itemList
-  **/
+   **/
   @ApiModelProperty(value = "")
-      @Valid
-    public List<Item> getItemList() {
+  @Valid
+  public List<Item> getItemList() {
     return itemList;
   }
 
@@ -193,7 +200,7 @@ public class Receipt   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Receipt {\n");
-    
+
     sb.append("    receiptId: ").append(toIndentedString(receiptId)).append("\n");
     sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
     sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
@@ -205,8 +212,8 @@ public class Receipt   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

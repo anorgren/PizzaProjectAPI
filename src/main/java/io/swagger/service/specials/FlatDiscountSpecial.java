@@ -18,6 +18,7 @@ public class FlatDiscountSpecial implements ApplicableSpecial {
 
   /**
    * Returns true if this special can be applied to the given orderId.
+   *
    * @param orderId orderId of an existing order.
    * @return true if applicable, false if not applicable or orderId doesn't exist.
    */
@@ -26,7 +27,7 @@ public class FlatDiscountSpecial implements ApplicableSpecial {
     Order order = repository.findByOrderId(orderId);
     if (order == null) {
       return false;
-    } else if (order.getTentativeAmount() != null){
+    } else if (order.getTentativeAmount() != null) {
       return order.getTentativeAmount().getPriceInCents() > DISCOUNT_MINIMUM;
     } else {
       return false;
@@ -36,6 +37,7 @@ public class FlatDiscountSpecial implements ApplicableSpecial {
   /**
    * Applies the special by updating the specialID and discountAmount of the order. Overwrites
    * previous changes
+   *
    * @param orderId the id of an existing order, no change if order doesn't exist.
    */
   @Override

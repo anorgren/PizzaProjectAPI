@@ -24,114 +24,114 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class DessertRepositoryTest {
 
-    @Autowired
-    private DessertRepository dessertRepository;
+  @Autowired
+  private DessertRepository dessertRepository;
 
-    @Before
-    public void setUp() throws Exception {
-        dessertRepository.deleteAll();
-    }
+  @Before
+  public void setUp() throws Exception {
+    dessertRepository.deleteAll();
+  }
 
-    @After
-    public void tearDown() throws Exception {
-        dessertRepository.deleteAll();
-    }
+  @After
+  public void tearDown() throws Exception {
+    dessertRepository.deleteAll();
+  }
 
-    @Test
-    public void getDessertByNonExistentName() {
-        Double price;
-        Dessert cookies;
-        Dessert brownies;
-        List<Dessert> desserts;
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        price = 4.99d;
+  @Test
+  public void getDessertByNonExistentName() {
+    Double price;
+    Dessert cookies;
+    Dessert brownies;
+    List<Dessert> desserts;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    price = 4.99d;
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        brownies = new Dessert();
-        cookies = new Dessert();
+    brownies = new Dessert();
+    cookies = new Dessert();
 
-        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
-                .dietaryProperties(vegetarian).price(price);
+    brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+        .dietaryProperties(vegetarian).price(price);
 
-        cookies.dessertName("cookies").description("chocolate cookies")
-                .dietaryProperties(vegetarian).price(price);
+    cookies.dessertName("cookies").description("chocolate cookies")
+        .dietaryProperties(vegetarian).price(price);
 
-        desserts = new ArrayList<>();
-        desserts.add(cookies);
-        desserts.add(brownies);
-        dessertRepository.insert(desserts);
+    desserts = new ArrayList<>();
+    desserts.add(cookies);
+    desserts.add(brownies);
+    dessertRepository.insert(desserts);
 
-        Dessert actual = dessertRepository.findDessertByDessertName("not a real name");
-        assertNull(actual);
-    }
+    Dessert actual = dessertRepository.findDessertByDessertName("not a real name");
+    assertNull(actual);
+  }
 
-    @Test
-    public void getDessertByCorrectName() {
-        Double price;
-        Dessert cookies;
-        Dessert brownies;
-        List<Dessert> desserts;
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        price = 4.99d;
+  @Test
+  public void getDessertByCorrectName() {
+    Double price;
+    Dessert cookies;
+    Dessert brownies;
+    List<Dessert> desserts;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    price = 4.99d;
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        brownies = new Dessert();
-        cookies = new Dessert();
+    brownies = new Dessert();
+    cookies = new Dessert();
 
-        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
-                .dietaryProperties(vegetarian).price(price);
+    brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+        .dietaryProperties(vegetarian).price(price);
 
-        cookies.dessertName("cookies").description("chocolate cookies")
-                .dietaryProperties(vegetarian).price(price);
+    cookies.dessertName("cookies").description("chocolate cookies")
+        .dietaryProperties(vegetarian).price(price);
 
-        desserts = new ArrayList<>();
-        desserts.add(cookies);
-        desserts.add(brownies);
-        dessertRepository.insert(desserts);
+    desserts = new ArrayList<>();
+    desserts.add(cookies);
+    desserts.add(brownies);
+    dessertRepository.insert(desserts);
 
-        Dessert actual = dessertRepository.findDessertByDessertName("brownies");
-        assertThat(actual).isEqualToComparingFieldByField(brownies);
-    }
+    Dessert actual = dessertRepository.findDessertByDessertName("brownies");
+    assertThat(actual).isEqualToComparingFieldByField(brownies);
+  }
 
-    @Test
-    public void getAllDessertsContainsAllDesserts() {
-        Double price;
-        Dessert cookies;
-        Dessert brownies;
-        List<Dessert> desserts;
-        HashMap<DietaryProperty, Boolean> vegetarian;
-        price = 4.99d;
+  @Test
+  public void getAllDessertsContainsAllDesserts() {
+    Double price;
+    Dessert cookies;
+    Dessert brownies;
+    List<Dessert> desserts;
+    HashMap<DietaryProperty, Boolean> vegetarian;
+    price = 4.99d;
 
-        vegetarian = new HashMap<>();
-        vegetarian.put(DietaryProperty.VEGAN, false);
-        vegetarian.put(DietaryProperty.VEGETARIAN, true);
-        vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
+    vegetarian = new HashMap<>();
+    vegetarian.put(DietaryProperty.VEGAN, false);
+    vegetarian.put(DietaryProperty.VEGETARIAN, true);
+    vegetarian.put(DietaryProperty.GLUTEN_FREE, false);
 
-        brownies = new Dessert();
-        cookies = new Dessert();
+    brownies = new Dessert();
+    cookies = new Dessert();
 
-        brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
-                .dietaryProperties(vegetarian).price(price);
+    brownies.dessertName("brownies").description("BROWNIE_DESCRIPTION")
+        .dietaryProperties(vegetarian).price(price);
 
-        cookies.dessertName("cookies").description("chocolate cookies")
-                .dietaryProperties(vegetarian).price(price);
+    cookies.dessertName("cookies").description("chocolate cookies")
+        .dietaryProperties(vegetarian).price(price);
 
-        desserts = new ArrayList<>();
-        desserts.add(cookies);
-        desserts.add(brownies);
-        dessertRepository.insert(desserts);
+    desserts = new ArrayList<>();
+    desserts.add(cookies);
+    desserts.add(brownies);
+    dessertRepository.insert(desserts);
 
-        List<Dessert> actual = dessertRepository.findAll();
-        List<Dessert> expected = Arrays.asList(cookies, brownies);
-        assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
-                && actual.containsAll(expected));
-    }
+    List<Dessert> actual = dessertRepository.findAll();
+    List<Dessert> expected = Arrays.asList(cookies, brownies);
+    assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
+        && actual.containsAll(expected));
+  }
 }

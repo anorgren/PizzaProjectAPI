@@ -22,94 +22,95 @@ import org.springframework.test.context.junit4.SpringRunner;
 @TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest
 public class ToppingRepositoryTest {
-    @Autowired
-    ToppingRepository toppingRepository;
 
-    @Before
-    public void setUp() throws Exception {
-        toppingRepository.deleteAll();
-    }
+  @Autowired
+  ToppingRepository toppingRepository;
 
-    @After
-    public void tearDown() throws Exception {
-        toppingRepository.deleteAll();
-    }
+  @Before
+  public void setUp() throws Exception {
+    toppingRepository.deleteAll();
+  }
 
-    @Test
-    public void getToppingByValidName() {
-        Topping pepperoni;
-        Topping ham;
-        Topping cheese;
-        HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
-        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-        Double price;
-        List<Topping> toppings;
+  @After
+  public void tearDown() throws Exception {
+    toppingRepository.deleteAll();
+  }
 
-        price = 5d;
-        pepperoni = new Topping();
-        ham = new Topping();
-        cheese = new Topping();
-        vegetarianGlutenFree = new HashMap<>();
-        notVegetarianIsGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
-        notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
-        notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
-        notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+  @Test
+  public void getToppingByValidName() {
+    Topping pepperoni;
+    Topping ham;
+    Topping cheese;
+    HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
+    HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+    Double price;
+    List<Topping> toppings;
 
-        pepperoni.toppingName("pepperoni").price(price)
-                .dietaryProperties(notVegetarianIsGlutenFree);
-        ham.toppingName("ham").price(price)
-                .dietaryProperties(notVegetarianIsGlutenFree);
-        cheese.toppingName("cheese").price(price)
-                .dietaryProperties(vegetarianGlutenFree);
-        toppings = Arrays.asList(pepperoni, ham, cheese);
-        toppingRepository.insert(toppings);
-        Topping actual = toppingRepository.findToppingByToppingName("ham");
-        Topping expected = ham;
-        assertThat(actual).isEqualToComparingFieldByField(expected);
-    }
+    price = 5d;
+    pepperoni = new Topping();
+    ham = new Topping();
+    cheese = new Topping();
+    vegetarianGlutenFree = new HashMap<>();
+    notVegetarianIsGlutenFree = new HashMap<>();
+    vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+    vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+    notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
+    notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
+    notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-    @Test
-    public void nonExistentToppingNameReturnsNull() {
-        assertNull(toppingRepository.findToppingByToppingName("this topping name does not exist"));
-    }
+    pepperoni.toppingName("pepperoni").price(price)
+        .dietaryProperties(notVegetarianIsGlutenFree);
+    ham.toppingName("ham").price(price)
+        .dietaryProperties(notVegetarianIsGlutenFree);
+    cheese.toppingName("cheese").price(price)
+        .dietaryProperties(vegetarianGlutenFree);
+    toppings = Arrays.asList(pepperoni, ham, cheese);
+    toppingRepository.insert(toppings);
+    Topping actual = toppingRepository.findToppingByToppingName("ham");
+    Topping expected = ham;
+    assertThat(actual).isEqualToComparingFieldByField(expected);
+  }
 
-    @Test
-    public void getAllToppings() {
-        Topping pepperoni;
-        Topping ham;
-        Topping cheese;
-        HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
-        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-        Double price;
-        List<Topping> toppings;
+  @Test
+  public void nonExistentToppingNameReturnsNull() {
+    assertNull(toppingRepository.findToppingByToppingName("this topping name does not exist"));
+  }
 
-        price = 5d;
-        pepperoni = new Topping();
-        ham = new Topping();
-        cheese = new Topping();
-        vegetarianGlutenFree = new HashMap<>();
-        notVegetarianIsGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
-        notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
-        notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
-        notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+  @Test
+  public void getAllToppings() {
+    Topping pepperoni;
+    Topping ham;
+    Topping cheese;
+    HashMap<DietaryProperty, Boolean> notVegetarianIsGlutenFree;
+    HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+    Double price;
+    List<Topping> toppings;
 
-        pepperoni.toppingName("pepperoni").price(price)
-                .dietaryProperties(notVegetarianIsGlutenFree);
-        ham.toppingName("ham").price(price)
-                .dietaryProperties(notVegetarianIsGlutenFree);
-        cheese.toppingName("cheese").price(price)
-                .dietaryProperties(vegetarianGlutenFree);
-        toppings = Arrays.asList(pepperoni, ham, cheese);
-        toppingRepository.insert(toppings);
-        List<Topping> actual = toppingRepository.findAll();
-        List<Topping> expected = toppings;
-        assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
-                && actual.containsAll(expected));
-    }
+    price = 5d;
+    pepperoni = new Topping();
+    ham = new Topping();
+    cheese = new Topping();
+    vegetarianGlutenFree = new HashMap<>();
+    notVegetarianIsGlutenFree = new HashMap<>();
+    vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+    vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+    notVegetarianIsGlutenFree.put(DietaryProperty.VEGAN, false);
+    notVegetarianIsGlutenFree.put(DietaryProperty.VEGETARIAN, false);
+    notVegetarianIsGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+
+    pepperoni.toppingName("pepperoni").price(price)
+        .dietaryProperties(notVegetarianIsGlutenFree);
+    ham.toppingName("ham").price(price)
+        .dietaryProperties(notVegetarianIsGlutenFree);
+    cheese.toppingName("cheese").price(price)
+        .dietaryProperties(vegetarianGlutenFree);
+    toppings = Arrays.asList(pepperoni, ham, cheese);
+    toppingRepository.insert(toppings);
+    List<Topping> actual = toppingRepository.findAll();
+    List<Topping> expected = toppings;
+    assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
+        && actual.containsAll(expected));
+  }
 }

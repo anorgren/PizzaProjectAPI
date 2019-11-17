@@ -12,7 +12,8 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
-public class PaymentInformation   {
+public class PaymentInformation {
+
   @JsonProperty("cardNumber")
   private String cardNumber = null;
 
@@ -32,12 +33,14 @@ public class PaymentInformation   {
 
   /**
    * Get cardNumber
+   *
    * @return cardNumber
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-  @Size(min=15,max=16)   public String getCardNumber() {
+  @Size(min = 15, max = 16)
+  public String getCardNumber() {
     return cardNumber;
   }
 
@@ -52,12 +55,13 @@ public class PaymentInformation   {
 
   /**
    * Get cardExpiry
+   *
    * @return cardExpiry
-  **/
+   **/
   @ApiModelProperty(example = "01/2020", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getCardExpiry() {
+  public String getCardExpiry() {
     return cardExpiry;
   }
 
@@ -72,12 +76,13 @@ public class PaymentInformation   {
 
   /**
    * Get nameOnCard
+   *
    * @return nameOnCard
-  **/
+   **/
   @ApiModelProperty(example = "Jon Doe", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getNameOnCard() {
+  public String getNameOnCard() {
     return nameOnCard;
   }
 
@@ -92,12 +97,14 @@ public class PaymentInformation   {
 
   /**
    * Get cardSecurityCode
+   *
    * @return cardSecurityCode
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-  @Size(min=3,max=4)   public String getCardSecurityCode() {
+  @Size(min = 3, max = 4)
+  public String getCardSecurityCode() {
     return cardSecurityCode;
   }
 
@@ -130,7 +137,7 @@ public class PaymentInformation   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class PaymentInformation {\n");
-    
+
     sb.append("    cardNumber: ").append(toIndentedString(cardNumber)).append("\n");
     sb.append("    cardExpiry: ").append(toIndentedString(cardExpiry)).append("\n");
     sb.append("    nameOnCard: ").append(toIndentedString(nameOnCard)).append("\n");
@@ -140,8 +147,8 @@ public class PaymentInformation   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

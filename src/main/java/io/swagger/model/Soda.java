@@ -179,9 +179,9 @@ public class Soda extends Item {
     }
     Soda soda = (Soda) o;
     return Objects.equals(this.sodaName, soda.sodaName) &&
-            Objects.equals(this.size, soda.size) &&
-            Objects.equals(this.dietaryProperties, soda.dietaryProperties) &&
-            Objects.equals(this.price, soda.price);
+        Objects.equals(this.size, soda.size) &&
+        Objects.equals(this.dietaryProperties, soda.dietaryProperties) &&
+        Objects.equals(this.price, soda.price);
   }
 
   @Override

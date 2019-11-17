@@ -147,7 +147,7 @@ public class Order {
   @ApiModelProperty(value = "")
 
   @Valid
-    public List<Item> getItemList() {
+  public List<Item> getItemList() {
     return itemList;
   }
 
@@ -289,19 +289,21 @@ public class Order {
     }
     Order order = (Order) o;
     return Objects.equals(this.orderId, order.orderId) &&
-            Objects.equals(this.storeId, order.storeId) &&
-            Objects.equals(this.itemList, order.itemList) &&
-            Objects.equals(this.tentativeAmount, order.tentativeAmount) &&
-            Objects.equals(this.calculatedAmount, order.calculatedAmount) &&
-            Objects.equals(this.discountAmount, order.discountAmount) &&
-            Objects.equals(this.payementInformation, order.payementInformation) &&
-            Objects.equals(this.status, order.status) &&
-            Objects.equals(this.specialId, order.specialId);
+        Objects.equals(this.storeId, order.storeId) &&
+        Objects.equals(this.itemList, order.itemList) &&
+        Objects.equals(this.tentativeAmount, order.tentativeAmount) &&
+        Objects.equals(this.calculatedAmount, order.calculatedAmount) &&
+        Objects.equals(this.discountAmount, order.discountAmount) &&
+        Objects.equals(this.payementInformation, order.payementInformation) &&
+        Objects.equals(this.status, order.status) &&
+        Objects.equals(this.specialId, order.specialId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(orderId, storeId, itemList, tentativeAmount, calculatedAmount, discountAmount, payementInformation, status, specialId);
+    return Objects
+        .hash(orderId, storeId, itemList, tentativeAmount, calculatedAmount, discountAmount,
+            payementInformation, status, specialId);
   }
 
   @Override
@@ -315,7 +317,8 @@ public class Order {
     sb.append("    tentativeAmount: ").append(toIndentedString(tentativeAmount)).append("\n");
     sb.append("    calculatedAmount: ").append(toIndentedString(calculatedAmount)).append("\n");
     sb.append("    discountAmount: ").append(toIndentedString(discountAmount)).append("\n");
-    sb.append("    payementInformation: ").append(toIndentedString(payementInformation)).append("\n");
+    sb.append("    payementInformation: ").append(toIndentedString(payementInformation))
+        .append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    specialId: ").append(toIndentedString(specialId)).append("\n");
     sb.append("}");

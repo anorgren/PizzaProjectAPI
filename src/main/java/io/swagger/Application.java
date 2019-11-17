@@ -30,7 +30,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackages = {"io.swagger", "io.swagger.api", "io.swagger.configuration", "io.swagger.repository"})
+@ComponentScan(basePackages = {"io.swagger", "io.swagger.api", "io.swagger.configuration",
+    "io.swagger.repository"})
 public class Application implements CommandLineRunner {
 
   @Autowired
@@ -41,7 +42,7 @@ public class Application implements CommandLineRunner {
 
   @Autowired
   private SpecialsRepository specialsRepository;
-  
+
   @Autowired
   private StoreRepository storeRepository;
 

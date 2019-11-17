@@ -20,6 +20,7 @@ public class StoreService {
   public List<Store> getAllStores() {
     return storeRepository.findAll();
   }
+
   public List<BasicStoreInfo> getAllBasicInfoStores() {
     return storeRepository.getAllByBranchIdExists(true);
   }

@@ -17,32 +17,32 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class BreadsticksApiController implements BreadsticksApi {
 
-    private final String HEADER_VALUE = "Accept";
-    private final String HEADER_CONTENTS = "application/json";
+  private final String HEADER_VALUE = "Accept";
+  private final String HEADER_CONTENTS = "application/json";
 
-    private static final Logger log = LoggerFactory.getLogger(BreadsticksApiController.class);
+  private static final Logger log = LoggerFactory.getLogger(BreadsticksApiController.class);
 
-    private final HttpServletRequest request;
+  private final HttpServletRequest request;
 
-    @Autowired
-    private BreadstickRepository repository;
+  @Autowired
+  private BreadstickRepository repository;
 
-    @Autowired
-    public BreadsticksApiController(HttpServletRequest request) {
-        this.request = request;
+  @Autowired
+  public BreadsticksApiController(HttpServletRequest request) {
+    this.request = request;
+  }
+
+  public ResponseEntity<List<Breadstick>> getBreadsticks() {
+    String accept = request.getHeader(HEADER_VALUE);
+    if (accept != null && accept.contains(HEADER_CONTENTS)) {
+      List<Breadstick> breadsticks = new LinkedList<>();
+      breadsticks = repository.findAll();
+      if (breadsticks == null) {
+        return new ResponseEntity<List<Breadstick>>(Collections.emptyList(), HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<List<Breadstick>>(breadsticks, HttpStatus.OK);
     }
-
-    public ResponseEntity<List<Breadstick>> getBreadsticks() {
-        String accept = request.getHeader(HEADER_VALUE);
-        if (accept != null && accept.contains(HEADER_CONTENTS)) {
-            List<Breadstick> breadsticks = new LinkedList<>();
-            breadsticks = repository.findAll();
-            if (breadsticks == null) {
-                return new ResponseEntity<List<Breadstick>>(Collections.emptyList(), HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<List<Breadstick>>(breadsticks, HttpStatus.OK);
-        }
-        return new ResponseEntity<List<Breadstick>>(HttpStatus.NOT_IMPLEMENTED);
-    }
+    return new ResponseEntity<List<Breadstick>>(HttpStatus.NOT_IMPLEMENTED);
+  }
 
 }

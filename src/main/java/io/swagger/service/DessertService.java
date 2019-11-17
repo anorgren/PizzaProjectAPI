@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class DessertService {
 
-    @Autowired
-    private DessertRepository dessertRepository;
+  @Autowired
+  private DessertRepository dessertRepository;
 
-    public Dessert getDessert(String dessertName) {
-        return dessertRepository.findDessertByDessertName(dessertName.toLowerCase());
-    }
+  public Dessert getDessert(String dessertName) {
+    return dessertRepository.findDessertByDessertName(dessertName.toLowerCase());
+  }
 
-    public List<Dessert> getAllDesserts() {
-        return dessertRepository.findAll();
-    }
+  public List<Dessert> getAllDesserts() {
+    return dessertRepository.findAll();
+  }
 }

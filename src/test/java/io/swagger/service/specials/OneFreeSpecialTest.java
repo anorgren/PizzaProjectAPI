@@ -107,7 +107,6 @@ public class OneFreeSpecialTest {
   }
 
 
-
   @Test
   public void applyValidOrder() {
     Order firstOrder = new Order();

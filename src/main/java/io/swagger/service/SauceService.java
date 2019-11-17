@@ -8,14 +8,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SauceService {
-    @Autowired
-    private SauceRepository sauceRepository;
 
-    public Sauce getSauceBySauceName(String sauceName) {
-        return sauceRepository.getSauceBySauceName(sauceName);
-    }
+  @Autowired
+  private SauceRepository sauceRepository;
 
-    public List<Sauce> getSauces() {
-        return sauceRepository.findAll();
-    }
+  public Sauce getSauceBySauceName(String sauceName) {
+    return sauceRepository.getSauceBySauceName(sauceName);
+  }
+
+  public List<Sauce> getSauces() {
+    return sauceRepository.findAll();
+  }
 }

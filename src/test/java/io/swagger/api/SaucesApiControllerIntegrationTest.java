@@ -35,218 +35,218 @@ import org.springframework.web.context.WebApplicationContext;
 @WebMvcTest(SaucesApiController.class)
 @WebAppConfiguration
 @ContextConfiguration(classes =
-        {SaucesApiController.class, TestContext.class, WebApplicationContext.class})
+    {SaucesApiController.class, TestContext.class, WebApplicationContext.class})
 public class SaucesApiControllerIntegrationTest {
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @MockBean
-    private SauceRepository repository;
+  @MockBean
+  private SauceRepository repository;
 
-    private ObjectMapper objectMapper;
+  private ObjectMapper objectMapper;
 
-    @Before
-    public void setUp() {
-        objectMapper = new ObjectMapper();
+  @Before
+  public void setUp() {
+    objectMapper = new ObjectMapper();
 
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    MockitoAnnotations.initMocks(this);
+    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-    }
+  }
 
-    @Test
-    public void contextLoads() {
-        assertThat(repository).isNotNull();
-    }
+  @Test
+  public void contextLoads() {
+    assertThat(repository).isNotNull();
+  }
 
-    @Test
-    public void getSaucesEmptyRepository() throws Exception {
-        when(repository.findAll()).thenReturn(null);
-        this.mockMvc.perform(get("/sauces")
-                .header("Accept", "application/json"))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json("[]"));
-    }
+  @Test
+  public void getSaucesEmptyRepository() throws Exception {
+    when(repository.findAll()).thenReturn(null);
+    this.mockMvc.perform(get("/sauces")
+        .header("Accept", "application/json"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json("[]"));
+  }
 
 
-    @Test
-    public void getSaucesOneInRepository() throws Exception {
-        Sauce original;
-        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+  @Test
+  public void getSaucesOneInRepository() throws Exception {
+    Sauce original;
+    HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
 
-        vegetarianGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+    vegetarianGlutenFree = new HashMap<>();
+    vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+    vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-        original = new Sauce();
-        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+    original = new Sauce();
+    original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
 
-        List<Sauce> singleObject = Arrays.asList(original);
-        String stringSingleObject = objectMapper.writeValueAsString(singleObject);
+    List<Sauce> singleObject = Arrays.asList(original);
+    String stringSingleObject = objectMapper.writeValueAsString(singleObject);
 
-        when(repository.findAll()).thenReturn(singleObject);
-        this.mockMvc.perform(get("/sauces")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringSingleObject));
-    }
+    when(repository.findAll()).thenReturn(singleObject);
+    this.mockMvc.perform(get("/sauces")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(stringSingleObject));
+  }
 
-    @Test
-    public void getSaucesMultipleReturned() throws Exception {
-        Sauce original;
-        Sauce robust;
-        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-        List<Sauce> sauces;
+  @Test
+  public void getSaucesMultipleReturned() throws Exception {
+    Sauce original;
+    Sauce robust;
+    HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+    List<Sauce> sauces;
 
-        vegetarianGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+    vegetarianGlutenFree = new HashMap<>();
+    vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+    vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-        original = new Sauce();
-        robust = new Sauce();
-        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
-        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
+    original = new Sauce();
+    robust = new Sauce();
+    original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+    robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
 
-        sauces = Arrays.asList(original, robust);
-        String stringMultipleObjects = objectMapper.writeValueAsString(sauces);
+    sauces = Arrays.asList(original, robust);
+    String stringMultipleObjects = objectMapper.writeValueAsString(sauces);
 
-        when(repository.findAll()).thenReturn(sauces);
-        this.mockMvc.perform(get("/sauces")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(stringMultipleObjects));
-    }
+    when(repository.findAll()).thenReturn(sauces);
+    this.mockMvc.perform(get("/sauces")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(stringMultipleObjects));
+  }
 
-    @Test
-    public void getSauceByNameValidName() throws Exception {
-        Sauce original;
-        Sauce robust;
-        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-        List<Sauce> sauces;
+  @Test
+  public void getSauceByNameValidName() throws Exception {
+    Sauce original;
+    Sauce robust;
+    HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+    List<Sauce> sauces;
 
-        vegetarianGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+    vegetarianGlutenFree = new HashMap<>();
+    vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+    vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-        original = new Sauce();
-        robust = new Sauce();
-        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
-        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
+    original = new Sauce();
+    robust = new Sauce();
+    original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+    robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
 
-        sauces = Arrays.asList(original, robust);
-        String objectToGet = objectMapper.writeValueAsString(original);
+    sauces = Arrays.asList(original, robust);
+    String objectToGet = objectMapper.writeValueAsString(original);
 
-        when(repository.getSauceBySauceName(any()))
-                .thenAnswer(invocationOnMock -> {
-                    for (Sauce sauce : sauces) {
-                        if (sauce.getSauceName()
-                                .equals(invocationOnMock.getArguments()[0])) {
-                            return sauce;
-                        }
-                    }
-                    return null;
-                });
-        this.mockMvc.perform(get("/sauces/original")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(objectToGet));
-    }
+    when(repository.getSauceBySauceName(any()))
+        .thenAnswer(invocationOnMock -> {
+          for (Sauce sauce : sauces) {
+            if (sauce.getSauceName()
+                .equals(invocationOnMock.getArguments()[0])) {
+              return sauce;
+            }
+          }
+          return null;
+        });
+    this.mockMvc.perform(get("/sauces/original")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(objectToGet));
+  }
 
-    @Test
-    public void getSaucesByNameValidNameMixedCase() throws Exception {
-        Sauce original;
-        Sauce robust;
-        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-        List<Sauce> sauces;
+  @Test
+  public void getSaucesByNameValidNameMixedCase() throws Exception {
+    Sauce original;
+    Sauce robust;
+    HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+    List<Sauce> sauces;
 
-        vegetarianGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+    vegetarianGlutenFree = new HashMap<>();
+    vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+    vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-        original = new Sauce();
-        robust = new Sauce();
-        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
-        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
+    original = new Sauce();
+    robust = new Sauce();
+    original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+    robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
 
-        sauces = Arrays.asList(original, robust);
-        String objectToGet = objectMapper.writeValueAsString(original);
+    sauces = Arrays.asList(original, robust);
+    String objectToGet = objectMapper.writeValueAsString(original);
 
-        when(repository.getSauceBySauceName(any()))
-                .thenAnswer(invocationOnMock -> {
-                    for (Sauce sauce : sauces) {
-                        if (sauce.getSauceName()
-                                .equals(invocationOnMock.getArguments()[0])) {
-                            return sauce;
-                        }
-                    }
-                    return null;
-                });
-        this.mockMvc.perform(get("/sauces/Original")
-                .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(objectToGet));
-    }
+    when(repository.getSauceBySauceName(any()))
+        .thenAnswer(invocationOnMock -> {
+          for (Sauce sauce : sauces) {
+            if (sauce.getSauceName()
+                .equals(invocationOnMock.getArguments()[0])) {
+              return sauce;
+            }
+          }
+          return null;
+        });
+    this.mockMvc.perform(get("/sauces/Original")
+        .header("Accept", "application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(objectToGet));
+  }
 
-    @Test
-    public void getSaucesByNameInvalidName() throws Exception {
-        Sauce original;
-        Sauce robust;
-        HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
-        List<Sauce> sauces;
+  @Test
+  public void getSaucesByNameInvalidName() throws Exception {
+    Sauce original;
+    Sauce robust;
+    HashMap<DietaryProperty, Boolean> vegetarianGlutenFree;
+    List<Sauce> sauces;
 
-        vegetarianGlutenFree = new HashMap<>();
-        vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
-        vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
-        vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
+    vegetarianGlutenFree = new HashMap<>();
+    vegetarianGlutenFree.put(DietaryProperty.VEGAN, false);
+    vegetarianGlutenFree.put(DietaryProperty.VEGETARIAN, true);
+    vegetarianGlutenFree.put(DietaryProperty.GLUTEN_FREE, true);
 
-        original = new Sauce();
-        robust = new Sauce();
-        original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
-        robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
+    original = new Sauce();
+    robust = new Sauce();
+    original.sauceName("original").dietaryProperties(vegetarianGlutenFree);
+    robust.sauceName("robust").dietaryProperties(vegetarianGlutenFree);
 
-        sauces = Arrays.asList(original, robust);
+    sauces = Arrays.asList(original, robust);
 
-        when(repository.getSauceBySauceName(any()))
-                .thenAnswer(invocationOnMock -> {
-                    for (Sauce sauce : sauces) {
-                        if (sauce.getSauceName()
-                                .equals(invocationOnMock.getArguments()[0])) {
-                            return sauce;
-                        }
-                    }
-                    return null;
-                });
-        this.mockMvc.perform(get("/sauces/invalidName")
-                .header("Accept", "application/json"))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").doesNotExist());
-    }
+    when(repository.getSauceBySauceName(any()))
+        .thenAnswer(invocationOnMock -> {
+          for (Sauce sauce : sauces) {
+            if (sauce.getSauceName()
+                .equals(invocationOnMock.getArguments()[0])) {
+              return sauce;
+            }
+          }
+          return null;
+        });
+    this.mockMvc.perform(get("/sauces/invalidName")
+        .header("Accept", "application/json"))
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$").doesNotExist());
+  }
 
-    @Test
-    public void getSauceByNameTestInvalidHeader() throws Exception {
-        this.mockMvc.perform(get("/sauces/original")
-                .header("null", "null"))
-                .andExpect(status().isNotImplemented());
-    }
+  @Test
+  public void getSauceByNameTestInvalidHeader() throws Exception {
+    this.mockMvc.perform(get("/sauces/original")
+        .header("null", "null"))
+        .andExpect(status().isNotImplemented());
+  }
 
-    @Test
-    public void getSauceTestInvalidHeader() throws Exception {
-        this.mockMvc.perform(get("/sauces")
-                .header("null", "null"))
-                .andExpect(status().isNotImplemented());
-    }
+  @Test
+  public void getSauceTestInvalidHeader() throws Exception {
+    this.mockMvc.perform(get("/sauces")
+        .header("null", "null"))
+        .andExpect(status().isNotImplemented());
+  }
 }
 

@@ -8,18 +8,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SodaService {
-    @Autowired
-    private SodaRepository sodaRepository;
 
-    public List<Soda> getSodasBySize(String size) {
-        return sodaRepository.getSodasBySize(size);
-    }
+  @Autowired
+  private SodaRepository sodaRepository;
 
-    public List<Soda> getSodasByBrandName(String name) {
-        return sodaRepository.getSodasBySodaName(name);
-    }
+  public List<Soda> getSodasBySize(String size) {
+    return sodaRepository.getSodasBySize(size);
+  }
 
-    public List<Soda> getAllSodas() {
-        return sodaRepository.findAll();
-    }
+  public List<Soda> getSodasByBrandName(String name) {
+    return sodaRepository.getSodasBySodaName(name);
+  }
+
+  public List<Soda> getAllSodas() {
+    return sodaRepository.findAll();
+  }
 }

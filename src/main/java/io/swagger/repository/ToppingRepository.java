@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ToppingRepository extends MongoRepository<Topping, String> {
+
   interface ToppingName {
+
     String getToppingName();
   }
+
   List<ToppingName> findToppingByToppingNameExists(boolean exists);
+
   Topping findToppingByToppingName(String toppingName);
 }

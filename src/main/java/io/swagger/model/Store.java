@@ -81,8 +81,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return branchName
    **/
   @ApiModelProperty(example = "Fremont Branch", value = "")
-  
-    public String getBranchName() {
+
+  public String getBranchName() {
     return branchName;
   }
 
@@ -101,8 +101,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return address
    **/
   @ApiModelProperty(example = "101 Fremont Ave, Seattle, WA 12345", value = "")
-  
-    public String getAddress() {
+
+  public String getAddress() {
     return address;
   }
 
@@ -129,8 +129,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return dietaryRestrictions
    **/
   @ApiModelProperty(value = "")
-  
-    public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
+
+  public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
     return dietaryRestrictions;
   }
 
@@ -157,8 +157,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return availableToppings
    **/
   @ApiModelProperty(value = "")
-  
-    public List<String> getAvailableToppings() {
+
+  public List<String> getAvailableToppings() {
     return availableToppings;
   }
 
@@ -185,8 +185,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return availableSizes
    **/
   @ApiModelProperty(value = "")
-      @Valid
-    public List<PizzaSize> getAvailableSizes() {
+  @Valid
+  public List<PizzaSize> getAvailableSizes() {
     return availableSizes;
   }
 
@@ -214,7 +214,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
 
   @Override
   public int hashCode() {
-    return Objects.hash(branchId, branchName, address, dietaryRestrictions, availableToppings, availableSizes);
+    return Objects.hash(branchId, branchName, address, dietaryRestrictions, availableToppings,
+        availableSizes);
   }
 
   @Override

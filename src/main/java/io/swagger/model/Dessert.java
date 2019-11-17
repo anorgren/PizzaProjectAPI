@@ -20,7 +20,8 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
 @JsonTypeName("Dessert")
-public class Dessert extends Item  {
+public class Dessert extends Item {
+
   private static final String ITEM_TYPE = "Dessert";
 
   @JsonProperty("dessertName")
@@ -50,12 +51,13 @@ public class Dessert extends Item  {
 
   /**
    * Get dessertName
+   *
    * @return dessertName
-  **/
+   **/
   @ApiModelProperty(example = "double chocolate brownies", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getDessertName() {
+  public String getDessertName() {
     return dessertName;
   }
 
@@ -70,12 +72,13 @@ public class Dessert extends Item  {
 
   /**
    * Get description
+   *
    * @return description
-  **/
+   **/
   @ApiModelProperty(example = "four large gooey chocolate brownies with chocolate chunks", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getDescription() {
+  public String getDescription() {
     return description;
   }
 
@@ -95,12 +98,13 @@ public class Dessert extends Item  {
 
   /**
    * Get dietaryProperties
+   *
    * @return dietaryProperties
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public Map<DietaryProperty, Boolean> getDietaryProperties() {
+  public Map<DietaryProperty, Boolean> getDietaryProperties() {
     return dietaryProperties;
   }
 
@@ -115,13 +119,14 @@ public class Dessert extends Item  {
 
   /**
    * Get price
+   *
    * @return price
-  **/
+   **/
   @ApiModelProperty(example = "4.99", required = true, value = "")
-      @NotNull
-    @Override
-    @Valid
-    public Double getPrice() {
+  @NotNull
+  @Override
+  @Valid
+  public Double getPrice() {
     return price;
   }
 
@@ -150,6 +155,7 @@ public class Dessert extends Item  {
   public String getItemType() {
     return ITEM_TYPE;
   }
+
   @Override
   public int hashCode() {
     return Objects.hash(dessertName, description, dietaryProperties, price, super.hashCode());
@@ -169,8 +175,8 @@ public class Dessert extends Item  {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

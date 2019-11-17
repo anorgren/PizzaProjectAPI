@@ -21,12 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Api(value = "applySpecial", description = "the applySpecial API")
 public interface ApplySpecialApi {
 
-  @ApiOperation(value = "Applies the given specialId to order if applicable", nickname = "applySpecial", notes = "applies the Special/Discount to order ", response = Order.class, tags = {"developers",})
+  @ApiOperation(value = "Applies the given specialId to order if applicable", nickname = "applySpecial", notes = "applies the Special/Discount to order ", response = Order.class, tags = {
+      "developers",})
   @ApiResponses(value = {
-          @ApiResponse(code = 200, message = "Updated Order Record", response = Order.class),
-          @ApiResponse(code = 400, message = "bad input parameter")})
+      @ApiResponse(code = 200, message = "Updated Order Record", response = Order.class),
+      @ApiResponse(code = 400, message = "bad input parameter")})
   @RequestMapping(value = "/applySpecial",
-          produces = {"application/json"},
-          method = RequestMethod.PUT)
-    ResponseEntity<Order> applySpecial(@NotNull @ApiParam(value = "specialId", required = true) @Valid @RequestParam(value = "specialId", required = true) String specialId, @NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "orderId", required = true) String orderId);
+      produces = {"application/json"},
+      method = RequestMethod.PUT)
+  ResponseEntity<Order> applySpecial(
+      @NotNull @ApiParam(value = "specialId", required = true) @Valid @RequestParam(value = "specialId", required = true) String specialId,
+      @NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "orderId", required = true) String orderId);
 }

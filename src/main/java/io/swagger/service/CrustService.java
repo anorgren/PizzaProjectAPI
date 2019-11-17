@@ -8,14 +8,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CrustService {
-    @Autowired
-    CrustRepository crustRepository;
 
-    public Crust getCrustByName(String crustName) {
-        return crustRepository.getCrustByCrustName(crustName.toLowerCase());
-    }
+  @Autowired
+  CrustRepository crustRepository;
 
-    public List<Crust> getAllCrusts() {
-        return crustRepository.findAll();
-    }
+  public Crust getCrustByName(String crustName) {
+    return crustRepository.getCrustByCrustName(crustName.toLowerCase());
+  }
+
+  public List<Crust> getAllCrusts() {
+    return crustRepository.findAll();
+  }
 }

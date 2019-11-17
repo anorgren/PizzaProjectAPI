@@ -93,7 +93,7 @@ public class BuyOneGetOneFreeSpecialTest {
   }
 
   @Test
-  public void isApplicableOrderDoesntExist(){
+  public void isApplicableOrderDoesntExist() {
     ApplicableSpecial special = applicableSpecialFactory.getApplicableSpecial(SPECIAL_ID);
 
     assertFalse(special.isApplicable("Doesn't exist"));

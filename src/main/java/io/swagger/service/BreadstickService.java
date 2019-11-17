@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class BreadstickService {
 
-    @Autowired
-    BreadstickRepository breadstickRepository;
+  @Autowired
+  BreadstickRepository breadstickRepository;
 
-    public List<Breadstick> getAllBreadsticks() {
-        return breadstickRepository.findAll();
-    }
+  public List<Breadstick> getAllBreadsticks() {
+    return breadstickRepository.findAll();
+  }
 }

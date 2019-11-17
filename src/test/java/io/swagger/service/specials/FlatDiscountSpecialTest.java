@@ -109,7 +109,7 @@ public class FlatDiscountSpecialTest {
     special.apply(ORDER_TWO_ID);
 
     Order modifiedOrderOne = orderRepository.findByOrderId(ORDER_TWO_ID);
-    assertEquals( new Price().priceInCents(DISCOUNT_AMOUNT), modifiedOrderOne.getDiscountAmount());
+    assertEquals(new Price().priceInCents(DISCOUNT_AMOUNT), modifiedOrderOne.getDiscountAmount());
     assertEquals(SPECIAL_ID, modifiedOrderOne.getSpecialId());
   }
 

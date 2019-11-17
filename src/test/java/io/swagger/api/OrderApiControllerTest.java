@@ -44,7 +44,7 @@ import org.springframework.web.context.WebApplicationContext;
 @WebMvcTest(OrderApiController.class)
 @WebAppConfiguration
 @ContextConfiguration(classes =
-        {OrderApiController.class, TestContext.class, WebApplicationContext.class})
+    {OrderApiController.class, TestContext.class, WebApplicationContext.class})
 public class OrderApiControllerTest {
 
   @MockBean
@@ -90,11 +90,11 @@ public class OrderApiControllerTest {
       }
     });
     MockHttpServletResponse response = this.mockMvc.perform(put("/order")
-            .param("branchId", TEST_BRANCH_ID)
-            .content("[]")
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content("[]")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(200, response.getStatus());
     Order order = objectMapper.readValue(response.getContentAsString(), Order.class);
     assertEquals(TEST_BRANCH_ID, order.getStoreId());
@@ -121,11 +121,11 @@ public class OrderApiControllerTest {
       }
     });
     MockHttpServletResponse response = this.mockMvc.perform(put("/order")
-            .param("branchId", TEST_BRANCH_ID)
-            .content(itemListJson)
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content(itemListJson)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(200, response.getStatus());
     Order order = objectMapper.readValue(response.getContentAsString(), Order.class);
     assertEquals(TEST_BRANCH_ID, order.getStoreId());
@@ -139,11 +139,11 @@ public class OrderApiControllerTest {
   public void testCreateOrder_InvalidBranchId() throws Exception {
     when(storeRepository.findStoreByBranchId(TEST_BRANCH_ID)).thenReturn(null);
     MockHttpServletResponse response = this.mockMvc.perform(put("/order")
-            .param("branchId", TEST_BRANCH_ID)
-            .content("[]")
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content("[]")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(404, response.getStatus());
   }
 
@@ -151,29 +151,29 @@ public class OrderApiControllerTest {
   public void testCreateOrder_Exception() throws Exception {
     when(storeRepository.findStoreByBranchId(TEST_BRANCH_ID)).thenThrow(new RuntimeException());
     MockHttpServletResponse response = this.mockMvc.perform(put("/order")
-            .param("branchId", TEST_BRANCH_ID)
-            .content("[]")
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content("[]")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(500, response.getStatus());
   }
 
   @Test
   public void testCreateOrder_NoHeader() throws Exception {
     MockHttpServletResponse response = this.mockMvc.perform(put("/order")
-            .param("branchId", TEST_BRANCH_ID)
-            .content("[]")
-            .contentType(MediaType.APPLICATION_JSON_UTF8))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content("[]")
+        .contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andReturn().getResponse();
     assertEquals(501, response.getStatus());
   }
 
   @Test
   public void testUpdateOrderWithNoItem() throws Exception {
     Order order = new Order().orderId(TEST_ORDER_ID)
-            .status(Order.StatusEnum.CREATED)
-            .tentativeAmount(new Price().priceInCents(0));
+        .status(Order.StatusEnum.CREATED)
+        .tentativeAmount(new Price().priceInCents(0));
     when(orderRepository.findByOrderId(TEST_ORDER_ID)).thenReturn(order);
     Dessert dessert = new Dessert().dessertName(TEST_DESSERT_NAME);
     Soda soda = new Soda().size(Soda.SizeEnum.SIX_PACK).sodaName("Coke");
@@ -189,11 +189,11 @@ public class OrderApiControllerTest {
       }
     });
     MockHttpServletResponse response = this.mockMvc.perform(put("/order/" + TEST_ORDER_ID)
-            .param("branchId", TEST_BRANCH_ID)
-            .content(itemListJson)
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content(itemListJson)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(200, response.getStatus());
     Order orderResponse = objectMapper.readValue(response.getContentAsString(), Order.class);
     assertEquals(TEST_ORDER_ID, orderResponse.getOrderId());
@@ -205,9 +205,9 @@ public class OrderApiControllerTest {
   @Test
   public void testUpdateOrderWithItem() throws Exception {
     Order order = new Order().orderId(TEST_ORDER_ID)
-            .status(Order.StatusEnum.CREATED)
-            .tentativeAmount(new Price().priceInCents(2000))
-            .addItemListItem(new Dessert().dessertName("Choclate Chip Cookie"));
+        .status(Order.StatusEnum.CREATED)
+        .tentativeAmount(new Price().priceInCents(2000))
+        .addItemListItem(new Dessert().dessertName("Choclate Chip Cookie"));
     when(orderRepository.findByOrderId(TEST_ORDER_ID)).thenReturn(order);
     Dessert dessert = new Dessert().dessertName(TEST_DESSERT_NAME);
     Soda soda = new Soda().size(Soda.SizeEnum.SIX_PACK).sodaName("Coke");
@@ -223,11 +223,11 @@ public class OrderApiControllerTest {
       }
     });
     MockHttpServletResponse response = this.mockMvc.perform(put("/order/" + TEST_ORDER_ID)
-            .param("branchId", TEST_BRANCH_ID)
-            .content(itemListJson)
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content(itemListJson)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(200, response.getStatus());
     Order orderResponse = objectMapper.readValue(response.getContentAsString(), Order.class);
     assertEquals(TEST_ORDER_ID, orderResponse.getOrderId());
@@ -239,19 +239,19 @@ public class OrderApiControllerTest {
   @Test
   public void testUpdateOrderOnCompletedOrder() throws Exception {
     Order order = new Order().orderId(TEST_ORDER_ID)
-            .status(Order.StatusEnum.COMPLETED)
-            .tentativeAmount(new Price().priceInCents(0));
+        .status(Order.StatusEnum.COMPLETED)
+        .tentativeAmount(new Price().priceInCents(0));
     when(orderRepository.findByOrderId(TEST_ORDER_ID)).thenReturn(order);
     Dessert dessert = new Dessert().dessertName(TEST_DESSERT_NAME);
     Soda soda = new Soda().size(Soda.SizeEnum.SIX_PACK).sodaName("Coke");
     List<Item> itemList = ImmutableList.of(dessert, soda);
     String itemListJson = objectMapper.writeValueAsString(itemList);
     MockHttpServletResponse response = this.mockMvc.perform(put("/order/" + TEST_ORDER_ID)
-            .param("branchId", TEST_BRANCH_ID)
-            .content(itemListJson)
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content(itemListJson)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(400, response.getStatus());
   }
 
@@ -263,11 +263,11 @@ public class OrderApiControllerTest {
     List<Item> itemList = ImmutableList.of(dessert, soda);
     String itemListJson = objectMapper.writeValueAsString(itemList);
     MockHttpServletResponse response = this.mockMvc.perform(put("/order/" + TEST_ORDER_ID)
-            .param("branchId", TEST_BRANCH_ID)
-            .content(itemListJson)
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content(itemListJson)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(404, response.getStatus());
   }
 
@@ -279,11 +279,11 @@ public class OrderApiControllerTest {
     List<Item> itemList = ImmutableList.of(dessert, soda);
     String itemListJson = objectMapper.writeValueAsString(itemList);
     MockHttpServletResponse response = this.mockMvc.perform(put("/order/" + TEST_ORDER_ID)
-            .param("branchId", TEST_BRANCH_ID)
-            .content(itemListJson)
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content(itemListJson)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(500, response.getStatus());
   }
 
@@ -294,10 +294,10 @@ public class OrderApiControllerTest {
     List<Item> itemList = ImmutableList.of(dessert, soda);
     String itemListJson = objectMapper.writeValueAsString(itemList);
     MockHttpServletResponse response = this.mockMvc.perform(put("/order/" + TEST_ORDER_ID)
-            .param("branchId", TEST_BRANCH_ID)
-            .content(itemListJson)
-            .contentType(MediaType.APPLICATION_JSON_UTF8))
-            .andReturn().getResponse();
+        .param("branchId", TEST_BRANCH_ID)
+        .content(itemListJson)
+        .contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andReturn().getResponse();
     assertEquals(501, response.getStatus());
   }
 
@@ -306,11 +306,12 @@ public class OrderApiControllerTest {
     Order order = new Order().orderId(TEST_ORDER_ID);
     when(orderRepository.findAll()).thenReturn(ImmutableList.of(order));
     MockHttpServletResponse response = this.mockMvc.perform(get("/order")
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(200, response.getStatus());
-    List<Order> orderList = objectMapper.readValue(response.getContentAsString(), new TypeReference<List<Order>>() {
-    });
+    List<Order> orderList = objectMapper
+        .readValue(response.getContentAsString(), new TypeReference<List<Order>>() {
+        });
     assertEquals(1, orderList.size());
     assertEquals(TEST_ORDER_ID, orderList.get(0).getOrderId());
   }
@@ -321,11 +322,12 @@ public class OrderApiControllerTest {
     Order testOrder2 = new Order().orderId(TEST_ORDER_ID_2);
     when(orderRepository.findAll()).thenReturn(ImmutableList.of(testOrder1, testOrder2));
     MockHttpServletResponse response = this.mockMvc.perform(get("/order")
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(200, response.getStatus());
-    List<Order> orderList = objectMapper.readValue(response.getContentAsString(), new TypeReference<List<Order>>() {
-    });
+    List<Order> orderList = objectMapper
+        .readValue(response.getContentAsString(), new TypeReference<List<Order>>() {
+        });
     assertEquals(2, orderList.size());
   }
 
@@ -333,8 +335,8 @@ public class OrderApiControllerTest {
   public void testGetOrdersNoOrderFound() throws Exception {
     when(orderRepository.findAll()).thenReturn(null);
     MockHttpServletResponse response = this.mockMvc.perform(get("/order")
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(404, response.getStatus());
   }
 
@@ -342,15 +344,15 @@ public class OrderApiControllerTest {
   public void testGetOrdersException() throws Exception {
     when(orderRepository.findAll()).thenThrow(new RuntimeException());
     MockHttpServletResponse response = this.mockMvc.perform(get("/order")
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(500, response.getStatus());
   }
 
   @Test
   public void testGetOrdersNoHeader() throws Exception {
     MockHttpServletResponse response = this.mockMvc.perform(get("/order"))
-            .andReturn().getResponse();
+        .andReturn().getResponse();
     assertEquals(501, response.getStatus());
   }
 
@@ -359,8 +361,8 @@ public class OrderApiControllerTest {
     Order order = new Order().orderId(TEST_ORDER_ID);
     when(orderRepository.findByOrderId(TEST_ORDER_ID)).thenReturn(order);
     MockHttpServletResponse response = this.mockMvc.perform(get("/order/" + TEST_ORDER_ID)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(200, response.getStatus());
     Order orderResponse = objectMapper.readValue(response.getContentAsString(), Order.class);
     assertEquals(TEST_ORDER_ID, orderResponse.getOrderId());
@@ -370,8 +372,8 @@ public class OrderApiControllerTest {
   public void testGetOrdersByIdInvalidId() throws Exception {
     when(orderRepository.findByOrderId(TEST_ORDER_ID)).thenReturn(null);
     MockHttpServletResponse response = this.mockMvc.perform(get("/order/" + TEST_ORDER_ID)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(404, response.getStatus());
   }
 
@@ -379,8 +381,8 @@ public class OrderApiControllerTest {
   public void testGetOrdersByIdException() throws Exception {
     when(orderRepository.findByOrderId(TEST_ORDER_ID)).thenThrow(new RuntimeException());
     MockHttpServletResponse response = this.mockMvc.perform(get("/order/" + TEST_ORDER_ID)
-            .header("Accept", "application/json"))
-            .andReturn().getResponse();
+        .header("Accept", "application/json"))
+        .andReturn().getResponse();
     assertEquals(500, response.getStatus());
   }
 
@@ -388,7 +390,7 @@ public class OrderApiControllerTest {
   public void testGetOrdersByIdNoHeader() throws Exception {
     when(orderRepository.findByOrderId(TEST_ORDER_ID)).thenThrow(new RuntimeException());
     MockHttpServletResponse response = this.mockMvc.perform(get("/order/" + TEST_ORDER_ID))
-            .andReturn().getResponse();
+        .andReturn().getResponse();
     assertEquals(501, response.getStatus());
   }
 

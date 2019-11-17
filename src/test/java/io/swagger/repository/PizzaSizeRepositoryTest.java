@@ -20,42 +20,43 @@ import org.springframework.test.context.junit4.SpringRunner;
 @TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest
 public class PizzaSizeRepositoryTest {
-    @Autowired
-    private PizzaSizeRepository pizzaSizeRepository;
 
-    @Before
-    public void setUp() throws Exception {
-        pizzaSizeRepository.deleteAll();
-    }
+  @Autowired
+  private PizzaSizeRepository pizzaSizeRepository;
 
-    @After
-    public void tearDown() throws Exception {
-        pizzaSizeRepository.deleteAll();
-    }
+  @Before
+  public void setUp() throws Exception {
+    pizzaSizeRepository.deleteAll();
+  }
 
-    @Test
-    public void getPizzaSizeBySizeDescription() {
-        PizzaSize expected = new PizzaSize("small", 12);
-        pizzaSizeRepository.insert(expected);
-        PizzaSize actual = pizzaSizeRepository.findPizzaSizeBySizeDescription("small");
-        assertThat(actual).isEqualToComparingFieldByField(expected);
-    }
+  @After
+  public void tearDown() throws Exception {
+    pizzaSizeRepository.deleteAll();
+  }
 
-    @Test
-    public void getPizzaSizeByIncorrectDescription() {
-        assertNull(pizzaSizeRepository.findPizzaSizeBySizeDescription("does not exist"));
-    }
+  @Test
+  public void getPizzaSizeBySizeDescription() {
+    PizzaSize expected = new PizzaSize("small", 12);
+    pizzaSizeRepository.insert(expected);
+    PizzaSize actual = pizzaSizeRepository.findPizzaSizeBySizeDescription("small");
+    assertThat(actual).isEqualToComparingFieldByField(expected);
+  }
 
-    @Test
-    public void getAllSizes() {
-        PizzaSize expectedOne = new PizzaSize("small", 12);
-        PizzaSize expectedTwo = new PizzaSize("large", 16);
-        PizzaSize expectedThree = new PizzaSize("medium", 14);
-        List<PizzaSize> expected = Arrays.asList(expectedOne, expectedTwo, expectedThree);
-        pizzaSizeRepository.insert(expected);
+  @Test
+  public void getPizzaSizeByIncorrectDescription() {
+    assertNull(pizzaSizeRepository.findPizzaSizeBySizeDescription("does not exist"));
+  }
 
-        List<PizzaSize> actual = pizzaSizeRepository.findAll();
-        assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
-                && actual.containsAll(expected));
-    }
+  @Test
+  public void getAllSizes() {
+    PizzaSize expectedOne = new PizzaSize("small", 12);
+    PizzaSize expectedTwo = new PizzaSize("large", 16);
+    PizzaSize expectedThree = new PizzaSize("medium", 14);
+    List<PizzaSize> expected = Arrays.asList(expectedOne, expectedTwo, expectedThree);
+    pizzaSizeRepository.insert(expected);
+
+    List<PizzaSize> actual = pizzaSizeRepository.findAll();
+    assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
+        && actual.containsAll(expected));
+  }
 }

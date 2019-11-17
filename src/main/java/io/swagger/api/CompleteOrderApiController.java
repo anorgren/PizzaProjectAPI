@@ -53,9 +53,10 @@ public class CompleteOrderApiController implements CompleteOrderApi {
     this.request = request;
   }
 
-  public ResponseEntity<Receipt> completeOrder(@NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "id", required = true) String id,
-                                               @NotNull @ApiParam(value = "tentative amount of order in cents", required = true) @Valid @RequestParam(value = "tentativeAmount", required = true) int tentativeAmount,
-                                               @ApiParam(value = "Payment Information"  )  @Valid @RequestBody PaymentInformation body) {
+  public ResponseEntity<Receipt> completeOrder(
+      @NotNull @ApiParam(value = "orderId", required = true) @Valid @RequestParam(value = "id", required = true) String id,
+      @NotNull @ApiParam(value = "tentative amount of order in cents", required = true) @Valid @RequestParam(value = "tentativeAmount", required = true) int tentativeAmount,
+      @ApiParam(value = "Payment Information") @Valid @RequestBody PaymentInformation body) {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
@@ -63,7 +64,8 @@ public class CompleteOrderApiController implements CompleteOrderApi {
         if (order == null) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (Order.StatusEnum.COMPLETED.equals(order.getStatus()) || order.getTentativeAmount().getPriceInCents() != tentativeAmount) {
+        if (Order.StatusEnum.COMPLETED.equals(order.getStatus())
+            || order.getTentativeAmount().getPriceInCents() != tentativeAmount) {
           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if (body == null || !validatePaymentImformation(body)) {
@@ -93,11 +95,15 @@ public class CompleteOrderApiController implements CompleteOrderApi {
   }
 
   private boolean validatePaymentImformation(PaymentInformation paymentInformation) {
-    if (paymentInformation.getCardNumber().length() > 16 || paymentInformation.getCardNumber().length() < 15
-            || !isNumeric(paymentInformation.getCardNumber()))
+    if (paymentInformation.getCardNumber().length() > 16
+        || paymentInformation.getCardNumber().length() < 15
+        || !isNumeric(paymentInformation.getCardNumber())) {
       return false;
-    if (paymentInformation.getCardSecurityCode().length() > 4 || paymentInformation.getCardSecurityCode().length() < 3)
+    }
+    if (paymentInformation.getCardSecurityCode().length() > 4
+        || paymentInformation.getCardSecurityCode().length() < 3) {
       return false;
+    }
     int expiryMonth;
     int expiryYear;
     try {
@@ -108,13 +114,16 @@ public class CompleteOrderApiController implements CompleteOrderApi {
       return false;
     }
     Calendar cal = Calendar.getInstance();
-    if (expiryMonth < 1 || expiryMonth > 12)
+    if (expiryMonth < 1 || expiryMonth > 12) {
       return false;
-    if (expiryYear < cal.get(Calendar.YEAR))
+    }
+    if (expiryYear < cal.get(Calendar.YEAR)) {
       return false;
+    }
     if (expiryYear == cal.get(Calendar.YEAR)) {
-      if (expiryMonth < cal.get(Calendar.MONTH) + 1)
+      if (expiryMonth < cal.get(Calendar.MONTH) + 1) {
         return false;
+      }
     }
     return true;
   }

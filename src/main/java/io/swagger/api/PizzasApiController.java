@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
 @Controller
 public class PizzasApiController implements PizzasApi {
+
   private final String HEADER_VALUE = "Accept";
   private final String HEADER_CONTENTS = "application/json";
   private final String ERROR_MESSAGE_TOPPINGS = "Invalid topping: ";
@@ -63,18 +64,21 @@ public class PizzasApiController implements PizzasApi {
     this.request = request;
   }
 
-  public ResponseEntity<Pizza> createPizza(@NotNull @ApiParam(value = "size description", required = true) @Valid @RequestParam(value = "size", required = true) String size,
-                                           @NotNull @ApiParam(value = "crustName", required = true) @Valid @RequestParam(value = "crustName", required = true) String crustName,
-                                           @NotNull @ApiParam(value = "sauceName", required = true) @Valid @RequestParam(value = "sauceName", required = true) String sauceName,
-                                           @ApiParam(value = "pizza name") @Valid @RequestParam(value = "pizzaName", required = false) String pizzaName,
-                                           @ApiParam(value = "topping name list(max 5 toppings)") @Valid @RequestParam(value = "toppingName", required = true) List<String> toppingNames) throws ApiException {
+  public ResponseEntity<Pizza> createPizza(
+      @NotNull @ApiParam(value = "size description", required = true) @Valid @RequestParam(value = "size", required = true) String size,
+      @NotNull @ApiParam(value = "crustName", required = true) @Valid @RequestParam(value = "crustName", required = true) String crustName,
+      @NotNull @ApiParam(value = "sauceName", required = true) @Valid @RequestParam(value = "sauceName", required = true) String sauceName,
+      @ApiParam(value = "pizza name") @Valid @RequestParam(value = "pizzaName", required = false) String pizzaName,
+      @ApiParam(value = "topping name list(max 5 toppings)") @Valid @RequestParam(value = "toppingName", required = true) List<String> toppingNames)
+      throws ApiException {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
         if (toppingNames.size() > MAX_ALLOWED_TOPPINGS) {
           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        PizzaSize pizzaSize = pizzaSizeRepository.findPizzaSizeBySizeDescription(size.toLowerCase());
+        PizzaSize pizzaSize = pizzaSizeRepository
+            .findPizzaSizeBySizeDescription(size.toLowerCase());
         if (pizzaSize == null) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -99,9 +103,9 @@ public class PizzasApiController implements PizzasApi {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Pizza pizza = new Pizza().size(pizzaSize)
-                .crust(pizzaCrust)
-                .sauce(pizzaSauce)
-                .toppings(toppingList);
+            .crust(pizzaCrust)
+            .sauce(pizzaSauce)
+            .toppings(toppingList);
         if (pizzaName != null) {
           pizza.pizzaName(pizzaName);
         }
@@ -114,7 +118,8 @@ public class PizzasApiController implements PizzasApi {
     return new ResponseEntity<Pizza>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  public ResponseEntity<Pizza> getPizzaByName(@ApiParam(value = "pizzaName", required = true) @PathVariable("pizzaName") String pizzaName) {
+  public ResponseEntity<Pizza> getPizzaByName(
+      @ApiParam(value = "pizzaName", required = true) @PathVariable("pizzaName") String pizzaName) {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       Pizza responsePizza = pizzaRepository.getPizzaByPizzaName(pizzaName.toLowerCase());

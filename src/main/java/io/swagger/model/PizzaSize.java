@@ -29,7 +29,8 @@ public class PizzaSize {
     DataConfiguration.backfillPizzaSizesRepository(repository);
   }
 
-  public PizzaSize() {}
+  public PizzaSize() {
+  }
 
   public PizzaSize(String sizeDescription, Integer sizeInInches) {
     this.sizeDescription = sizeDescription.toLowerCase();
@@ -50,17 +51,22 @@ public class PizzaSize {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     PizzaSize pizzaSize = (PizzaSize) o;
     return sizeDescription.equals(pizzaSize.sizeDescription) &&
-            sizeInInches.equals(pizzaSize.sizeInInches);
+        sizeInInches.equals(pizzaSize.sizeInInches);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(sizeDescription, sizeInInches);
   }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -73,8 +79,8 @@ public class PizzaSize {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
