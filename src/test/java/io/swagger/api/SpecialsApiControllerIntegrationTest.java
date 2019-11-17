@@ -114,5 +114,12 @@ public class SpecialsApiControllerIntegrationTest {
         .andExpect(status().isNotImplemented());
   }
 
+  @Test
+  public void getSpecialNotFound() throws Exception {
+    when(repository.findAll()).thenReturn(null);
+    this.mockMvc.perform(get("/specials")
+        .header("Accept", "application/json"))
+        .andExpect(status().isNotFound());
+  }
 
 }
