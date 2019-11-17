@@ -77,8 +77,7 @@ public class BreadstickRepositoryTest {
         breadstickRepository.insert(expected);
         List<Breadstick> actual = breadstickRepository.findAll();
 
-        System.out.println(expected);
-        System.out.println(actual);
+
         assertTrue(actual.size() == expected.size() && expected.containsAll(actual)
                 && actual.containsAll(expected));
 

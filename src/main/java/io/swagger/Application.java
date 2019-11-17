@@ -50,7 +50,7 @@ public class Application implements CommandLineRunner {
     if (arg0.length > 0 && arg0[0].equals("exitcode")) {
       throw new ExitException();
     }
-    //TODO: Remove the delete all statements before submission.
+    
     toppingRepository.deleteAll();
     Topping.initialize(toppingRepository);
     pizzaSizeRepository.deleteAll();
