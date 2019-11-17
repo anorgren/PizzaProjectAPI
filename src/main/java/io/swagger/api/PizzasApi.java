@@ -4,17 +4,23 @@
  */
 package io.swagger.api;
 
-import io.swagger.annotations.*;
-import io.swagger.model.Pizza;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.model.Pizza;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
 @Api(value = "pizzas", description = "the pizzas API")
@@ -31,7 +37,7 @@ public interface PizzasApi {
                                     @NotNull @ApiParam(value = "crustName", required = true) @Valid @RequestParam(value = "crustName", required = true) String crustName,
                                     @NotNull @ApiParam(value = "sauceName", required = true) @Valid @RequestParam(value = "sauceName", required = true) String sauceName,
                                     @ApiParam(value = "pizza name") @Valid @RequestParam(value = "pizzaName", required = false) String pizzaName,
-                                    @ApiParam(value = "topping name list(max 5 toppings)") @Valid @RequestParam(value = "toppings name List", required = true) List<String> toppingNames) throws ApiException;
+                                    @ApiParam(value = "topping name list(max 5 toppings)") @Valid @RequestParam(value = "toppingName", required = true) List<String> toppingNames) throws ApiException;
 
 
   @ApiOperation(value = "returns information about the given pizza.", nickname = "getPizzaByName", notes = "Get information of the given pizza ", response = Pizza.class, responseContainer = "List", tags = {"developers",})
