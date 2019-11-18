@@ -1,16 +1,15 @@
 package io.swagger.model;
 
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
-
-import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
-import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
+import javax.validation.constraints.NotNull;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Item
@@ -19,12 +18,13 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:07:33.221Z[GMT]")
 @JsonTypeInfo(use = NAME, include = PROPERTY, property = "itemType")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Pizza.class, name = "Pizza"),
-        @JsonSubTypes.Type(value = Dessert.class, name = "Dessert"),
-        @JsonSubTypes.Type(value = Soda.class, name = "Soda"),
-        @JsonSubTypes.Type(value = Breadstick.class, name = "Breadstick")
+    @JsonSubTypes.Type(value = Pizza.class, name = "Pizza"),
+    @JsonSubTypes.Type(value = Dessert.class, name = "Dessert"),
+    @JsonSubTypes.Type(value = Soda.class, name = "Soda"),
+    @JsonSubTypes.Type(value = Breadstick.class, name = "Breadstick")
 })
 public class Item {
+
   @JsonProperty("itemType")
   private String itemType = null;
 

@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
-import io.swagger.repository.CrustRepository;
 import io.swagger.repository.PizzaRepository;
-import org.springframework.validation.annotation.Validated;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Pizza
@@ -19,6 +21,7 @@ import java.util.*;
 @JsonTypeName("Pizza")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T21:13:59.483Z[GMT]")
 public class Pizza extends Item {
+
   private final Double SMALL_BASE_PRICE = 8.00;
   private final Double MEDIUM_BASE_PRICE = 10.00;
   private final Double LARGE_BASE_PRICE = 12.00;
@@ -217,12 +220,12 @@ public class Pizza extends Item {
     }
     Pizza pizza = (Pizza) o;
     return Objects.equals(this.pizzaName, pizza.pizzaName) &&
-            Objects.equals(this.size, pizza.size) &&
-            Objects.equals(this.sauce, pizza.sauce) &&
-            Objects.equals(this.crust, pizza.crust) &&
-            Objects.equals(this.toppings, pizza.toppings) &&
-            Objects.equals(this.price, pizza.price) &&
-            super.equals(o);
+        Objects.equals(this.size, pizza.size) &&
+        Objects.equals(this.sauce, pizza.sauce) &&
+        Objects.equals(this.crust, pizza.crust) &&
+        Objects.equals(this.toppings, pizza.toppings) &&
+        Objects.equals(this.price, pizza.price) &&
+        super.equals(o);
   }
 
   @Override

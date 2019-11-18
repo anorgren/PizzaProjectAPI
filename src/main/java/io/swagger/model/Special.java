@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.SpecialsRepository;
+import java.util.Objects;
+import javax.validation.constraints.NotNull;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
-
-import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 /**
  * Special
@@ -16,7 +15,8 @@ import java.util.Objects;
 @Document(collection = "Specials")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-06T23:28:45.897Z[GMT]")
-public class Special   {
+public class Special {
+
   @JsonProperty("specialId")
   private String specialId = null;
 
@@ -37,6 +37,7 @@ public class Special   {
 
   /**
    * Get specialId
+   *
    * @return specialId
    **/
   @ApiModelProperty(example = "BOGO", required = true, value = "")
@@ -57,6 +58,7 @@ public class Special   {
 
   /**
    * Get description
+   *
    * @return description
    **/
   @ApiModelProperty(example = "Receive the cheapest item for free when you purchase two or more items.", required = true, value = "")
@@ -81,7 +83,7 @@ public class Special   {
     }
     Special special = (Special) o;
     return Objects.equals(this.specialId, special.specialId) &&
-            Objects.equals(this.description, special.description);
+        Objects.equals(this.description, special.description);
   }
 
   @Override
@@ -101,8 +103,8 @@ public class Special   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

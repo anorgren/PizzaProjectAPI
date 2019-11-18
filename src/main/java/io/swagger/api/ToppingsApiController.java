@@ -3,6 +3,9 @@ package io.swagger.api;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.Topping;
 import io.swagger.repository.ToppingRepository;
+import java.util.Collections;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.List;
-
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-19T23:59:29.208Z[GMT]")
 @Controller
 public class ToppingsApiController implements ToppingsApi {
+
   private final String HEADER_VALUE = "Accept";
   private final String HEADER_CONTENTS = "application/json";
 
@@ -36,7 +36,8 @@ public class ToppingsApiController implements ToppingsApi {
   public ResponseEntity<List<ToppingRepository.ToppingName>> getToppings() {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
-      final List<ToppingRepository.ToppingName> toppingList = toppingRepository.findToppingByToppingNameExists(true);
+      final List<ToppingRepository.ToppingName> toppingList = toppingRepository
+          .findToppingByToppingNameExists(true);
       if (toppingList == null) {
         return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
       }
@@ -46,7 +47,7 @@ public class ToppingsApiController implements ToppingsApi {
   }
 
   public ResponseEntity<Topping> getToppingsByName(
-          @ApiParam(value = "toppingName", required = true) @PathVariable("name") String name) {
+      @ApiParam(value = "toppingName", required = true) @PathVariable("name") String name) {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       final Topping topping = toppingRepository.findToppingByToppingName(name.toLowerCase());

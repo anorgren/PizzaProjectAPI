@@ -1,7 +1,16 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import io.swagger.annotations.ApiParam;
+import io.swagger.model.Item;
+import io.swagger.model.Order;
+import io.swagger.repository.OrderRepository;
+import io.swagger.repository.StoreRepository;
+import io.swagger.service.OrderService;
+import java.util.List;
+import java.util.Random;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +21,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import io.swagger.annotations.ApiParam;
-import io.swagger.model.Item;
-import io.swagger.model.Order;
-import io.swagger.repository.OrderRepository;
-import io.swagger.repository.StoreRepository;
-import io.swagger.service.OrderService;
-
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-11T04:33:40.208Z[GMT]")
 @Controller
-public class OrderApiController implements OrderApi {
+public class
+OrderApiController implements OrderApi {
+
   private final String HEADER_VALUE = "Accept";
   private final String HEADER_CONTENTS = "application/json";
 
@@ -54,8 +52,9 @@ public class OrderApiController implements OrderApi {
     this.request = request;
   }
 
-  public ResponseEntity<Order> createOrder(@ApiParam(value = "list of items with item types to be added order") @Valid @RequestBody List<Item> body,
-                                           @ApiParam(value = "Branch Id of the store where order is being placed") @Valid @RequestParam(value = "branchId", required = false) String branchId) {
+  public ResponseEntity<Order> createOrder(
+      @ApiParam(value = "list of items with item types to be added order") @Valid @RequestBody List<Item> body,
+      @ApiParam(value = "Branch Id of the store where order is being placed") @Valid @RequestParam(value = "branchId", required = false) String branchId) {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
@@ -99,7 +98,8 @@ public class OrderApiController implements OrderApi {
     return new ResponseEntity<List<Order>>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  public ResponseEntity<Order> getOrdersById(@ApiParam(value = "orderId", required = true) @PathVariable("id") String id) {
+  public ResponseEntity<Order> getOrdersById(
+      @ApiParam(value = "orderId", required = true) @PathVariable("id") String id) {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
@@ -118,7 +118,9 @@ public class OrderApiController implements OrderApi {
     return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  public ResponseEntity<Order> updateOrder(@ApiParam(value = "orderId", required = true) @PathVariable("id") String id, @ApiParam(value = "") @Valid @RequestBody List<Item> body) {
+  public ResponseEntity<Order> updateOrder(
+      @ApiParam(value = "orderId", required = true) @PathVariable("id") String id,
+      @ApiParam(value = "") @Valid @RequestBody List<Item> body) {
     String accept = request.getHeader(HEADER_VALUE);
     if (accept != null && accept.contains(HEADER_CONTENTS)) {
       try {
@@ -130,7 +132,7 @@ public class OrderApiController implements OrderApi {
           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         order.setItemList(body);
-        if(Order.StatusEnum.CREATED.equals(order.getStatus())){
+        if (Order.StatusEnum.CREATED.equals(order.getStatus())) {
           order.setStatus(Order.StatusEnum.INPROCESS);
         }
         order = orderService.updatePrice(order);

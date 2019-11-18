@@ -4,12 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.StoreRepository;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Store
@@ -78,8 +81,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return branchName
    **/
   @ApiModelProperty(example = "Fremont Branch", value = "")
-  
-    public String getBranchName() {
+
+  public String getBranchName() {
     return branchName;
   }
 
@@ -98,8 +101,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return address
    **/
   @ApiModelProperty(example = "101 Fremont Ave, Seattle, WA 12345", value = "")
-  
-    public String getAddress() {
+
+  public String getAddress() {
     return address;
   }
 
@@ -126,8 +129,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return dietaryRestrictions
    **/
   @ApiModelProperty(value = "")
-  
-    public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
+
+  public Map<DietaryProperty, Boolean> getDietaryRestrictions() {
     return dietaryRestrictions;
   }
 
@@ -154,8 +157,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return availableToppings
    **/
   @ApiModelProperty(value = "")
-  
-    public List<String> getAvailableToppings() {
+
+  public List<String> getAvailableToppings() {
     return availableToppings;
   }
 
@@ -182,8 +185,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
    * @return availableSizes
    **/
   @ApiModelProperty(value = "")
-      @Valid
-    public List<PizzaSize> getAvailableSizes() {
+  @Valid
+  public List<PizzaSize> getAvailableSizes() {
     return availableSizes;
   }
 
@@ -211,7 +214,8 @@ public class Store implements StoreRepository.BasicStoreInfo {
 
   @Override
   public int hashCode() {
-    return Objects.hash(branchId, branchName, address, dietaryRestrictions, availableToppings, availableSizes);
+    return Objects.hash(branchId, branchName, address, dietaryRestrictions, availableToppings,
+        availableSizes);
   }
 
   @Override

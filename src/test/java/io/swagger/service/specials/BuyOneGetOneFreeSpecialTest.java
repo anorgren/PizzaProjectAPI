@@ -1,7 +1,18 @@
 package io.swagger.service.specials;
 
-import io.swagger.model.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import io.swagger.model.Dessert;
+import io.swagger.model.Item;
+import io.swagger.model.Order;
+import io.swagger.model.Price;
+import io.swagger.model.Soda;
 import io.swagger.repository.OrderRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,11 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:/application-test.properties")
@@ -87,7 +93,7 @@ public class BuyOneGetOneFreeSpecialTest {
   }
 
   @Test
-  public void isApplicableOrderDoesntExist(){
+  public void isApplicableOrderDoesntExist() {
     ApplicableSpecial special = applicableSpecialFactory.getApplicableSpecial(SPECIAL_ID);
 
     assertFalse(special.isApplicable("Doesn't exist"));

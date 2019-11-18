@@ -7,14 +7,13 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.BreadstickRepository;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Breadstick
@@ -23,7 +22,8 @@ import java.util.Objects;
 @Validated
 @JsonTypeName("Breadstick")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
-public class Breadstick extends Item  {
+public class Breadstick extends Item {
+
   private static final Double SMALL_PRICE = new Double(2.99);
   private static final Double LARGE_PRICE = new Double(4.99);
   private static final Double WITH_CHEESE_PRICE = new Double(2.00);
@@ -95,8 +95,9 @@ public class Breadstick extends Item  {
 
   /**
    * Get size
+   *
    * @return size
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
   public SizeEnum getSize() {
@@ -113,8 +114,9 @@ public class Breadstick extends Item  {
 
   /**
    * Get withCheese
+   *
    * @return withCheese
-  **/
+   **/
   @ApiModelProperty(required = true, value = "true/false")
   @NotNull
   public Boolean isWithCheese() {
@@ -133,8 +135,9 @@ public class Breadstick extends Item  {
 
   /**
    * Get dietaryProperties
+   *
    * @return dietaryProperties
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
@@ -144,8 +147,9 @@ public class Breadstick extends Item  {
 
   /**
    * Get price
+   *
    * @return price
-  **/
+   **/
   @ApiModelProperty(example = "3.99", required = true, value = "")
   @NotNull
   @Override
@@ -194,8 +198,8 @@ public class Breadstick extends Item  {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

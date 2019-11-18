@@ -7,14 +7,13 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.SodaRepository;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Soda
@@ -180,9 +179,9 @@ public class Soda extends Item {
     }
     Soda soda = (Soda) o;
     return Objects.equals(this.sodaName, soda.sodaName) &&
-            Objects.equals(this.size, soda.size) &&
-            Objects.equals(this.dietaryProperties, soda.dietaryProperties) &&
-            Objects.equals(this.price, soda.price);
+        Objects.equals(this.size, soda.size) &&
+        Objects.equals(this.dietaryProperties, soda.dietaryProperties) &&
+        Objects.equals(this.price, soda.price);
   }
 
   @Override

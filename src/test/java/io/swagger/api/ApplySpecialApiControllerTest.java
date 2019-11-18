@@ -1,7 +1,22 @@
 package io.swagger.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.Dessert;
+import io.swagger.model.Order;
+import io.swagger.model.Price;
+import io.swagger.model.Special;
+import io.swagger.repository.OrderRepository;
+import io.swagger.repository.SpecialsRepository;
+import io.swagger.service.OrderService;
+import io.swagger.service.specials.ApplicableSpecial;
+import io.swagger.service.specials.ApplicableSpecialFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,28 +33,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import io.swagger.model.Dessert;
-import io.swagger.model.Order;
-import io.swagger.model.Price;
-import io.swagger.model.Special;
-import io.swagger.repository.OrderRepository;
-import io.swagger.repository.SpecialsRepository;
-import io.swagger.service.OrderService;
-import io.swagger.service.specials.ApplicableSpecial;
-import io.swagger.service.specials.ApplicableSpecialFactory;
-
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(ApplySpecialApiController.class)
 @WebAppConfiguration
 @ContextConfiguration(classes =
-        {ApplySpecialApiController.class, TestContext.class, WebApplicationContext.class})
+    {ApplySpecialApiController.class, TestContext.class, WebApplicationContext.class})
 public class ApplySpecialApiControllerTest {
 
   @MockBean
@@ -84,17 +82,20 @@ public class ApplySpecialApiControllerTest {
         return true;
       }
     };
-    when(applicableSpecialFactory.getApplicableSpecial("TestSpecialId")).thenReturn(testApplicableSpecial);
+    when(applicableSpecialFactory.getApplicableSpecial("TestSpecialId"))
+        .thenReturn(testApplicableSpecial);
     Dessert dessert = new Dessert().dessertName("testDessert");
     order.addItemListItem(dessert);
     when(orderRepository.findByOrderId("TestOrderId")).thenReturn(order);
-    when(orderService.updatePrice(order)).thenReturn(order.tentativeAmount(new Price().priceInCents(1000)));
+    when(orderService.updatePrice(order))
+        .thenReturn(order.tentativeAmount(new Price().priceInCents(1000)));
     String orderJson = objectMapper.writeValueAsString(order);
-    this.mockMvc.perform(put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
+    this.mockMvc.perform(
+        put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
             .header("Accept", "application/json"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-            .andExpect(content().json(orderJson));
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(orderJson));
     assertTrue(testApplicableSpecial.isApplied());
   }
 
@@ -112,19 +113,22 @@ public class ApplySpecialApiControllerTest {
         return false;
       }
     };
-    when(applicableSpecialFactory.getApplicableSpecial("TestSpecialId")).thenReturn(testApplicableSpecial);
-    this.mockMvc.perform(put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
+    when(applicableSpecialFactory.getApplicableSpecial("TestSpecialId"))
+        .thenReturn(testApplicableSpecial);
+    this.mockMvc.perform(
+        put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
             .header("Accept", "application/json"))
-            .andExpect(status().isNotAcceptable());
+        .andExpect(status().isNotAcceptable());
     assertFalse(testApplicableSpecial.isApplied());
   }
 
   @Test
   public void testApplySpecial_InvalidOrderId() throws Exception {
     when(orderRepository.findByOrderId("TestOrderId")).thenReturn(null);
-    this.mockMvc.perform(put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
+    this.mockMvc.perform(
+        put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
             .header("Accept", "application/json"))
-            .andExpect(status().isNotFound());
+        .andExpect(status().isNotFound());
   }
 
   @Test
@@ -133,9 +137,10 @@ public class ApplySpecialApiControllerTest {
     order.orderId("TestOrderId");
     when(orderRepository.findByOrderId("TestOrderId")).thenReturn(order);
     when(specialsRepository.findBySpecialId("TestSpecialId")).thenReturn(null);
-    this.mockMvc.perform(put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
+    this.mockMvc.perform(
+        put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
             .header("Accept", "application/json"))
-            .andExpect(status().isNotFound());
+        .andExpect(status().isNotFound());
   }
 
   @Test
@@ -146,19 +151,23 @@ public class ApplySpecialApiControllerTest {
     Special special = new Special();
     special.specialId("TestSpecialId");
     when(specialsRepository.findBySpecialId("TestSpecialId")).thenReturn(special);
-    when(applicableSpecialFactory.getApplicableSpecial("TestSpecialId")).thenThrow(new SpecialNotFoundException("TestSpecialId"));
-    this.mockMvc.perform(put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
+    when(applicableSpecialFactory.getApplicableSpecial("TestSpecialId"))
+        .thenThrow(new SpecialNotFoundException("TestSpecialId"));
+    this.mockMvc.perform(
+        put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId")
             .header("Accept", "application/json"))
-            .andExpect(status().isInternalServerError());
+        .andExpect(status().isInternalServerError());
   }
 
   @Test
   public void testApplySpecial_NoHeader() throws Exception {
-    this.mockMvc.perform(put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId"))
-            .andExpect(status().isNotImplemented());
+    this.mockMvc.perform(
+        put("/applySpecial").param("specialId", "TestSpecialId").param("orderId", "TestOrderId"))
+        .andExpect(status().isNotImplemented());
   }
 
   private static class MockApplicableSpecial implements ApplicableSpecial {
+
     public boolean applied = false;
 
     public boolean isApplied() {
