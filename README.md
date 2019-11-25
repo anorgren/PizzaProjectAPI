@@ -32,7 +32,8 @@ within the past 30 minutes.
 * Create a new Heroku application
   * ```$ heroku create```
 * Attach mLab MongoDB to the Heroku app
-  * ```$ heroku addons: create mongolab```
+  * ```$ heroku addons:create mongolab```
+  * Your heroku account must be verified in order to add this addon (will require entering credit card information)
 * Push local branch to the Heroku app
   * If on a branch of your local repo other than master:
     * ```$ git push heroku 'yourLocalBranchName:master```
@@ -40,14 +41,17 @@ within the past 30 minutes.
     * ```$ git push heroku master```
 * Open the deployed app
   * ```$ heroku open```
+  * Will need to add 'ThePizzaProject/1.0.0' to the end of the URL provided by Heroku.
+    * Example: your-heroku-app-name.herokuapp.com/ThePizzaProject/1.0.0
   
-  ### Deployment Instructions (Local)
+### Deployment Instructions (Local)
 * Install MongoDB locally. 
   * [Instructions](https://docs.mongodb.com/manual/installation/)
-* Run tests with the command:
+* Run application with the command:
   * ```$ mvn spring-boot:run ```
+* If the local port has not been changed, open in browser with this [link](http://localhost:8080/ThePizzaProject/1.0.0).
  
- ### Test Instructions
+### Test Instructions
  * Run tests with Maven from the command line.
    * ```$ mvn verify```
 
