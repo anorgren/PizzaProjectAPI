@@ -20,6 +20,11 @@ The underlying library integrating swagger to SpringBoot is [springfox](https://
 Includes links to all post-mortems, additional resources used, 
 and any other additional relevant documents.
 
+### Final Project Report
+[Report](https://docs.google.com/document/d/1mnl9vtSs68ulHj1y7PeRuFpT7EnlGMQfT8o_MvtCJMQ/edit?usp=sharing)
+
+### Final Presentation Materials
+
 ### Live API
 [Version 1.0.0](https://pizza-project-cs5500.herokuapp.com/ThePizzaProject/1.0.0/swagger-ui.html#!/developers/getBreadsticksByName)
 This is currently running on a free Heroku dyno which may take up to 90 seconds 
@@ -54,12 +59,6 @@ within the past 30 minutes.
 ### Test Instructions
  * Run tests with Maven from the command line.
    * ```$ mvn verify```
-
-### Final Project Report
-[Report](https://docs.google.com/document/d/1mnl9vtSs68ulHj1y7PeRuFpT7EnlGMQfT8o_MvtCJMQ/edit?usp=sharing)
-
-### Final Presentation Materials
-
 ________________________________
 
 ##### Group Members
