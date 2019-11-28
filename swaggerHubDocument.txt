@@ -2,43 +2,54 @@ openapi: 3.0.0
 # Added by API Auto Mocking Plugin
 servers:
 # Added by API Auto Mocking Plugin
-# Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/ateam_cs5500/PizzaProject/1.0.0
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/acurt7/ThePizzaProject/1.0.0
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/aayushms93/ThePizzaProject/1.0.0
-  - description: Heroku API
-    url: https://infinite-wildwood-41499.herokuapp.com/aayushms93/ThePizzaProject/1.0.0
-  - description: Andrew Heroku API
-    url: https://arcane-river-43270.herokuapp.com/aayushms93/ThePizzaProject/1.0.0
 info:
-  description: These are the APIs for delivery at The Pizza Temple Restaurant
+  description: Backend API for the The Pizza Temple Restaurant
   version: "1.0.0"
   title: The Pizza Temple
-  contact:
-    email: you@your-company.com
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
-  - name: admins
-    description: Secured Admin-only calls
-  - name: developers
-    description: Operations available to regular developers
+  - name: stores
+    description: Access information about all existing store branches.
+  - name: toppings
+    description: Access information about all toppings provided.
+  - name: sizes
+    description: Access information about all sizes offered.
+  - name: specials
+    description: Access information about all specials offered.
+  - name: prices
+    description: Determine the price of a pizza or order.
+  - name: suggestions
+    description: Determine how many pizzas are needed to feed a group of a given size.
+  - name: breadsticks
+    description: Access information about all breadsticks offered.
+  - name: desserts
+    description: Access information about all desserts offered.
+  - name: sodas
+    description: Access information about all sodas offered.
+  - name: pizzas
+    description: Access information about pizzas offered or create a custom pizza.
+  - name: crusts
+    description: Access information about all crusts offered.
+  - name: sauces
+    description: Access information about all sauces offered.
+  - name: order
+    description: Access information about existing orders, or create a a new order.
 paths:
   /stores:
     get:
       tags:
-        - developers
-      summary: returns all stores
+        - stores
+      summary: Returns all stores' branch id, name, and address.
       operationId: getStores
       description: |
         Get list of all stores
       responses:
         '200':
-          description: list of all stores
+          description: List of all stores' basic information.
           content:
             application/json:
               schema:
@@ -50,8 +61,8 @@ paths:
   /stores/{id}:
     get:
       tags:
-        - developers
-      summary: get store by id
+        - stores
+      summary: Get a particular store by its branch id.
       operationId: getStoresById
       description: |
         Get store details by id
@@ -75,14 +86,15 @@ paths:
   /toppings:
     get:
       tags:
-        - developers
-      summary: returns all topping names
+        - toppings
+      summary: Returns all topping and information about their price and dietary
+               properties.
       operationId: getToppings
       description: |
-        Get list of all topping names
+        Get list of all toppings
       responses:
         '200':
-          description: list of all topping names
+          description: List of all topping names
           content:
             application/json:
               schema:
@@ -94,11 +106,11 @@ paths:
   /toppings/{name}:
     get:
       tags:
-        - developers
-      summary: returns topping information of the given topping
+        - toppings
+      summary: Returns all topping information of the given topping.
       operationId: getToppingsbyName
       description: |
-        Get topping information of the given topping
+        Get all topping information of the given topping
       parameters:
         - name: name
           in: path
@@ -109,7 +121,7 @@ paths:
             example: tomato
       responses:
         '200':
-          description: topping information of the given topping
+          description: Topping information about the given topping.
           content:
             application/json:
               schema:
@@ -119,14 +131,14 @@ paths:
   /sizes:
     get:
       tags:
-        - developers
-      summary: returns all pizza sizes
+        - sizes
+      summary: Returns all pizza sizes' description and size in inches.
       operationId: getSizes
       description: |
         Get list of all pizza sizes
       responses:
         '200':
-          description: list of all pizza sizes
+          description: List of all pizza sizes.
           content:
             application/json:
               schema:
@@ -138,11 +150,11 @@ paths:
   /specials:
     get:
       tags:
-      - developers
-      summary: returns list of specials in all stores
+      - specials
+      summary: Returns a list of avaialable specials across all stores.
       operationId: getSpecials
       description: |
-        get list of all specials for all stores
+        Get list of all specials for all stores.
       responses:
         '200':
           description: 'list of all specials for all stores'
@@ -155,8 +167,9 @@ paths:
   /prices:
     get:
       tags:
-        - developers
-      summary: Returns the price of a single pizza sold by Pizza Temple in cents
+        - prices
+      summary: Returns the price of a single pizza sold by Pizza Temple in
+               cents (USD).
       operationId: getPizzaPrice
       description: Get pricing information on pizzas sold by PizzaTemple
       parameters:
@@ -169,14 +182,14 @@ paths:
             example: small
         - name: toppings
           in: query
-          description: Topping to include on pizza
+          description: Toppings to include on pizza (max 5)
           schema:
             type: array
             items:
              type: string
       responses:
         '200':
-          description: The cost of the requested pizza in cents
+          description: The cost of the requested pizza in cents (USD).
           content:
             application/json:
               schema:
@@ -186,11 +199,11 @@ paths:
   /prices/{orderId}:
     get:
       tags:
-        - developers
-      summary: get order by id
+        - prices
+      summary: Get the price of an order by its ID.
       operationId: getOrderPrice
       description: |
-        Get price of the given order
+        Get the price of the given order.
       parameters:
       - name: orderId
         in: path
@@ -201,7 +214,7 @@ paths:
           example: 1
       responses:
         '200':
-          description: the price of the order in cents
+          description: The price of the order in cents (USD).
           content:
             application/json:
               schema:
@@ -211,7 +224,7 @@ paths:
   /suggestions:
     get:
       tags:
-        - developers
+        - suggestions
       summary: Returns a suggested number of pizzas to order given the number of adults and children that will be enjoying it.
       operationId: getNumberOfPizzas
       description: Suggests how many pizzas to order based on the number of people in the ordering group.
@@ -238,7 +251,7 @@ paths:
             example : small
       responses:
         '200':
-          description: The number of small, medium, and large pizzas to order
+          description: The number of small, medium, and large pizzas to order.
           content:
             application/json:
               schema:
@@ -249,14 +262,14 @@ paths:
   /breadsticks:
     get:
       tags:
-        - developers
-      summary: returns breadsticks
+        - breadsticks
+      summary: Get all breadstick options.
       operationId: getBreadsticks
       description: |
         Get list of all breadsticks
       responses:
         '200':
-          description: list of all breadsticks
+          description: List of all breadsticks.
           content:
             application/json:
               schema:
@@ -268,14 +281,14 @@ paths:
   /desserts:
     get:
       tags:
-        - developers
-      summary: returns desserts
+        - desserts
+      summary: Returns all dessert options available.
       operationId: getDesserts
       description: |
-        Get list of all desserts
+        Get list of all desserts.
       responses:
         '200':
-          description: list of all desserts
+          description: List of all desserts.
           content:
             application/json:
               schema:
@@ -287,11 +300,11 @@ paths:
   /desserts/{name}:
     get:
       tags:
-        - developers
-      summary: returns dessert information about the given dessert.
+        - desserts
+      summary: Returns dessert information about the given dessert.
       operationId: getDessertsByName
       description: |
-        Get information of the given dessert
+        Get information about the given dessert
       parameters:
         - name: name
           in: path
@@ -302,7 +315,7 @@ paths:
             example: double chocolate brownies
       responses:
         '200':
-          description: information about the given dessert
+          description: Information about the given dessert.
           content:
             application/json:
               schema:
@@ -312,14 +325,14 @@ paths:
   /sodas:
     get:
       tags:
-        - developers
-      summary: returns all sodas
+        - sodas
+      summary: Returns all soda configurations of unique brand and size combinations.
       operationId: getSodas
       description: |
         Get list of all sodas
       responses:
         '200':
-          description: list of all sodas
+          description: List of all available sodas.
           content:
             application/json:
               schema:
@@ -331,11 +344,11 @@ paths:
   /sodas/{name}:
     get:
       tags:
-        - developers
-      summary: returns all size options and information about the given soda.
+        - sodas
+      summary: Returns all size options and information about the given soda brand.
       operationId: getSodasByName
       description: |
-        Get information of the given soda
+        Get information of the given soda brand.
       parameters:
         - name: name
           in: path
@@ -346,7 +359,7 @@ paths:
             example: sprite
       responses:
         '200':
-          description: all available sizes and information about the given soda
+          description: All available sizes and information about the given soda brand.
           content:
             application/json:
               schema:
@@ -358,14 +371,14 @@ paths:
   /pizzas:
     get:
       tags:
-        - developers
-      summary: returns all pizzas
+        - pizzas
+      summary: Returns all pre-configured pizza options.
       operationId: getPizzas
       description: |
-        Get list of all pizzas
+        Get list of all pre-configured pizzas.
       responses:
         '200':
-          description: list of all pizzas
+          description: List of all pizzas.
           content:
             application/json:
               schema:
@@ -376,11 +389,11 @@ paths:
           description: bad input parameter
     put:
       tags:
-        - developers
-      summary: creates a Pizza 
+        - pizzas
+      summary: Creates a custom pizza.
       operationId: createPizza
       description: |
-        Validates and creates pizza object using the parameters provided
+        Validates and creates a pizza object using the parameters provided.
       parameters:
         - name: pizzaName
           in: query
@@ -388,7 +401,7 @@ paths:
           required: false
           schema:
             type: string
-            example: 'meat Lovers'
+            example: 'meat lovers'
         - name: size
           in: query
           description: size description
@@ -412,7 +425,7 @@ paths:
             example: original
       responses:
         '200':
-          description: pizza 
+          description: pizza
           content:
             application/json:
               schema:
@@ -422,11 +435,11 @@ paths:
   /pizzas/{pizzaName}:
     get:
       tags:
-        - developers
-      summary: returns information about the given pizza.
+        - pizzas
+      summary: Returns information about the given pizza.
       operationId: getPizzaByName
       description: |
-        Get information of the given pizza
+        Get information about the given pizza.
       parameters:
         - name: pizzaName
           in: path
@@ -437,7 +450,7 @@ paths:
             example: meat lovers
       responses:
         '200':
-          description: information about the given pizza
+          description: Information about the given pizza.
           content:
             application/json:
               schema:
@@ -447,14 +460,14 @@ paths:
   /crusts:
     get:
       tags:
-        - developers
-      summary: returns all crust options
+        - crusts
+      summary: Returns all crust options.
       operationId: getCrusts
       description: |
-        Get list of all crusts
+        Get list of all crusts.
       responses:
         '200':
-          description: list of all crusts
+          description: List of all crusts.
           content:
             application/json:
               schema:
@@ -466,11 +479,11 @@ paths:
   /crusts/{crustName}:
     get:
       tags:
-        - developers
-      summary: returns information about the given crust.
+        - crusts
+      summary: Returns information about the given crust.
       operationId: getCrustByName
       description: |
-        Get information of the given crust
+        Get information of the given crust.
       parameters:
         - name: crustName
           in: path
@@ -481,7 +494,7 @@ paths:
             example: original crust
       responses:
         '200':
-          description: information about the given crust
+          description: Information about the given crust.
           content:
             application/json:
               schema:
@@ -492,13 +505,13 @@ paths:
   /sauces:
     get:
       tags:
-        - developers
-      summary: returns all sauces
+        - sauces
+      summary: Returns all sauces.
       operationId: getSauces
-      description: Get list of all sauces
+      description: Get list of all sauces.
       responses:
         '200':
-          description: list of all sauces
+          description: List of all sauces.
           content:
             application/json:
               schema:
@@ -510,8 +523,8 @@ paths:
   /sauces/{sauceName}:
     get:
       tags:
-        - developers
-      summary: returns information about the given sauce.
+        - sauces
+      summary: Returns information about the given sauce.
       operationId: getSauceByName
       description: |
         Get information of the given sauce
@@ -525,7 +538,7 @@ paths:
             example: original
       responses:
         '200':
-          description: information about the given sauce
+          description: Information about the given sauce.
           content:
             application/json:
               schema:
@@ -535,14 +548,14 @@ paths:
   /order:
     get:
       tags:
-        - developers
-      summary: returns all orders
+        - order
+      summary: Returns all existing orders.
       operationId: getOrders
       description: |
-        Get list of all orders
+        Get list of all orders.
       responses:
         '200':
-          description: list of all orders
+          description: List of all orders.
           content:
             application/json:
               schema:
@@ -553,11 +566,12 @@ paths:
           description: bad input parameter
     put:
       tags:
-        - developers
-      summary: creates a new order
+        - order
+      summary: Creates a new order.
       operationId: createOrder
       description: |
-        Creates a new order with provided ItemList(optional). Returns order object.
+        Creates a new order with provided ItemList(optional).
+        Returns a new order object.
       parameters:
         - name: itemList
           in: query
@@ -566,7 +580,7 @@ paths:
             $ref: '#/components/schemas/ItemList'
       responses:
         '200':
-          description: Created order object with order id
+          description: Created order object with order Id.
           content:
             application/json:
               schema:
@@ -576,11 +590,11 @@ paths:
   /order/{id}:
     get:
       tags:
-        - developers
-      summary: get order by id
+        - order
+      summary: Get order by order Id.
       operationId: getOrdersById
       description: |
-        Get order details by id
+        Get order details by order Id.
       parameters:
       - name: id
         in: path
@@ -591,7 +605,7 @@ paths:
           example: 1
       responses:
         '200':
-          description: Details of the order of the given Id
+          description: Details of the order corresponding to the given order Id.
           content:
             application/json:
               schema:
@@ -600,11 +614,11 @@ paths:
           description: bad input parameter
     put:
       tags:
-        - developers
-      summary: updates the given order
+        - order
+      summary: Updates order based off the provided order Id.
       operationId: updateOrder
       description: |
-        update the given order with given parameters.
+        Update the given order with given parameters.
       parameters:
         - name: id
           in: path
@@ -631,11 +645,11 @@ paths:
   /applySpecial:
     put:
       tags:
-        - developers
-      summary: Completes the given order
+        - order
+      summary: Completes the order of the provided order Id.
       operationId: applySpecial
       description: |
-        applies the Special/Discount to order
+        Applies the Special/Discount to the order of the provided order Id.
       parameters:
         - name: specialId
           in: path
@@ -646,7 +660,7 @@ paths:
             example: 1
       responses:
         '200':
-          description: Updated Order Record
+          description: Updated Order Record.
           content:
             application/json:
               schema:
@@ -656,11 +670,12 @@ paths:
   /completeOrder:
     put:
       tags:
-        - developers
-      summary: Completes the given order
+        - order
+      summary: Completes the order of the provided order Id.
       operationId: completeOrder
       description: |
-        Finalizes the order with payement information and marking order complete. Once completed the order can not be modified.
+        Finalizes the order with payement information and marking order complete.
+        Once completed the order can not be modified.
       parameters:
         - name: id
           in: query
@@ -677,7 +692,7 @@ paths:
             $ref: '#/components/schemas/PaymentInformation'
         - name: tentativeAmount
           in: query
-          description: tentative amount of order in cents
+          description: Tentative amount of order in cents
           required: true
           schema:
             $ref: '#/components/schemas/Price' 

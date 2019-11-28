@@ -5,10 +5,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CrustRepository extends MongoRepository<Crust, String> {
 
-  interface CrustNameOnly {
+    interface CrustNameOnly {
 
-    String getCrustName();
-  }
+        String getCrustName();
+    }
 
-  Crust getCrustByCrustName(String crustName);
+    Crust getCrustByCrustName(String crustName);
 }

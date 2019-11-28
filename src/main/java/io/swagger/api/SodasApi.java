@@ -4,42 +4,42 @@
  */
 package io.swagger.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import io.swagger.model.Soda;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-10T08:56:40.405Z[GMT]")
 @Api(value = "sodas", description = "the sodas API")
 public interface SodasApi {
 
-  @ApiOperation(value = "returns all sodas", nickname = "getSodas", notes = "Get list of all sodas ", response = Soda.class, responseContainer = "List", tags = {
-      "developers",})
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "list of all sodas", response = Soda.class, responseContainer = "List"),
-      @ApiResponse(code = 400, message = "bad input parameter")})
-  @RequestMapping(value = "/sodas",
-      produces = {"application/json"},
-      method = RequestMethod.GET)
-  ResponseEntity<List<Soda>> getSodas();
+    @ApiOperation(value = "Returns all soda configurations of unique brand and size combinations.",
+            nickname = "getSodas", notes = "Get list of all sodas ", response = Soda.class,
+            responseContainer = "List", tags = {"sodas",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "List of all available sodas.", response = Soda.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "bad input parameter")})
+    @RequestMapping(value = "/sodas",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    ResponseEntity<List<Soda>> getSodas();
 
 
-  @ApiOperation(value = "returns soda information about the given soda.", nickname = "getSodasByName", notes = "Get information of the given dessert ", response = Soda.class, responseContainer = "List", tags = {
-      "developers",})
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "information about the given soda", response = Soda.class, responseContainer = "List"),
-      @ApiResponse(code = 400, message = "bad input parameter")})
-  @RequestMapping(value = "/sodas/{name}",
-      produces = {"application/json"},
-      method = RequestMethod.GET)
-  ResponseEntity<List<Soda>> getSodasByName(
-      @ApiParam(value = "sodaName", required = true) @PathVariable("name") String name);
+    @ApiOperation(value = "Returns all size options and information about the given soda brand.",
+            nickname = "getSodasByName", notes = "Get information of the given soda brand. ",
+            response = Soda.class, responseContainer = "List", tags = {"sodas",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "All available sizes and information about the given soda brand.",
+                    response = Soda.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "bad input parameter")})
+    @RequestMapping(value = "/sodas/{name}",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    ResponseEntity<List<Soda>> getSodasByName(
+            @ApiParam(value = "sodaName", required = true) @PathVariable("name") String name);
 
 }
