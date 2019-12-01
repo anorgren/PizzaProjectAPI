@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface SauceRepository extends MongoRepository<Sauce, String> {
 
-  Sauce getSauceBySauceName(String sauceName);
+    Sauce getSauceBySauceName(String sauceName);
 }

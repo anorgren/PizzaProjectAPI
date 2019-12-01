@@ -1,19 +1,20 @@
 package io.swagger.repository;
 
 import io.swagger.model.Topping;
-import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface ToppingRepository extends MongoRepository<Topping, String> {
 
-  interface ToppingName {
+    interface ToppingName {
 
-    String getToppingName();
-  }
+        String getToppingName();
+    }
 
-  List<ToppingName> findToppingByToppingNameExists(boolean exists);
+    List<ToppingName> findToppingByToppingNameExists(boolean exists);
 
-  Topping findToppingByToppingName(String toppingName);
+    Topping findToppingByToppingName(String toppingName);
 }

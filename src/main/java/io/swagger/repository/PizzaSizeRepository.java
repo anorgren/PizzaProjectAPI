@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface PizzaSizeRepository extends MongoRepository<PizzaSize, String> {
 
-  PizzaSize findPizzaSizeBySizeDescription(String sizeDescription);
+    PizzaSize findPizzaSizeBySizeDescription(String sizeDescription);
 }

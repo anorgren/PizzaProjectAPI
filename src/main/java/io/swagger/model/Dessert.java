@@ -5,13 +5,14 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.configuration.DataConfiguration;
 import io.swagger.repository.DessertRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
 
 /**
  * Dessert
@@ -22,166 +23,166 @@ import org.springframework.validation.annotation.Validated;
 @JsonTypeName("Dessert")
 public class Dessert extends Item {
 
-  private static final String ITEM_TYPE = "Dessert";
+    private static final String ITEM_TYPE = "Dessert";
 
-  @JsonProperty("dessertName")
-  private String dessertName = null;
+    @JsonProperty("dessertName")
+    private String dessertName = null;
 
-  @JsonProperty("description")
-  private String description = null;
+    @JsonProperty("description")
+    private String description = null;
 
-  @JsonProperty("dietaryProperties")
-  @Valid
-  private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
+    @JsonProperty("dietaryProperties")
+    @Valid
+    private Map<DietaryProperty, Boolean> dietaryProperties = new HashMap<DietaryProperty, Boolean>();
 
-  @JsonProperty("price")
-  private Double price = null;
+    @JsonProperty("price")
+    private Double price = null;
 
-  public static void initialize(DessertRepository repository) {
-    if (repository.count() > 0) {
-      return;
+    public static void initialize(DessertRepository repository) {
+        if (repository.count() > 0) {
+            return;
+        }
+        DataConfiguration.backfillDessertsRepository(repository);
     }
-    DataConfiguration.backfillDessertsRepository(repository);
-  }
 
-  public Dessert dessertName(String dessertName) {
-    this.dessertName = dessertName;
-    return this;
-  }
-
-  /**
-   * Get dessertName
-   *
-   * @return dessertName
-   **/
-  @ApiModelProperty(example = "double chocolate brownies", required = true, value = "")
-  @NotNull
-
-  public String getDessertName() {
-    return dessertName;
-  }
-
-  public void setDessertName(String dessertName) {
-    this.dessertName = dessertName;
-  }
-
-  public Dessert description(String description) {
-    this.description = description;
-    return this;
-  }
-
-  /**
-   * Get description
-   *
-   * @return description
-   **/
-  @ApiModelProperty(example = "four large gooey chocolate brownies with chocolate chunks", required = true, value = "")
-  @NotNull
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Dessert dietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
-    this.dietaryProperties = dietaryProperties;
-    return this;
-  }
-
-  public Dessert putDietaryPropertiesItem(DietaryProperty key, Boolean dietaryPropertiesItem) {
-    this.dietaryProperties.put(key, dietaryPropertiesItem);
-    return this;
-  }
-
-  /**
-   * Get dietaryProperties
-   *
-   * @return dietaryProperties
-   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-  public Map<DietaryProperty, Boolean> getDietaryProperties() {
-    return dietaryProperties;
-  }
-
-  public void setDietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
-    this.dietaryProperties = dietaryProperties;
-  }
-
-  public Dessert price(Double price) {
-    this.price = price;
-    return this;
-  }
-
-  /**
-   * Get price
-   *
-   * @return price
-   **/
-  @ApiModelProperty(example = "4.99", required = true, value = "")
-  @NotNull
-  @Override
-  @Valid
-  public Double getPrice() {
-    return price;
-  }
-
-  public void setPrice(Double price) {
-    this.price = price;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
+    public Dessert dessertName(String dessertName) {
+        this.dessertName = dessertName;
+        return this;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    /**
+     * Get dessertName
+     *
+     * @return dessertName
+     **/
+    @ApiModelProperty(example = "double chocolate brownies", required = true, value = "")
+    @NotNull
+
+    public String getDessertName() {
+        return dessertName;
     }
-    Dessert dessert = (Dessert) o;
-    return Objects.equals(this.dessertName, dessert.dessertName) &&
-        Objects.equals(this.description, dessert.description) &&
-        Objects.equals(this.dietaryProperties, dessert.dietaryProperties) &&
-        Objects.equals(this.price, dessert.price) &&
-        super.equals(o);
-  }
 
-  @Override
-  public String getItemType() {
-    return ITEM_TYPE;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(dessertName, description, dietaryProperties, price, super.hashCode());
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Dessert {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    dessertName: ").append(toIndentedString(dessertName)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
-    sb.append("    price: ").append(toIndentedString(price)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first
-   * line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
+    public void setDessertName(String dessertName) {
+        this.dessertName = dessertName;
     }
-    return o.toString().replace("\n", "\n    ");
-  }
+
+    public Dessert description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return description
+     **/
+    @ApiModelProperty(example = "four large gooey chocolate brownies with chocolate chunks", required = true, value = "")
+    @NotNull
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Dessert dietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
+        this.dietaryProperties = dietaryProperties;
+        return this;
+    }
+
+    public Dessert putDietaryPropertiesItem(DietaryProperty key, Boolean dietaryPropertiesItem) {
+        this.dietaryProperties.put(key, dietaryPropertiesItem);
+        return this;
+    }
+
+    /**
+     * Get dietaryProperties
+     *
+     * @return dietaryProperties
+     **/
+    @ApiModelProperty(required = true, value = "")
+    @NotNull
+
+    public Map<DietaryProperty, Boolean> getDietaryProperties() {
+        return dietaryProperties;
+    }
+
+    public void setDietaryProperties(Map<DietaryProperty, Boolean> dietaryProperties) {
+        this.dietaryProperties = dietaryProperties;
+    }
+
+    public Dessert price(Double price) {
+        this.price = price;
+        return this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return price
+     **/
+    @ApiModelProperty(example = "4.99", required = true, value = "")
+    @NotNull
+    @Override
+    @Valid
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Dessert dessert = (Dessert) o;
+        return Objects.equals(this.dessertName, dessert.dessertName) &&
+                Objects.equals(this.description, dessert.description) &&
+                Objects.equals(this.dietaryProperties, dessert.dietaryProperties) &&
+                Objects.equals(this.price, dessert.price) &&
+                super.equals(o);
+    }
+
+    @Override
+    public String getItemType() {
+        return ITEM_TYPE;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dessertName, description, dietaryProperties, price, super.hashCode());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Dessert {\n");
+        sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+        sb.append("    dessertName: ").append(toIndentedString(dessertName)).append("\n");
+        sb.append("    description: ").append(toIndentedString(description)).append("\n");
+        sb.append("    dietaryProperties: ").append(toIndentedString(dietaryProperties)).append("\n");
+        sb.append("    price: ").append(toIndentedString(price)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces (except the first
+     * line).
+     */
+    private String toIndentedString(java.lang.Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
 }

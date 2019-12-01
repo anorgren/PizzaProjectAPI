@@ -9,22 +9,25 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.model.Special;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-06T23:28:45.897Z[GMT]")
 @Api(value = "specials", description = "the specials API")
 public interface SpecialsApi {
 
-  @ApiOperation(value = "returns list of specials in all stores", nickname = "getSpecials", notes = "get list of all specials for all stores ", response = Special.class, responseContainer = "List", tags = {
-      "developers",})
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "list of all specials for all stores", response = Special.class, responseContainer = "List")})
-  @RequestMapping(value = "/specials",
-      produces = {"application/json"},
-      method = RequestMethod.GET)
-  ResponseEntity<List<Special>> getSpecials();
+    @ApiOperation(value = "Returns a list of avaialable specials across all stores.", nickname = "getSpecials",
+            notes = "Get list of all specials for all stores. ", response = Special.class, responseContainer = "List",
+            tags = {"specials",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "list of all specials for all stores", response = Special.class,
+                    responseContainer = "List")})
+    @RequestMapping(value = "/specials",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    ResponseEntity<List<Special>> getSpecials();
 
 }

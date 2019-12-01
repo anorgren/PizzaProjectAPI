@@ -4,43 +4,42 @@
  */
 package io.swagger.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import io.swagger.model.Topping;
 import io.swagger.repository.ToppingRepository;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-19T23:59:29.208Z[GMT]")
 @Api(value = "toppings", description = "the toppings API")
 public interface ToppingsApi {
 
-  @ApiOperation(value = "returns all topping names", nickname = "getToppings", notes = "Get list of all topping names", response = Topping.class, responseContainer = "List", tags = {
-      "developers",})
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "list of all topping names", response = Topping.class, responseContainer = "List"),
-      @ApiResponse(code = 400, message = "bad input parameter")})
-  @RequestMapping(value = "/toppings",
-      produces = {"application/json"},
-      method = RequestMethod.GET)
-  ResponseEntity<List<ToppingRepository.ToppingName>> getToppings();
+    @ApiOperation(value = "Returns all topping and information about their price and dietary properties.",
+            nickname = "getToppings", notes = "Get list of all toppings ", response = Topping.class,
+            responseContainer = "List", tags = {"toppings",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "List of all topping names", response = Topping.class,
+                    responseContainer = "List"),
+            @ApiResponse(code = 400, message = "bad input parameter")})
+    @RequestMapping(value = "/toppings",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    ResponseEntity<List<ToppingRepository.ToppingName>> getToppings();
 
 
-  @ApiOperation(value = "returns topping information of the given topping", nickname = "getToppingsbyName", notes = "Get topping information of the given topping ", response = Topping.class, tags = {
-      "developers",})
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "topping information of the given topping", response = Topping.class),
-      @ApiResponse(code = 400, message = "bad input parameter")})
-  @RequestMapping(value = "/toppings/{name}",
-      produces = {"application/json"},
-      method = RequestMethod.GET)
-  ResponseEntity<Topping> getToppingsByName(
-      @ApiParam(value = "toppingName", required = true) @PathVariable("name") String name);
+    @ApiOperation(value = "Returns all topping information of the given topping.", nickname = "getToppingsbyName",
+            notes = "Get all topping information of the given topping ", response = Topping.class, tags = {"toppings",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Topping information about the given topping.", response = Topping.class),
+            @ApiResponse(code = 400, message = "bad input parameter")})
+    @RequestMapping(value = "/toppings/{name}",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    ResponseEntity<Topping> getToppingsByName(
+            @ApiParam(value = "toppingName", required = true) @PathVariable("name") String name);
 
 }
