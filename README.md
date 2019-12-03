@@ -46,7 +46,7 @@ within the past 30 minutes.
     * ```$ git push heroku master```
 * Open the deployed app
   * ```$ heroku open```
-  * Will need to add 'ThePizzaProject/1.0.0' to the end of the URL provided by Heroku.
+  * Will need to add '/ThePizzaProject/1.0.0' to the end of the URL provided by Heroku.
     * Example: your-heroku-app-name.herokuapp.com/ThePizzaProject/1.0.0
   
 ### Deployment Instructions (Local)
