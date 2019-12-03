@@ -32,19 +32,21 @@ for the first request to be processed if the application has not been accessed
 within the past 30 minutes.
 
 ### Deployment Instructions (Heroku)
-* Install all necessary tools (Heroku CLI, git, Maven, etc.)
+* Install all necessary tools (Heroku CLI, git, Maven, etc.).
 * Navigate to the project directory on the command line.
-* Create a new Heroku application
+* Create a new Heroku application.
   * ```$ heroku create```
-* Attach mLab MongoDB to the Heroku app
+* Attach mLab MongoDB to the Heroku app.
   * ```$ heroku addons:create mongolab```
-  * Your heroku account must be verified in order to add this addon (will require entering credit card information)
-* Push local branch to the Heroku app
+  * If you have multiple Heroku apps on your account you will need to specify which application to provision the database:
+    * ```$ heroku addons:create mongolab -a your-application-name```
+  * Your heroku account must be verified in order to add this addon (will require entering credit card information).
+* Push local branch to the Heroku app.
   * If on a branch of your local repo other than master:
     * ```$ git push heroku 'yourLocalBranchName:master```
   * If on the master branch of your local repo:
     * ```$ git push heroku master```
-* Open the deployed app
+* Open the deployed app.
   * ```$ heroku open```
   * Will need to add '/ThePizzaProject/1.0.0' to the end of the URL provided by Heroku.
     * Example: your-heroku-app-name.herokuapp.com/ThePizzaProject/1.0.0
