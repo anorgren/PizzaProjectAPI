@@ -27,6 +27,7 @@ and any other user created documents.
 [Report](https://docs.google.com/document/d/1mnl9vtSs68ulHj1y7PeRuFpT7EnlGMQfT8o_MvtCJMQ/edit?usp=sharing)
 
 ### Final Presentation Materials
+[Presentation Slide Deck] (https://docs.google.com/presentation/d/1CxDqcz_OjGpPD_7yiRLpS8L9xkpAZFC9H9OuBwYzXew/edit?usp=sharing)
 
 ### Live API
 [Version 1.0.0](https://pizza-project-cs5500.herokuapp.com/ThePizzaProject/1.0.0/swagger-ui.html#!/developers/getBreadsticksByName)
