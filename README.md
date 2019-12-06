@@ -17,17 +17,17 @@ The underlying library integrating swagger to SpringBoot is [springfox](https://
 
 ### Backend API Design Document
 [Backend Design Doc](https://docs.google.com/document/d/1QJZbcmNr3z5pI0odDU3iSeZgCMg1KFlZzifdSRICHb0/edit?usp=sharing):
-Includes links to all post-mortems, additional resources used, 
-and any other user created documents.
+Includes links to all post-mortems, use cases document, testing plan, spike stories plan, and other group created documentation.
 
 ### Frontend Client Design Document
 [Frontend Design Doc](https://docs.google.com/document/d/1OgBnm2iR_zV2zt6I4yzTeGMOWKcgTQ2jVTumVnRD3UU/edit?usp=sharing)
+Includes link to group created accessibility guidelines.
 
 ### Final Project Report
 [Report](https://docs.google.com/document/d/1mnl9vtSs68ulHj1y7PeRuFpT7EnlGMQfT8o_MvtCJMQ/edit?usp=sharing)
 
 ### Final Presentation Materials
-[Presentation Slide Deck] (https://docs.google.com/presentation/d/1CxDqcz_OjGpPD_7yiRLpS8L9xkpAZFC9H9OuBwYzXew/edit?usp=sharing)
+[Presentation Slide Deck](https://docs.google.com/presentation/d/1CxDqcz_OjGpPD_7yiRLpS8L9xkpAZFC9H9OuBwYzXew/edit?usp=sharing)
 
 ### Live API
 [Version 1.0.0](https://pizza-project-cs5500.herokuapp.com/ThePizzaProject/1.0.0/swagger-ui.html#!/developers/getBreadsticksByName)
