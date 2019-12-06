@@ -15,10 +15,13 @@ The underlying library integrating swagger to SpringBoot is [springfox](https://
 - Testing: JUnit, Mockito, MockMVC
 - Java 8, Maven 3
 
-### Design Document
-[Design Doc](https://docs.google.com/document/d/1QJZbcmNr3z5pI0odDU3iSeZgCMg1KFlZzifdSRICHb0/edit?usp=sharing):
+### Backend API Design Document
+[Backend Design Doc](https://docs.google.com/document/d/1QJZbcmNr3z5pI0odDU3iSeZgCMg1KFlZzifdSRICHb0/edit?usp=sharing):
 Includes links to all post-mortems, additional resources used, 
-and any other additional relevant documents.
+and any other user created documents.
+
+### Frontend Client Design Document
+[Frontend Design Doc](https://docs.google.com/document/d/1OgBnm2iR_zV2zt6I4yzTeGMOWKcgTQ2jVTumVnRD3UU/edit?usp=sharing)
 
 ### Final Project Report
 [Report](https://docs.google.com/document/d/1mnl9vtSs68ulHj1y7PeRuFpT7EnlGMQfT8o_MvtCJMQ/edit?usp=sharing)
