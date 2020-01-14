@@ -20,7 +20,7 @@ The underlying library integrating swagger to SpringBoot is [springfox](https://
 Includes links to all post-mortems, use cases document, testing plan, spike stories plan, and other group created documentation.
 
 ### Frontend Client Design Document
-[Frontend Design Doc](https://docs.google.com/document/d/1OgBnm2iR_zV2zt6I4yzTeGMOWKcgTQ2jVTumVnRD3UU/edit?usp=sharing)
+[Frontend Design Doc](https://docs.google.com/document/d/1QJZbcmNr3z5pI0odDU3iSeZgCMg1KFlZzifdSRICHb0/edit?usp=sharing)
 Includes link to group created accessibility guidelines.
 
 ### Final Project Report
